@@ -1,0 +1,60 @@
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    html {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    
+    *,
+    *:before,
+    *:after {
+        -webkit-box-sizing: inherit;
+        -moz-box-sizing: inherit;
+        box-sizing: inherit;
+    }
+    
+    body {
+        background-color: rgb(230, 222, 213);
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    }
+    
+    .main-content {
+        height: 40vw;
+        display: grid;
+        align-content: center;
+        justify-content: center;
+    }
+    
+    .login {
+        background-color: white;
+        width: 350px;
+        height: 250px;
+        border-radius: 5px;
+        padding: 24px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+    }
+    
+    .inputs {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    label {
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+    
+    input {
+        padding: 10px 5px;
+    }
+    
+    button {
+        height: 35px;
+    }

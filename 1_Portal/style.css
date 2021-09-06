@@ -23,7 +23,7 @@
     }
     
     .main-content {
-        height: 40vw;
+        height: 50vw;
         display: grid;
         align-content: center;
         justify-content: center;
@@ -57,4 +57,9 @@
     
     button {
         height: 35px;
+    }
+    
+    h1 {
+        margin: auto;
+        padding-bottom: 20px;
     }

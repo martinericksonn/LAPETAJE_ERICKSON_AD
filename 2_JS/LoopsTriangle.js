@@ -5,7 +5,7 @@ console.log("------------------------------");
 var height = prompt("Enter height of triangle: ");
 var string = "*";
 for (var i = 0; i < height; i++) {
-    console.log(`${string}`);
+    console.log(string);
     string += "*";
 }
 console.log("------------------------------");

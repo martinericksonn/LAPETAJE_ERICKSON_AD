@@ -6,7 +6,7 @@ println();
 console.log("Number\n");
 var num1 = 1000;
 var num2 = 12.32;
-console.log(`num1 = ${num1} is a type of ${typeof num1}`);
+console.log(`num1 = ${num1} is a type of ${typeof(num1)}`);
 console.log(`num2 = ${num2} is a type of ${typeof(num2)}`);
 
 println();
@@ -36,7 +36,7 @@ var null1 = 123;
 let null2 = null;
 
 var null1 = null
-console.log(`null1 = ${null1} is a type of ${typeof null1}`);
+console.log(`null1 = ${null1} is a type of ${typeof(null1)}`);
 console.log(`null2 = ${null2} is a type of ${typeof(null2)}`);
 
 println();

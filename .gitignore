@@ -2,8 +2,8 @@
 3-nest/dist
 3-nest/node_modules
 
-# Logs
-logs
+Rmdir /S .git# Logs
+logscd
 *.log
 npm-debug.log*
 pnpm-debug.log*

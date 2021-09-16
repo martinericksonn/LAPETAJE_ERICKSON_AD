@@ -5,4 +5,14 @@ export declare class Exercise3Controller {
     loopsTriangle(height: string): string;
     hello(someWords: string): string;
     prime(numberToCheck: string): string;
+    getOne(id: string): {
+        model: string;
+        color: string;
+        wheels: import("./car.model").Wheels;
+    };
+    addCar(body: any): void;
+    replaceCar(id: string, body: any): void;
+    removeCar(id: string): void;
+    test2(): void;
+    logCars(): void;
 }

@@ -30,6 +30,24 @@ let Exercise3Controller = class Exercise3Controller {
         var parsedNumber = parseInt(numberToCheck);
         return this.e3.prime(parsedNumber);
     }
+    getOne(id) {
+        return this.e3.getCar(id);
+    }
+    addCar(body) {
+        return this.e3.addCar(body);
+    }
+    replaceCar(id, body) {
+        return this.e3.replaceCar(id, body);
+    }
+    removeCar(id) {
+        return this.e3.deleteCar(id);
+    }
+    test2() {
+        return this.e3.addJoshCar2();
+    }
+    logCars() {
+        return this.e3.logAllCars();
+    }
 };
 __decorate([
     (0, common_1.Get)('/loopsTriangle/:height'),
@@ -52,6 +70,47 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], Exercise3Controller.prototype, "prime", null);
+__decorate([
+    (0, common_1.Get)('/getCar/:id'),
+    __param(0, (0, common_1.Param)("id")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], Exercise3Controller.prototype, "getOne", null);
+__decorate([
+    (0, common_1.Post)('/addCar'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], Exercise3Controller.prototype, "addCar", null);
+__decorate([
+    (0, common_1.Put)('/replaceCar/:id'),
+    __param(0, (0, common_1.Param)("id")),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], Exercise3Controller.prototype, "replaceCar", null);
+__decorate([
+    (0, common_1.Delete)('/replaceCar/:id'),
+    __param(0, (0, common_1.Param)("id")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], Exercise3Controller.prototype, "removeCar", null);
+__decorate([
+    (0, common_1.Get)('/addJoshCar2'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], Exercise3Controller.prototype, "test2", null);
+__decorate([
+    (0, common_1.Get)('/logCars'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], Exercise3Controller.prototype, "logCars", null);
 Exercise3Controller = __decorate([
     (0, common_1.Controller)('exercise3'),
     __metadata("design:paramtypes", [exercise3_service_1.Exercise3Service])

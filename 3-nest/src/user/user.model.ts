@@ -14,15 +14,15 @@ export class User{
     }
 
     searchTerm(term:any):boolean{
-        if(this.id == term || this.name.toLowerCase() == term
-        ||  this.age == term || this.email.toLowerCase() == term) 
+        if(this.id == term || this.name.toLowerCase() == term.toLowerCase()
+        ||  this.age == term || this.email.toLowerCase() == term.toLowerCase()) 
             return true;
 
         return false;
     }
 
     verifyEmail (email:string):boolean{
-        return this.email == email;
+        return this.email.toLowerCase() == email.toLowerCase();
     }
 
     verifyID (id:number):boolean{
@@ -34,10 +34,11 @@ export class User{
         this.name = user.name ? user.name : this.name;
         this.age = user.age ? user.age : this.age; 
         this.email = user.email ? user.email : this.email; 
+        this.password = user.password ? user.password : this.password;
     }
     
     login(email:string, password:string):boolean{
-        return this.email == email && this.password == password;
+        return this.email.toLowerCase() == email.toLowerCase() && this.password == password;
     }
 
     log(){

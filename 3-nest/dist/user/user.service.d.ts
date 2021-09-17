@@ -1,6 +1,7 @@
 export declare class UserService {
     private users;
     private systemMessage;
+    private idNumber;
     private generateID;
     private isCredentialsComplete;
     private isIdExist;

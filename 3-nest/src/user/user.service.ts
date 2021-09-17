@@ -5,9 +5,10 @@ import { SystemMessage, User } from './user.model';
 export class UserService {
     private users = new Map<number,User>();
     private systemMessage = new SystemMessage();
+    private idNumber:number = 0;
 
     private generateID():number{
-        return 20000 + (10 * this.users.size);
+        return 20000 + (this.idNumber+= 10); 
     }
     
     private isCredentialsComplete(user:any,option:string):boolean{
@@ -109,15 +110,15 @@ export class UserService {
     searchTerm(term:any){
         var resultData = [];
         for(const user of this.users.values())
-            if (user.searchTerm(term.toLowerCase()))
+            if (user.searchTerm(term))
                 resultData.push(user.toJson())
-                
-        if (!(resultData.length > 1))
+        
+        if (!resultData.length)
             return this.systemMessage.error(507);
 
         resultData.unshift({keyword:term,result:resultData.length})    
         return resultData;
     }
-    
+
 }
 

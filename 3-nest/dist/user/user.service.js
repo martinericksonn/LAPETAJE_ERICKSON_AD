@@ -13,9 +13,10 @@ let UserService = class UserService {
     constructor() {
         this.users = new Map();
         this.systemMessage = new user_model_1.SystemMessage();
+        this.idNumber = 0;
     }
     generateID() {
-        return 20000 + (10 * this.users.size);
+        return 20000 + (this.idNumber += 10);
     }
     isCredentialsComplete(user, option) {
         switch (option.toUpperCase()) {
@@ -89,9 +90,9 @@ let UserService = class UserService {
     searchTerm(term) {
         var resultData = [];
         for (const user of this.users.values())
-            if (user.searchTerm(term.toLowerCase()))
+            if (user.searchTerm(term))
                 resultData.push(user.toJson());
-        if (!(resultData.length > 1))
+        if (!resultData.length)
             return this.systemMessage.error(507);
         resultData.unshift({ keyword: term, result: resultData.length });
         return resultData;

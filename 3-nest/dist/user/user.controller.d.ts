@@ -5,6 +5,9 @@ export declare class UserController {
     register(body: any): any;
     getAll(): any;
     getUser(id: string): any;
-    patchUser(id: string, body: any): string;
-    putUser(id: string, body: any): string;
+    putUser(id: string, body: any): any;
+    patchUser(id: string, body: any): any;
+    deleteUser(id: string): any;
+    userLogin(body: any): any;
+    searchTerm(term: string): any;
 }

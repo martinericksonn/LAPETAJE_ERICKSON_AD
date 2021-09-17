@@ -1,11 +1,10 @@
-import { Body, Controller, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 
 
 @Controller('user')
 export class UserController {
     constructor(private readonly userService:UserService){}
-
 
     @Post("/register")
     register(@Body() body:any){
@@ -19,21 +18,32 @@ export class UserController {
     
     @Get("/:id")
     getUser(@Param("id") id:string){
-        var parsedID = parseInt(id);
-        return this.userService.getUser(parsedID);
-    }
-    
-    @Patch("/:id")
-    patchUser(@Param("id") id:string, @Body() body:any){
-        var parsedID = parseInt(id);
-        return this.userService.patchUser(parsedID,body);
+        return this.userService.getUser(parseInt(id));
     }
     
     @Put("/:id")
     putUser(@Param("id") id:string, @Body() body:any){
-        var parsedID = parseInt(id);
-        return this.userService.putUser(parsedID,body);
+        return this.userService.putUser(parseInt(id),body);
     }
     
+    @Patch("/:id")
+    patchUser(@Param("id") id:string, @Body() body:any){
+        return this.userService.patchUser(parseInt(id),body);
+    }
+    
+    @Delete("/:id")
+    deleteUser(@Param("id") id:string){
+        return this.userService.deleteUser(parseInt(id));
+    }
+
+    @Post("/login")
+    userLogin(@Body() body:any){
+        return this.userService.userLogin(body);
+    }
+    
+    @Get("/search/:term")
+    searchTerm(@Param("term") term:string){
+        return this.userService.searchTerm(term);
+    }
 }
     

@@ -12,61 +12,39 @@ const user_model_1 = require("./user.model");
 let UserService = class UserService {
     constructor() {
         this.users = new Map();
+        this.systemMessage = new user_model_1.SystemMessage();
     }
     generateID() {
         return 20000 + (10 * this.users.size);
     }
-    systemMessage(code) {
-        switch (code) {
-            case 101: return "Account has been successfully registered";
-            case 102: return "Account credentials has been updated successfully";
-            case 502: return "Sorry missing credentials, please try again";
-            case 503: return "This Email is already registered, try logging in";
-            case 504: return "This Email is already registered, cannot update credentials";
-            case 506: return "ID do not exist";
+    isCredentialsComplete(user, option) {
+        switch (option.toUpperCase()) {
+            case "REGISTER": return user.name && user.age && user.email && user.password;
+            case "LOGIN": return user.email && user.password;
         }
     }
-    IsJsonString(str) {
-        try {
-            JSON.parse(str);
-        }
-        catch (e) {
-            return false;
-        }
-        return true;
+    isIdExist(id) {
+        return this.users.has(id);
     }
-    isCredentialsComplete(user) {
-        return (user.name && user.age && user.email && user.password);
-    }
-    isEmailRepeated(newUser) {
-        for (const user of this.users.values()) {
-            console.log(user.verifyEmail(newUser.email) + " " + !user.verifyID(newUser.id));
+    isEmailExist(newUser) {
+        for (const user of this.users.values())
             if (user.verifyEmail(newUser.email) && !user.verifyID(newUser.id))
                 return true;
-        }
         return false;
     }
-    patchUser(id, user) {
-        user.id = id;
-        this.IsJsonString(user);
-        if (!this.users.has(id))
-            return JSON.stringify(this.systemMessage(506));
-        if (this.isEmailRepeated(user))
-            return JSON.stringify(this.systemMessage(504));
-        this.users.get(id).modifyUser(user);
-        return JSON.stringify(this.systemMessage(102));
+    register(user) {
+        if (this.isEmailExist(user))
+            return this.systemMessage.error(503);
+        if (!this.isCredentialsComplete(user, "REGISTER"))
+            return this.systemMessage.error(504);
+        user.id = this.generateID();
+        this.users.set(user.id, new user_model_1.User(user));
+        return this.systemMessage.success(101);
     }
-    putUser(id, user) {
-        user.id = id;
-        if (!this.users.has(id))
-            return JSON.stringify(this.systemMessage(506));
-        if (this.isEmailRepeated(user))
-            return JSON.stringify(this.systemMessage(504));
-        if (!this.isCredentialsComplete(user))
-            return JSON.stringify(this.systemMessage(502));
-        var newUser = new user_model_1.User(user);
-        this.users.set(user.id, newUser);
-        return JSON.stringify(this.systemMessage(102));
+    getUser(id) {
+        if (!this.isIdExist(id))
+            return this.systemMessage.error(506);
+        return this.users.get(id).toJson();
     }
     getAllUser() {
         var populatedData = [];
@@ -74,24 +52,49 @@ let UserService = class UserService {
             populatedData.push(user.toJson());
         return populatedData;
     }
-    getUser(id) {
-        if (!this.users.has(id))
-            return JSON.stringify(this.systemMessage(506));
-        return this.users.get(id).toJson();
+    putUser(id, user) {
+        user.id = id;
+        if (!this.isIdExist(id))
+            return this.systemMessage.error(506);
+        if (this.isEmailExist(user))
+            return this.systemMessage.error(504);
+        if (!this.isCredentialsComplete(user, "REGISTER"))
+            return this.systemMessage.error(502);
+        this.users.set(user.id, new user_model_1.User(user));
+        return this.systemMessage.success(102);
     }
-    logAllUsers() {
-        for (const [key, user] of this.users.entries())
-            user.log();
+    patchUser(id, user) {
+        user.id = id;
+        if (!this.isIdExist(id))
+            return this.systemMessage.error(506);
+        if (this.isEmailExist(user))
+            return this.systemMessage.error(504);
+        this.users.get(id).modifyUser(user);
+        return this.systemMessage.success(102);
     }
-    register(user) {
-        if (this.isEmailRepeated(user))
-            return JSON.stringify(this.systemMessage(503));
-        if (!this.isCredentialsComplete(user))
-            return JSON.stringify(this.systemMessage(504));
-        user.id = this.generateID();
-        var newUser = new user_model_1.User(user);
-        this.users.set(user.id, newUser);
-        return JSON.stringify(this.systemMessage(101));
+    deleteUser(id) {
+        if (!this.isIdExist(id))
+            return this.systemMessage.error(506);
+        this.users.delete(id);
+        return this.systemMessage.success(103);
+    }
+    userLogin(newUser) {
+        if (!this.isCredentialsComplete(newUser, "LOGIN"))
+            return this.systemMessage.error(502);
+        for (const user of this.users.values())
+            if (user.login(newUser.email, newUser.password))
+                return this.systemMessage.success(104);
+        return this.systemMessage.error(505);
+    }
+    searchTerm(term) {
+        var resultData = [];
+        for (const user of this.users.values())
+            if (user.searchTerm(term.toLowerCase()))
+                resultData.push(user.toJson());
+        if (!(resultData.length > 1))
+            return this.systemMessage.error(507);
+        resultData.unshift({ keyword: term, result: resultData.length });
+        return resultData;
     }
 };
 UserService = __decorate([

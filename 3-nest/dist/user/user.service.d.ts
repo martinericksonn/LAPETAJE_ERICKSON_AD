@@ -1,14 +1,16 @@
 export declare class UserService {
     private users;
-    private generateID;
     private systemMessage;
-    IsJsonString(str: any): boolean;
+    private generateID;
     private isCredentialsComplete;
-    private isEmailRepeated;
-    patchUser(id: number, user: any): string;
-    putUser(id: number, user: any): string;
-    getAllUser(): any;
-    getUser(id: number): any;
-    logAllUsers(): void;
+    private isIdExist;
+    private isEmailExist;
     register(user: any): any;
+    getUser(id: number): any;
+    getAllUser(): any;
+    putUser(id: number, user: any): any;
+    patchUser(id: number, user: any): any;
+    deleteUser(id: number): any;
+    userLogin(newUser: any): any;
+    searchTerm(term: any): any;
 }

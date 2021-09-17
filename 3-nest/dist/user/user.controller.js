@@ -26,16 +26,22 @@ let UserController = class UserController {
         return this.userService.getAllUser();
     }
     getUser(id) {
-        var parsedID = parseInt(id);
-        return this.userService.getUser(parsedID);
-    }
-    patchUser(id, body) {
-        var parsedID = parseInt(id);
-        return this.userService.patchUser(parsedID, body);
+        return this.userService.getUser(parseInt(id));
     }
     putUser(id, body) {
-        var parsedID = parseInt(id);
-        return this.userService.putUser(parsedID, body);
+        return this.userService.putUser(parseInt(id), body);
+    }
+    patchUser(id, body) {
+        return this.userService.patchUser(parseInt(id), body);
+    }
+    deleteUser(id) {
+        return this.userService.deleteUser(parseInt(id));
+    }
+    userLogin(body) {
+        return this.userService.userLogin(body);
+    }
+    searchTerm(term) {
+        return this.userService.searchTerm(term);
     }
 };
 __decorate([
@@ -59,6 +65,14 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "getUser", null);
 __decorate([
+    (0, common_1.Put)("/:id"),
+    __param(0, (0, common_1.Param)("id")),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "putUser", null);
+__decorate([
     (0, common_1.Patch)("/:id"),
     __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
@@ -67,13 +81,26 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "patchUser", null);
 __decorate([
-    (0, common_1.Put)("/:id"),
+    (0, common_1.Delete)("/:id"),
     __param(0, (0, common_1.Param)("id")),
-    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], UserController.prototype, "putUser", null);
+], UserController.prototype, "deleteUser", null);
+__decorate([
+    (0, common_1.Post)("/login"),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "userLogin", null);
+__decorate([
+    (0, common_1.Get)("/search/:term"),
+    __param(0, (0, common_1.Param)("term")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "searchTerm", null);
 UserController = __decorate([
     (0, common_1.Controller)('user'),
     __metadata("design:paramtypes", [user_service_1.UserService])

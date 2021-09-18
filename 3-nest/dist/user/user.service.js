@@ -24,18 +24,23 @@ let UserService = class UserService {
             case "LOGIN": return user.email && user.password;
         }
     }
+    isEmailValid(newUser) {
+        return newUser.email.trim() ? newUser.email.includes("@") : false;
+    }
     isIdExist(id) {
         return this.users.has(id);
     }
     isEmailExist(newUser) {
         for (const user of this.users.values())
-            if (user.verifyEmail(newUser.email) && !user.verifyID(newUser.id))
+            if (user.verifyEmail(newUser.email.trim()) && !user.verifyID(newUser.id))
                 return true;
         return false;
     }
     register(user) {
         if (this.isEmailExist(user))
             return this.systemMessage.error(503);
+        if (!this.isEmailValid(user))
+            return this.systemMessage.error(508);
         if (!this.isCredentialsComplete(user, "REGISTER"))
             return this.systemMessage.error(504);
         user.id = this.generateID();
@@ -57,6 +62,8 @@ let UserService = class UserService {
         user.id = id;
         if (!this.isIdExist(id))
             return this.systemMessage.error(506);
+        if (!this.isEmailValid(user))
+            return this.systemMessage.error(508);
         if (this.isEmailExist(user))
             return this.systemMessage.error(504);
         if (!this.isCredentialsComplete(user, "REGISTER"))
@@ -68,6 +75,8 @@ let UserService = class UserService {
         user.id = id;
         if (!this.isIdExist(id))
             return this.systemMessage.error(506);
+        if (!this.isEmailValid(user))
+            return this.systemMessage.error(508);
         if (this.isEmailExist(user))
             return this.systemMessage.error(504);
         this.users.get(id).modifyUser(user);

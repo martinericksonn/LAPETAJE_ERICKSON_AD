@@ -17,23 +17,29 @@ export class UserService {
             case "LOGIN" : return user.email && user.password;
         }
     }
-    
+
+    private isEmailValid(newUser):boolean{
+        return newUser.email.trim() ? newUser.email.includes("@") : false;
+    }
+
     private isIdExist(id:number):boolean{
         return this.users.has(id);
     }
   
     private isEmailExist(newUser:any):boolean{
         for(const user of this.users.values())
-            if(user.verifyEmail(newUser.email) && !user.verifyID(newUser.id))
+            if(user.verifyEmail(newUser.email.trim()) && !user.verifyID(newUser.id))
                 return true;      
         
         return false;
     }
 
-    
     register(user:any):any{
         if(this.isEmailExist(user))
             return this.systemMessage.error(503);
+
+        if(!this.isEmailValid(user))
+            return this.systemMessage.error(508);
 
         if(!this.isCredentialsComplete(user,"REGISTER"))
             return this.systemMessage.error(504);
@@ -52,7 +58,6 @@ export class UserService {
 
     getAllUser():any{
         var populatedData = [];
-
         for(const user of this.users.values())
             populatedData.push(user.toJson());     
 
@@ -64,10 +69,13 @@ export class UserService {
         user.id = id;
         if(!this.isIdExist(id))
             return this.systemMessage.error(506);   
+            
+        if(!this.isEmailValid(user))
+            return this.systemMessage.error(508);
 
         if(this.isEmailExist(user))
             return this.systemMessage.error(504);
-
+        
         if(!this.isCredentialsComplete(user,"REGISTER"))
             return this.systemMessage.error(502);
 
@@ -79,6 +87,9 @@ export class UserService {
         user.id = id;
         if(!this.isIdExist(id))
             return this.systemMessage.error(506);  
+        
+        if(!this.isEmailValid(user))
+            return this.systemMessage.error(508);
 
         if(this.isEmailExist(user))
             return this.systemMessage.error(504);
@@ -86,7 +97,6 @@ export class UserService {
         this.users.get(id).modifyUser(user);
         return this.systemMessage.success(102);
     }
-
 
     deleteUser(id: number):any {
         if(!this.isIdExist(id))

@@ -4,29 +4,27 @@ exports.SystemMessage = exports.User = void 0;
 class User {
     constructor(user) {
         this.id = user.id;
-        this.name = user.name;
-        this.age = user.age;
-        this.email = user.email;
-        this.password = user.password;
+        this.name = user.name.trim();
+        this.age = user.age.trim();
+        this.email = user.email.trim();
+        this.password = user.password.trim();
     }
     searchTerm(term) {
-        if (this.id == term || this.name.toLowerCase() == term.toLowerCase()
-            || this.age == term || this.email.toLowerCase() == term.toLowerCase())
-            return true;
-        return false;
+        return (this.id == term || this.name.toLowerCase() == term.toLowerCase()
+            || this.age == term || this.email.toLowerCase() == term.toLowerCase());
     }
     verifyEmail(email) {
-        return this.email.toLowerCase() == email.toLowerCase();
+        return email ? this.email.toLowerCase() == email.toLowerCase() : false;
     }
     verifyID(id) {
         return this.id == id;
     }
     modifyUser(user) {
         this.id = user.id ? user.id : this.id;
-        this.name = user.name ? user.name : this.name;
-        this.age = user.age ? user.age : this.age;
-        this.email = user.email ? user.email : this.email;
-        this.password = user.password ? user.password : this.password;
+        this.name = user.name ? user.name.trim() : this.name;
+        this.age = user.age ? user.age.trim() : this.age;
+        this.email = user.email ? user.email.trim() : this.email;
+        this.password = user.password ? user.password.trim() : this.password;
     }
     login(email, password) {
         return this.email.toLowerCase() == email.toLowerCase() && this.password == password;
@@ -58,6 +56,7 @@ class SystemMessage {
             case 505: return "The email address or password is incorrect";
             case 506: return "This ID does not exist";
             case 507: return "Sorry we couldn't find any results";
+            case 508: return "Sorry this email is not a valid email";
             default: return "Unknown request";
         }
     }

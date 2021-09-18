@@ -4,6 +4,7 @@ export declare class UserService {
     private idNumber;
     private generateID;
     private isCredentialsComplete;
+    private isEmailValid;
     private isIdExist;
     private isEmailExist;
     register(user: any): any;

@@ -11,6 +11,8 @@ export declare class UserService {
     getUser(id: number): any;
     getAllUser(): any;
     putUser(id: number, user: any): any;
+    testa(): boolean;
+    testb(): boolean;
     patchUser(id: number, user: any): any;
     deleteUser(id: number): any;
     userLogin(newUser: any): any;

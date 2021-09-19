@@ -37,12 +37,12 @@ let UserService = class UserService {
         return false;
     }
     register(user) {
-        if (this.isEmailExist(user))
-            return this.systemMessage.error(503);
+        if (!this.isCredentialsComplete(user, "REGISTER"))
+            return this.systemMessage.error(502);
         if (!this.isEmailValid(user))
             return this.systemMessage.error(508);
-        if (!this.isCredentialsComplete(user, "REGISTER"))
-            return this.systemMessage.error(504);
+        if (this.isEmailExist(user))
+            return this.systemMessage.error(503);
         user.id = this.generateID();
         this.users.set(user.id, new user_model_1.User(user));
         return this.systemMessage.success(101);
@@ -60,24 +60,31 @@ let UserService = class UserService {
     }
     putUser(id, user) {
         user.id = id;
+        if (!this.isCredentialsComplete(user, "REGISTER"))
+            return this.systemMessage.error(502);
         if (!this.isIdExist(id))
             return this.systemMessage.error(506);
         if (!this.isEmailValid(user))
             return this.systemMessage.error(508);
         if (this.isEmailExist(user))
             return this.systemMessage.error(504);
-        if (!this.isCredentialsComplete(user, "REGISTER"))
-            return this.systemMessage.error(502);
         this.users.set(user.id, new user_model_1.User(user));
         return this.systemMessage.success(102);
+    }
+    testa() {
+        console.log("yoyoyo");
+        return true;
+    }
+    testb() {
+        return false;
     }
     patchUser(id, user) {
         user.id = id;
         if (!this.isIdExist(id))
             return this.systemMessage.error(506);
-        if (!this.isEmailValid(user))
+        if (user.email && !this.isEmailValid(user))
             return this.systemMessage.error(508);
-        if (this.isEmailExist(user))
+        if (user.email && this.isEmailExist(user))
             return this.systemMessage.error(504);
         this.users.get(id).modifyUser(user);
         return this.systemMessage.success(102);

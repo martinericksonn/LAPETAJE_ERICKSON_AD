@@ -83,15 +83,7 @@ export class UserService {
         this.users.set(user.id,new User(user));   
         return this.systemMessage.success(102);
     }
-    testa(){
-        console.log("yoyoyo")
-        return true;
-    }
 
-    testb(){
-        return false;
-        
-    }
     patchUser(id: number, user: any) {
         user.id = id;
         if(!this.isIdExist(id))

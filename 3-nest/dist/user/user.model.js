@@ -5,7 +5,7 @@ class User {
     constructor(user) {
         this.id = user.id;
         this.name = user.name.trim();
-        this.age = user.age.trim();
+        this.age = user.age;
         this.email = user.email.trim();
         this.password = user.password.trim();
     }
@@ -22,7 +22,7 @@ class User {
     modifyUser(user) {
         this.id = user.id ? user.id : this.id;
         this.name = user.name ? user.name.trim() : this.name;
-        this.age = user.age ? user.age.trim() : this.age;
+        this.age = user.age ? user.age : this.age;
         this.email = user.email ? user.email.trim() : this.email;
         this.password = user.password ? user.password.trim() : this.password;
     }

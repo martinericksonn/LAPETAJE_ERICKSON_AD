@@ -71,13 +71,6 @@ let UserService = class UserService {
         this.users.set(user.id, new user_model_1.User(user));
         return this.systemMessage.success(102);
     }
-    testa() {
-        console.log("yoyoyo");
-        return true;
-    }
-    testb() {
-        return false;
-    }
     patchUser(id, user) {
         user.id = id;
         if (!this.isIdExist(id))

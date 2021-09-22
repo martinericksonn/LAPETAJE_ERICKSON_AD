@@ -19,7 +19,7 @@ export class UserService {
     }
 
     private isEmailValid(newUser):boolean{
-            return newUser.email.trim() ? newUser.email.includes("@") : false;
+        return newUser.email.trim() ? newUser.email.includes("@") : false;
     }
 
     private isIdExist(id:number):boolean{

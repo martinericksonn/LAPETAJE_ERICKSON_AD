@@ -18,22 +18,22 @@ export class UserController {
     
     @Get("/:id")
     getUser(@Param("id") id:string){
-        return this.userService.getUser(parseInt(id));
+        return this.userService.getUser(id);
     }
     
     @Put("/:id")
     putUser(@Param("id") id:string, @Body() body:any){
-        return this.userService.putUser(parseInt(id),body);
+        return this.userService.putUser(id,body);
     }
     
     @Patch("/:id")
     patchUser(@Param("id") id:string, @Body() body:any){
-        return this.userService.patchUser(parseInt(id),body);
+        return this.userService.patchUser(id,body);
     }
     
     @Delete("/:id")
     deleteUser(@Param("id") id:string){
-        return this.userService.deleteUser(parseInt(id));
+        return this.userService.deleteUser(id);
     }
 
     @Post("/login")

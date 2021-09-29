@@ -26,16 +26,16 @@ let UserController = class UserController {
         return this.userService.getAllUser();
     }
     getUser(id) {
-        return this.userService.getUser(parseInt(id));
+        return this.userService.getUser(id);
     }
     putUser(id, body) {
-        return this.userService.putUser(parseInt(id), body);
+        return this.userService.putUser(id, body);
     }
     patchUser(id, body) {
-        return this.userService.patchUser(parseInt(id), body);
+        return this.userService.patchUser(id, body);
     }
     deleteUser(id) {
-        return this.userService.deleteUser(parseInt(id));
+        return this.userService.deleteUser(id);
     }
     userLogin(body) {
         return this.userService.userLogin(body);

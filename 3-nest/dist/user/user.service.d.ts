@@ -1,18 +1,12 @@
 export declare class UserService {
     private users;
-    private systemMessage;
-    private idNumber;
-    private generateID;
-    private isCredentialsComplete;
-    private isEmailValid;
-    private isIdExist;
-    private isEmailExist;
-    register(user: any): any;
-    getUser(id: number): any;
+    constructor();
+    register(newUser: any): any;
+    getUser(id: string): any;
     getAllUser(): any;
-    putUser(id: number, user: any): any;
-    patchUser(id: number, user: any): any;
-    deleteUser(id: number): any;
+    putUser(id: string, user: any): any;
+    patchUser(id: string, user: any): any;
+    deleteUser(id: string): any;
     userLogin(newUser: any): any;
-    searchTerm(term: any): any;
+    searchTerm(query: any): any;
 }

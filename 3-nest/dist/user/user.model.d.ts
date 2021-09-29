@@ -4,26 +4,29 @@ export declare class User {
     private age;
     private email;
     private password;
+    constructor();
     constructor(user: any);
     searchTerm(term: any): boolean;
     verifyEmail(email: string): boolean;
-    verifyID(id: number): boolean;
-    modifyUser(user: any): void;
+    verifyID(id: string): boolean;
+    replaceValues(user: any): void;
     login(email: string, password: string): boolean;
     log(): void;
     toJson(): {
-        id: number;
+        id: string;
         name: string;
         age: number;
         email: string;
     };
 }
 export declare class SystemMessage {
-    private status;
-    private statusCode;
+    private isSuccess;
     private message;
+    private data;
     private systemMessage;
-    success(code: number): any;
+    custom(data: any): any;
+    success(code: number, data?: any): any;
     error(code: number): any;
     private toJson;
+    private toJsonWithMessage;
 }

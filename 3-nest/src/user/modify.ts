@@ -43,7 +43,7 @@ export class Process {
     return this.systemMessage.success(103);
   }
 
-  static LoginUser(newUser: any, users: any) {
+  static loginUser(newUser: any, users: any) {
     for (const user of users.values())
       if (user.login(newUser.email, newUser.password))
         return this.systemMessage.success(104);

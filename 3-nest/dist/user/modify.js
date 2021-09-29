@@ -35,7 +35,7 @@ class Process {
         users.delete(id);
         return this.systemMessage.success(103);
     }
-    static LoginUser(newUser, users) {
+    static loginUser(newUser, users) {
         for (const user of users.values())
             if (user.login(newUser.email, newUser.password))
                 return this.systemMessage.success(104);

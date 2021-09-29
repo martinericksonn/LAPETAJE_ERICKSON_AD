@@ -10,6 +10,7 @@ export class UserService {
 
   constructor() {
     this.users = Helper.populate();
+    // console.log('length ' + this.users.size);
   }
 
   register(newUser: any): any {
@@ -41,7 +42,7 @@ export class UserService {
     try {
       Verification.verifyCredentials(user, 'REGISTER');
       Verification.verifyID(id, this.users);
-      Verification.verifyEmail(user, this.users);
+      Verification.verifyEmail(user, this.users, id);
 
       return Process.overwriteUser(id, user, this.users);
     } catch (error) {
@@ -52,7 +53,7 @@ export class UserService {
   patchUser(id: string, user: any) {
     try {
       Verification.verifyID(id, this.users);
-      Verification.verifyEmail(user, this.users);
+      Verification.verifyEmail(user, this.users, id);
 
       return Process.updateUser(id, user, this.users);
     } catch (error) {
@@ -74,7 +75,7 @@ export class UserService {
     try {
       Verification.verifyCredentials(newUser, 'LOGIN');
 
-      return Process.LoginUser(newUser, this.users);
+      return Process.loginUser(newUser, this.users);
     } catch (error) {
       return error;
     }

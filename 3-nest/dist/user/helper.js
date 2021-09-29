@@ -29,8 +29,28 @@ class Helper {
                     email: 'sincere@april.biz',
                     password: 'LG_123456',
                 }),
+                new user_model_1.User({
+                    name: 'Ervin Howell',
+                    age: 21,
+                    email: 'shanna@melissa.tv',
+                    password: 'EH_123123',
+                }),
+                new user_model_1.User({
+                    name: 'Nathan Plains',
+                    age: 25,
+                    email: 'nathan@yesenia.net',
+                    password: 'NP_812415',
+                }),
+                new user_model_1.User({
+                    name: 'Patricia Lebsack',
+                    age: 18,
+                    email: 'patty@kory.org',
+                    password: 'PL_12345',
+                }),
             ];
             users.forEach((user) => {
+                user.id = Helper.generateUID();
+                result.set(user.id, user);
             });
             return result;
         }

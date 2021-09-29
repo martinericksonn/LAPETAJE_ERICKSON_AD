@@ -7,7 +7,7 @@ export class Verification {
   static verifyCredentials(newUser: any, option: string) {
     switch (option.toUpperCase()) {
       case 'REGISTER':
-        console.log(Helper.validBodyPut(newUser));
+        //console.log(Helper.validBodyPut(newUser));
         // console.log(Helper.validBody(newUser));
         // if (!(user.name && user.age && user.email && user.password))
         //   throw this.systemMessage.error(502);
@@ -18,24 +18,19 @@ export class Verification {
     }
   }
 
-  static verifyEmail(newUser: any, users?: any) {
+  static verifyEmail(newUser: any, users?: any, id?: string) {
     if (!newUser.email) return;
 
     if (!(newUser.email.trim() && newUser.email.includes('@')))
       throw this.systemMessage.error(508);
 
-    if (users)
-      for (const user of users.values()) {
-        if (
-          !(
-            user.verifyEmail(newUser.email.trim()) && !user.verifyID(newUser.id)
-          )
-        )
-          throw this.systemMessage.error(503);
-      }
+    for (const user of users.values()) {
+      if (user.verifyEmail(newUser.email.trim()) && !user.verifyID(id))
+        throw this.systemMessage.error(503);
+    }
   }
 
-  static verifyID(id: string, users: any): boolean {
-    return users.has(id);
+  static verifyID(id: string, users: any) {
+    if (!users.has(id)) throw this.systemMessage.error(506);
   }
 }

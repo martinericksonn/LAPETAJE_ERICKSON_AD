@@ -1,5 +1,5 @@
 export declare class User {
-    private id;
+    id: string;
     private name;
     private age;
     private email;

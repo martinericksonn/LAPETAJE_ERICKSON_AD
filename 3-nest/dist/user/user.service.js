@@ -45,7 +45,7 @@ let UserService = class UserService {
         try {
             verify_1.Verification.verifyCredentials(user, 'REGISTER');
             verify_1.Verification.verifyID(id, this.users);
-            verify_1.Verification.verifyEmail(user, this.users);
+            verify_1.Verification.verifyEmail(user, this.users, id);
             return modify_1.Process.overwriteUser(id, user, this.users);
         }
         catch (error) {
@@ -55,7 +55,7 @@ let UserService = class UserService {
     patchUser(id, user) {
         try {
             verify_1.Verification.verifyID(id, this.users);
-            verify_1.Verification.verifyEmail(user, this.users);
+            verify_1.Verification.verifyEmail(user, this.users, id);
             return modify_1.Process.updateUser(id, user, this.users);
         }
         catch (error) {
@@ -74,7 +74,7 @@ let UserService = class UserService {
     userLogin(newUser) {
         try {
             verify_1.Verification.verifyCredentials(newUser, 'LOGIN');
-            return modify_1.Process.LoginUser(newUser, this.users);
+            return modify_1.Process.loginUser(newUser, this.users);
         }
         catch (error) {
             return error;

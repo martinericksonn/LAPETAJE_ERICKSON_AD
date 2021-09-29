@@ -1,7 +1,7 @@
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
 
 export class User {
-  private id: string;
+  public id: string;
   private name: string;
   private age: number;
   private email: string;
@@ -33,6 +33,7 @@ export class User {
   }
 
   verifyID(id: string): boolean {
+    // this.log();
     return this.id == id;
   }
 

@@ -6,6 +6,6 @@ export declare class Process {
     static getAllUser(users: any): any[];
     static overwriteUser(id: string, newUser: any, users: any): any;
     static deleteUser(id: string, users: any): any;
-    static LoginUser(newUser: any, users: any): any;
+    static loginUser(newUser: any, users: any): any;
     static searchInUser(query: any, users: any): any[];
 }

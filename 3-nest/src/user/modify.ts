@@ -1,4 +1,3 @@
-import { Helper } from './helper';
 import { SystemMessage, User } from './user.model';
 
 export class Process {
@@ -12,10 +11,8 @@ export class Process {
   }
 
   static registerUser(newUser: any, users: any) {
-    newUser.id = Helper.generateUID();
-
     var user = new User(newUser);
-    users.set(newUser.id, user);
+    users.set(user.id, user);
     return this.systemMessage.success(101, user.toJson());
   }
 

@@ -54,6 +54,7 @@ let UserService = class UserService {
     }
     patchUser(id, user) {
         try {
+            verify_1.Verification.verifyCredentials(user, 'PATCH');
             verify_1.Verification.verifyID(id, this.users);
             verify_1.Verification.verifyEmail(user, this.users, id);
             return modify_1.Process.updateUser(id, user, this.users);

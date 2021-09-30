@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Process = void 0;
-const helper_1 = require("./helper");
 const user_model_1 = require("./user.model");
 class Process {
     static updateUser(id, user, users) {
@@ -11,9 +10,8 @@ class Process {
         return this.systemMessage.success(102, newUser.toJson());
     }
     static registerUser(newUser, users) {
-        newUser.id = helper_1.Helper.generateUID();
         var user = new user_model_1.User(newUser);
-        users.set(newUser.id, user);
+        users.set(user.id, user);
         return this.systemMessage.success(101, user.toJson());
     }
     static getUser(id, users) {

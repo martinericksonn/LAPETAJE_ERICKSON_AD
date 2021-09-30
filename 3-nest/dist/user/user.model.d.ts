@@ -4,8 +4,7 @@ export declare class User {
     private age;
     private email;
     private password;
-    constructor();
-    constructor(user: any);
+    constructor(user: any | string, age?: number, email?: string, password?: string);
     searchTerm(term: any): boolean;
     verifyEmail(email: string): boolean;
     verifyID(id: string): boolean;

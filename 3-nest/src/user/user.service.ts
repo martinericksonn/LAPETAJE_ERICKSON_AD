@@ -3,7 +3,7 @@ import { User } from './user.model';
 import { Helper } from './helper';
 import { Verification } from './verify';
 import { Process } from './modify';
-
+import { CRUDReturn } from './crud_return.interface';
 @Injectable()
 export class UserService {
   private users = new Map<string, User>();
@@ -13,7 +13,7 @@ export class UserService {
     // console.log('length ' + this.users.size);
   }
 
-  register(newUser: any): any {
+  register(newUser: any): CRUDReturn {
     try {
       Verification.verifyCredentials(newUser, 'REGISTER');
       Verification.verifyEmail(newUser, this.users);
@@ -52,6 +52,7 @@ export class UserService {
 
   patchUser(id: string, user: any) {
     try {
+      Verification.verifyCredentials(user, 'PATCH');
       Verification.verifyID(id, this.users);
       Verification.verifyEmail(user, this.users, id);
 

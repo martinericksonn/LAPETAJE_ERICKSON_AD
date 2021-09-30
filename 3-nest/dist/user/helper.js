@@ -9,6 +9,11 @@ class Helper {
         let array = Object.getOwnPropertyNames(a);
         return array;
     }
+    static describeClassUser() {
+        let a = new user_model_1.User('', 0, '', '');
+        let array = Object.getOwnPropertyNames(a);
+        return array;
+    }
     static generateUID() {
         return (0, uuid_1.v4)().toString().replace(/-/g, '').substring(0, 27);
     }
@@ -23,33 +28,12 @@ class Helper {
         var result = new Map();
         try {
             var users = [
-                new user_model_1.User({
-                    name: 'Leanne Graham',
-                    age: 18,
-                    email: 'sincere@april.biz',
-                    password: 'LG_123456',
-                }),
-                new user_model_1.User({
-                    name: 'Ervin Howell',
-                    age: 21,
-                    email: 'shanna@melissa.tv',
-                    password: 'EH_123123',
-                }),
-                new user_model_1.User({
-                    name: 'Nathan Plains',
-                    age: 25,
-                    email: 'nathan@yesenia.net',
-                    password: 'NP_812415',
-                }),
-                new user_model_1.User({
-                    name: 'Patricia Lebsack',
-                    age: 18,
-                    email: 'patty@kory.org',
-                    password: 'PL_12345',
-                }),
+                new user_model_1.User('Leanne Graham', 18, 'sincere@april.biz', 'LG_123456'),
+                new user_model_1.User('Ervin Howell', 21, 'shanna@melissa.tv', 'EH_123123'),
+                new user_model_1.User('Nathan Plains', 25, 'nathan@yesenia.net', 'NP_812415'),
+                new user_model_1.User('Patricia Lebsack', 18, 'patty@kory.org', 'PL_12345'),
             ];
             users.forEach((user) => {
-                user.id = Helper.generateUID();
                 result.set(user.id, user);
             });
             return result;
@@ -59,19 +43,27 @@ class Helper {
             return null;
         }
     }
-    static validBodyPut(body) {
-        var user = new user_model_1.User(body);
-        var keys = Object.getOwnPropertyNames(user);
-        keys = Helper.removeItemOnce(keys, 'id');
-        console.log(keys);
+    static validBody(body) {
+        var systemMessage = new user_model_1.SystemMessage();
+        var keys = Helper.describeClassUser();
+        var types = new Map();
+        types.set('name', typeof '');
+        types.set('age', typeof 0);
+        types.set('email', typeof '');
+        types.set('password', typeof '');
         for (const key of Object.keys(body)) {
-            console.log(key);
-            if (keys.includes(`${key}`)) {
-                keys = Helper.removeItemOnce(keys, key);
+            if (!keys.includes(`${key}`) && typeof body[key] != types.get(key)) {
+                throw systemMessage.error(502);
+            }
+            if (typeof body[key] != types.get(key)) {
+                throw this.systemMessage.custom({
+                    valid: false,
+                    data: `${key} is not a valid attribute`,
+                });
             }
         }
-        return keys.length > 0;
     }
 }
 exports.Helper = Helper;
+Helper.systemMessage = new user_model_1.SystemMessage();
 //# sourceMappingURL=helper.js.map

@@ -1,4 +1,5 @@
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
+import { Helper } from './helper';
 
 export class User {
   public id: string;
@@ -7,15 +8,28 @@ export class User {
   private email: string;
   private password: string;
 
-  constructor();
-  constructor(user: any);
-  constructor(user?: any) {
+  constructor(
+    user: any | string,
+    age?: number,
+    email?: string,
+    password?: string,
+  ) {
+    if (typeof user === 'string') {
+      this.id = Helper.generateUID();
+      this.name = user;
+      this.age = age;
+      this.email = email;
+      this.password = password;
+      return;
+    }
     this.id = user.id;
     this.name = user.name.trim();
     this.age = user.age;
     this.email = user.email.trim();
     this.password = user.password.trim();
   }
+
+  // }
 
   searchTerm(term: any): boolean {
     for (var attributename in this) {
@@ -33,7 +47,6 @@ export class User {
   }
 
   verifyID(id: string): boolean {
-    // this.log();
     return this.id == id;
   }
 

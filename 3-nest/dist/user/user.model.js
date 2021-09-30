@@ -1,8 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SystemMessage = exports.User = void 0;
+const helper_1 = require("./helper");
 class User {
-    constructor(user) {
+    constructor(user, age, email, password) {
+        if (typeof user === 'string') {
+            this.id = helper_1.Helper.generateUID();
+            this.name = user;
+            this.age = age;
+            this.email = email;
+            this.password = password;
+            return;
+        }
         this.id = user.id;
         this.name = user.name.trim();
         this.age = user.age;

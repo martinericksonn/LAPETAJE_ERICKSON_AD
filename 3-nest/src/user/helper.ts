@@ -3,6 +3,7 @@ import { v4 as uid } from 'uuid';
 
 export class Helper {
   private static systemMessage = new SystemMessage();
+
   //returns an array of attributes as defined in the class
   static describeClass(typeOfClass: any): Array<any> {
     let a = new typeOfClass();
@@ -10,6 +11,7 @@ export class Helper {
 
     return array;
   }
+
   static describeClassUser(): Array<any> {
     let a = new User('', 0, '', '');
     let array = Object.getOwnPropertyNames(a);
@@ -19,6 +21,7 @@ export class Helper {
   static generateUID(): string {
     return uid().toString().replace(/-/g, '').substring(0, 27);
   }
+
   //removes an item matching the value from the array
   static removeItemOnce(arr: Array<any>, value: any): Array<any> {
     var index = arr.indexOf(value);
@@ -46,6 +49,7 @@ export class Helper {
       return null;
     }
   }
+
   static validBody(body: any) {
     var systemMessage = new SystemMessage();
 
@@ -62,48 +66,144 @@ export class Helper {
       }
       if (typeof body[key] != types.get(key)) {
         throw this.systemMessage.custom({
-          valid: false,
+          success: false,
           data: `${key} is not a valid attribute`,
         });
       }
     }
   }
 
-  // static validBodyPut(body: any): { valid: boolean; data: string } {
-  //   try {
-  //     // var bodyValidation: { valid: boolean; data: string } =
-  //     //   this.validBody(body);
-  //     // if (bodyValidation.valid) {
-  //     //   var keys: Array<string> = Helper.describeClass(User);
+  static validBodyPut(body: any): { success: boolean; data: string } {
+    var systemMessage = new SystemMessage();
+    var keys: Array<string> = Helper.describeClassUser();
 
-  //       keys = Helper.removeItemOnce(keys, 'id');
-  //       for (const key of Object.keys(body)) {
-  //         if (keys.includes(`${key}`)) {
-  //           keys = Helper.removeItemOnce(keys, key);
-  //         }
-  //       }
-  //       if (keys.length > 0) {
-  //         throw Error(`Payload is missing ${keys}`);
-  //       }
-  //       return { valid: true, data: null };
-  //     } else throw Error(bodyValidation.data);
-  //   } catch (error) {
-  //     return { valid: false, data: error.message };
-  //   }
-  //}
+    keys = Helper.removeItemOnce(keys, 'id');
+    for (const key of Object.keys(body)) {
+      if (keys.includes(`${key}`)) {
+        keys = Helper.removeItemOnce(keys, key);
+      }
+    }
+    if (keys.length > 0) {
+      throw this.systemMessage.custom({
+        success: false,
+        data: `Payload is missing ${keys}`,
+      });
+    }
+    return this.systemMessage.custom({ success: true, data: null });
+  }
+}
 
-  // static validBodyPut(body: any): boolean {
-  //   var user = new User(body);
-  //   var keys: Array<string> = Object.getOwnPropertyNames(user);
+export class Verification {
+  private static systemMessage = new SystemMessage();
 
-  //   keys = Helper.removeItemOnce(keys, 'id');
-  //   //console.log(keys);
-  //   for (const key of Object.keys(body)) {
-  //     // console.log(key);
-  //     if (keys.includes(`${key}`)) {
-  //       keys = Helper.removeItemOnce(keys, key);
-  //     }
-  //   }
-  //   return keys.length > 0;
-  // }
+  static verifyCredentials(newUser: any, option: string) {
+    switch (option.toUpperCase()) {
+      case 'LOGIN':
+        if (!(newUser.email && newUser.password))
+          throw this.systemMessage.error(502);
+        break;
+
+      case 'REGISTER':
+        Helper.validBody(newUser);
+        Helper.validBodyPut(newUser);
+        break;
+
+      case 'PATCH':
+        Helper.validBody(newUser);
+        break;
+    }
+  }
+
+  static verifyEmail(newUser: any, users?: any, id?: string) {
+    if (!newUser.email) return;
+    if (!(newUser.email.trim() && newUser.email.includes('@')))
+      throw this.systemMessage.error(508);
+
+    if (id) {
+      for (const user of users.values()) {
+        if (user.verifyEmail(newUser.email.trim()) && !user.verifyID(id))
+          throw this.systemMessage.error(503);
+      }
+      return;
+    }
+
+    for (const user of users.values())
+      if (user.verifyEmail(newUser.email.trim()))
+        throw this.systemMessage.error(503);
+  }
+
+  static verifyAge(newUser: any) {
+    if (!newUser.age) return;
+    if (newUser.age < 0) throw this.systemMessage.error(509);
+  }
+
+  static verifyID(id: string, users: any) {
+    if (!users.has(id)) throw this.systemMessage.error(506);
+  }
+}
+
+export class Process {
+  private static systemMessage = new SystemMessage();
+
+  static updateUser(id: string, user: any, users: any) {
+    var newUser = users.get(id);
+
+    newUser.replaceValues(user);
+    return this.systemMessage.success(newUser.toJson());
+  }
+
+  static registerUser(newUser: any, users: any) {
+    var user = new User(newUser);
+
+    users.set(user.id, user);
+    return this.systemMessage.success(user.toJson());
+  }
+
+  static getUser(id: any, users: any) {
+    return this.systemMessage.success(users.get(id).toJson());
+  }
+
+  static getAllUser(users: any) {
+    var populatedData = [];
+    for (const user of users.values()) {
+      populatedData.push(user.toJson());
+    }
+
+    return this.systemMessage.success(populatedData);
+  }
+
+  static overwriteUser(id: string, newUser: any, users: any) {
+    var user = new User(newUser);
+    user.id = id;
+    users.set(newUser.id, user);
+    return this.systemMessage.success(user.toJson());
+  }
+
+  static deleteUser(id: string, users: any) {
+    users.delete(id);
+    return this.systemMessage.success(103);
+  }
+
+  static loginUser(newUser: any, users: any) {
+    for (const user of users.values())
+      if (user.login(newUser.email, newUser.password))
+        return this.systemMessage.success(user.toJson());
+
+    throw this.systemMessage.error(505);
+  }
+
+  static searchInUser(query: any, users: any) {
+    var result: string[] = [];
+
+    for (const user of users.values())
+      if (user.searchTerm(query)) result.push(user.toJson());
+
+    if (!result.length) return this.systemMessage.error(result);
+
+    return this.systemMessage.success(result);
+  }
+
+  static populateDatabase(): Map<string, User> {
+    return Helper.populate();
+  }
 }

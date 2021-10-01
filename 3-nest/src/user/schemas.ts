@@ -5,8 +5,6 @@ EXISTING USERS [name,age,email,password]
 ['Ervin Howell', 21, 'shanna@melissa.tv', 'EH_123123')]
 ['Nathan Plains', 25, 'nathan@yesenia.net', 'NP_812415'],
 ['Patricia Lebsack', 18, 'patty@kory.org', 'PL_12345']
-
-
 USER_REGISTER_BODY
 {
 	"name": string,
@@ -14,22 +12,19 @@ USER_REGISTER_BODY
 	"email": string,
 	"password": string
 }
-
 USER_RETURN
 interface of CRUDReturn
 {
     success: boolean,
     data: //SPECIFIED IN ASSIGNMENT DOCUMENT
 }
-
 USER_DATA
 {
+      id: string
       name: string,
       age: number,
-      email: string,
-      password:string
+      email: string
 }
-
 LOGIN_SCHEMA
 {
     "email": string,

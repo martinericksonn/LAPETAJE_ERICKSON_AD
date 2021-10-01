@@ -10,20 +10,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
-const common_1 = require("@nestjs/common");
 const helper_1 = require("./helper");
-const verify_1 = require("./verify");
-const modify_1 = require("./modify");
+const common_1 = require("@nestjs/common");
 let UserService = class UserService {
     constructor() {
         this.users = new Map();
-        this.users = helper_1.Helper.populate();
+        this.users = helper_1.Process.populateDatabase();
     }
     register(newUser) {
         try {
-            verify_1.Verification.verifyCredentials(newUser, 'REGISTER');
-            verify_1.Verification.verifyEmail(newUser, this.users);
-            return modify_1.Process.registerUser(newUser, this.users);
+            helper_1.Verification.verifyCredentials(newUser, 'REGISTER');
+            helper_1.Verification.verifyAge(newUser);
+            helper_1.Verification.verifyEmail(newUser, this.users);
+            return helper_1.Process.registerUser(newUser, this.users);
         }
         catch (error) {
             return error;
@@ -31,22 +30,23 @@ let UserService = class UserService {
     }
     getUser(id) {
         try {
-            verify_1.Verification.verifyID(id, this.users);
-            return modify_1.Process.getUser(id, this.users);
+            helper_1.Verification.verifyID(id, this.users);
+            return helper_1.Process.getUser(id, this.users);
         }
         catch (error) {
             return error;
         }
     }
     getAllUser() {
-        return modify_1.Process.getAllUser(this.users);
+        return helper_1.Process.getAllUser(this.users);
     }
     putUser(id, user) {
         try {
-            verify_1.Verification.verifyCredentials(user, 'REGISTER');
-            verify_1.Verification.verifyID(id, this.users);
-            verify_1.Verification.verifyEmail(user, this.users, id);
-            return modify_1.Process.overwriteUser(id, user, this.users);
+            helper_1.Verification.verifyCredentials(user, 'REGISTER');
+            helper_1.Verification.verifyAge(user);
+            helper_1.Verification.verifyID(id, this.users);
+            helper_1.Verification.verifyEmail(user, this.users, id);
+            return helper_1.Process.overwriteUser(id, user, this.users);
         }
         catch (error) {
             return error;
@@ -54,10 +54,11 @@ let UserService = class UserService {
     }
     patchUser(id, user) {
         try {
-            verify_1.Verification.verifyCredentials(user, 'PATCH');
-            verify_1.Verification.verifyID(id, this.users);
-            verify_1.Verification.verifyEmail(user, this.users, id);
-            return modify_1.Process.updateUser(id, user, this.users);
+            helper_1.Verification.verifyCredentials(user, 'PATCH');
+            helper_1.Verification.verifyAge(user);
+            helper_1.Verification.verifyID(id, this.users);
+            helper_1.Verification.verifyEmail(user, this.users, id);
+            return helper_1.Process.updateUser(id, user, this.users);
         }
         catch (error) {
             return error;
@@ -65,8 +66,8 @@ let UserService = class UserService {
     }
     deleteUser(id) {
         try {
-            verify_1.Verification.verifyID(id, this.users);
-            return modify_1.Process.deleteUser(id, this.users);
+            helper_1.Verification.verifyID(id, this.users);
+            return helper_1.Process.deleteUser(id, this.users);
         }
         catch (error) {
             return error;
@@ -74,8 +75,8 @@ let UserService = class UserService {
     }
     userLogin(newUser) {
         try {
-            verify_1.Verification.verifyCredentials(newUser, 'LOGIN');
-            return modify_1.Process.loginUser(newUser, this.users);
+            helper_1.Verification.verifyCredentials(newUser, 'LOGIN');
+            return helper_1.Process.loginUser(newUser, this.users);
         }
         catch (error) {
             return error;
@@ -83,7 +84,7 @@ let UserService = class UserService {
     }
     searchTerm(query) {
         try {
-            return modify_1.Process.searchInUser(query, this.users);
+            return helper_1.Process.searchInUser(query, this.users);
         }
         catch (error) {
             return error;

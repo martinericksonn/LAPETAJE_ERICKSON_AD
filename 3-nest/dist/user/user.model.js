@@ -12,7 +12,7 @@ class User {
             this.password = password;
             return;
         }
-        this.id = user.id;
+        this.id = helper_1.Helper.generateUID();
         this.name = user.name.trim();
         this.age = user.age;
         this.email = user.email.trim();
@@ -81,6 +81,8 @@ class SystemMessage {
                 return "Sorry we couldn't find any results";
             case 508:
                 return 'Sorry this email is not a valid email';
+            case 509:
+                return 'Sorry this age is not a valid age';
             default:
                 return 'Unknown request';
         }
@@ -88,32 +90,29 @@ class SystemMessage {
     custom(data) {
         return data;
     }
-    success(code, data) {
-        if (data) {
+    success(code) {
+        if (isNaN(code)) {
             this.isSuccess = true;
-            this.message = this.systemMessage(code);
-            this.data = data;
-            return this.toJsonWithMessage();
+            this.data = code;
+            return this.toJson();
         }
         this.isSuccess = true;
         this.data = this.systemMessage(code);
         return this.toJson();
     }
     error(code) {
+        if (!isNaN(code)) {
+            this.isSuccess = false;
+            this.data = code;
+            return this.toJson();
+        }
         this.isSuccess = false;
-        this.message = this.systemMessage(code);
+        this.data = this.systemMessage(code);
         return this.toJson();
     }
     toJson() {
         return {
             success: this.isSuccess,
-            message: this.message,
-        };
-    }
-    toJsonWithMessage() {
-        return {
-            success: this.isSuccess,
-            message: this.message,
             data: this.data,
         };
     }

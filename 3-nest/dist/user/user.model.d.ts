@@ -20,12 +20,10 @@ export declare class User {
 }
 export declare class SystemMessage {
     private isSuccess;
-    private message;
     private data;
     private systemMessage;
     custom(data: any): any;
-    success(code: number, data?: any): any;
-    error(code: number): any;
+    success(code: number | any): any;
+    error(code: number | any): any;
     private toJson;
-    private toJsonWithMessage;
 }

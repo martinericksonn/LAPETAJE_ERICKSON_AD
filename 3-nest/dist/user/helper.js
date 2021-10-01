@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Helper = void 0;
+exports.Process = exports.Verification = exports.Helper = void 0;
 const user_model_1 = require("./user.model");
 const uuid_1 = require("uuid");
 class Helper {
@@ -57,13 +57,127 @@ class Helper {
             }
             if (typeof body[key] != types.get(key)) {
                 throw this.systemMessage.custom({
-                    valid: false,
+                    success: false,
                     data: `${key} is not a valid attribute`,
                 });
             }
         }
     }
+    static validBodyPut(body) {
+        var systemMessage = new user_model_1.SystemMessage();
+        var keys = Helper.describeClassUser();
+        keys = Helper.removeItemOnce(keys, 'id');
+        for (const key of Object.keys(body)) {
+            if (keys.includes(`${key}`)) {
+                keys = Helper.removeItemOnce(keys, key);
+            }
+        }
+        if (keys.length > 0) {
+            throw this.systemMessage.custom({
+                success: false,
+                data: `Payload is missing ${keys}`,
+            });
+        }
+        return this.systemMessage.custom({ success: true, data: null });
+    }
 }
 exports.Helper = Helper;
 Helper.systemMessage = new user_model_1.SystemMessage();
+class Verification {
+    static verifyCredentials(newUser, option) {
+        switch (option.toUpperCase()) {
+            case 'LOGIN':
+                if (!(newUser.email && newUser.password))
+                    throw this.systemMessage.error(502);
+                break;
+            case 'REGISTER':
+                Helper.validBody(newUser);
+                Helper.validBodyPut(newUser);
+                break;
+            case 'PATCH':
+                Helper.validBody(newUser);
+                break;
+        }
+    }
+    static verifyEmail(newUser, users, id) {
+        if (!newUser.email)
+            return;
+        if (!(newUser.email.trim() && newUser.email.includes('@')))
+            throw this.systemMessage.error(508);
+        if (id) {
+            for (const user of users.values()) {
+                if (user.verifyEmail(newUser.email.trim()) && !user.verifyID(id))
+                    throw this.systemMessage.error(503);
+            }
+            return;
+        }
+        for (const user of users.values())
+            if (user.verifyEmail(newUser.email.trim()))
+                throw this.systemMessage.error(503);
+    }
+    static verifyAge(newUser) {
+        if (!newUser.age)
+            return;
+        if (newUser.age < 0)
+            throw this.systemMessage.error(509);
+    }
+    static verifyID(id, users) {
+        if (!users.has(id))
+            throw this.systemMessage.error(506);
+    }
+}
+exports.Verification = Verification;
+Verification.systemMessage = new user_model_1.SystemMessage();
+class Process {
+    static updateUser(id, user, users) {
+        var newUser = users.get(id);
+        newUser.replaceValues(user);
+        return this.systemMessage.success(newUser.toJson());
+    }
+    static registerUser(newUser, users) {
+        var user = new user_model_1.User(newUser);
+        users.set(user.id, user);
+        return this.systemMessage.success(user.toJson());
+    }
+    static getUser(id, users) {
+        return this.systemMessage.success(users.get(id).toJson());
+    }
+    static getAllUser(users) {
+        var populatedData = [];
+        for (const user of users.values()) {
+            populatedData.push(user.toJson());
+        }
+        return this.systemMessage.success(populatedData);
+    }
+    static overwriteUser(id, newUser, users) {
+        var user = new user_model_1.User(newUser);
+        user.id = id;
+        users.set(newUser.id, user);
+        return this.systemMessage.success(user.toJson());
+    }
+    static deleteUser(id, users) {
+        users.delete(id);
+        return this.systemMessage.success(103);
+    }
+    static loginUser(newUser, users) {
+        for (const user of users.values())
+            if (user.login(newUser.email, newUser.password))
+                return this.systemMessage.success(user.toJson());
+        throw this.systemMessage.error(505);
+    }
+    static searchInUser(query, users) {
+        var result = [];
+        for (const user of users.values())
+            if (user.searchTerm(query))
+                result.push(user.toJson());
+        if (!result.length)
+            return this.systemMessage.error(result);
+        return this.systemMessage.success(result);
+    }
+    static populateDatabase() {
+        return Helper.populate();
+    }
+}
+exports.Process = Process;
+Process.systemMessage = new user_model_1.SystemMessage();
 //# sourceMappingURL=helper.js.map

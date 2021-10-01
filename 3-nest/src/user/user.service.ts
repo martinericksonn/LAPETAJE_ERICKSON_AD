@@ -1,21 +1,20 @@
+import { Process, Verification } from './helper';
+import { CRUDReturn } from './crud_return.interface';
 import { Injectable } from '@nestjs/common';
 import { User } from './user.model';
-import { Helper } from './helper';
-import { Verification } from './verify';
-import { Process } from './modify';
-import { CRUDReturn } from './crud_return.interface';
+
 @Injectable()
 export class UserService {
   private users = new Map<string, User>();
 
   constructor() {
-    this.users = Helper.populate();
-    // console.log('length ' + this.users.size);
+    this.users = Process.populateDatabase();
   }
 
   register(newUser: any): CRUDReturn {
     try {
       Verification.verifyCredentials(newUser, 'REGISTER');
+      Verification.verifyAge(newUser);
       Verification.verifyEmail(newUser, this.users);
 
       return Process.registerUser(newUser, this.users);
@@ -24,7 +23,7 @@ export class UserService {
     }
   }
 
-  getUser(id: string) {
+  getUser(id: string): CRUDReturn {
     try {
       Verification.verifyID(id, this.users);
 
@@ -34,13 +33,14 @@ export class UserService {
     }
   }
 
-  getAllUser(): any {
+  getAllUser(): CRUDReturn {
     return Process.getAllUser(this.users);
   }
 
-  putUser(id: string, user: any) {
+  putUser(id: string, user: any): CRUDReturn {
     try {
       Verification.verifyCredentials(user, 'REGISTER');
+      Verification.verifyAge(user);
       Verification.verifyID(id, this.users);
       Verification.verifyEmail(user, this.users, id);
 
@@ -50,9 +50,10 @@ export class UserService {
     }
   }
 
-  patchUser(id: string, user: any) {
+  patchUser(id: string, user: any): CRUDReturn {
     try {
       Verification.verifyCredentials(user, 'PATCH');
+      Verification.verifyAge(user);
       Verification.verifyID(id, this.users);
       Verification.verifyEmail(user, this.users, id);
 
@@ -62,7 +63,7 @@ export class UserService {
     }
   }
 
-  deleteUser(id: string): any {
+  deleteUser(id: string): CRUDReturn {
     try {
       Verification.verifyID(id, this.users);
 
@@ -72,7 +73,7 @@ export class UserService {
     }
   }
 
-  userLogin(newUser: any) {
+  userLogin(newUser: any): CRUDReturn {
     try {
       Verification.verifyCredentials(newUser, 'LOGIN');
 
@@ -82,7 +83,7 @@ export class UserService {
     }
   }
 
-  searchTerm(query: any) {
+  searchTerm(query: any): CRUDReturn | String[] {
     try {
       return Process.searchInUser(query, this.users);
     } catch (error) {

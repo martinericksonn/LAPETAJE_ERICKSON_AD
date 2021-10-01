@@ -3,11 +3,11 @@ export declare class UserService {
     private users;
     constructor();
     register(newUser: any): CRUDReturn;
-    getUser(id: string): any;
-    getAllUser(): any;
-    putUser(id: string, user: any): any;
-    patchUser(id: string, user: any): any;
-    deleteUser(id: string): any;
-    userLogin(newUser: any): any;
-    searchTerm(query: any): any;
+    getUser(id: string): CRUDReturn;
+    getAllUser(): CRUDReturn;
+    putUser(id: string, user: any): CRUDReturn;
+    patchUser(id: string, user: any): CRUDReturn;
+    deleteUser(id: string): CRUDReturn;
+    userLogin(newUser: any): CRUDReturn;
+    searchTerm(query: any): CRUDReturn | String[];
 }

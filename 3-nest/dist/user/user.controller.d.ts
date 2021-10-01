@@ -3,11 +3,11 @@ export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
     register(body: any): import("./crud_return.interface").CRUDReturn;
-    getAll(): any;
-    getUser(id: string): any;
-    putUser(id: string, body: any): any;
-    patchUser(id: string, body: any): any;
-    deleteUser(id: string): any;
-    userLogin(body: any): any;
-    searchTerm(term: string): any;
+    getAll(): import("./crud_return.interface").CRUDReturn;
+    getUser(id: string): import("./crud_return.interface").CRUDReturn;
+    putUser(id: string, body: any): import("./crud_return.interface").CRUDReturn;
+    patchUser(id: string, body: any): import("./crud_return.interface").CRUDReturn;
+    deleteUser(id: string): import("./crud_return.interface").CRUDReturn;
+    userLogin(body: any): import("./crud_return.interface").CRUDReturn;
+    searchTerm(term: string): import("./crud_return.interface").CRUDReturn | String[];
 }

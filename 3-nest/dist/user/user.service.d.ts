@@ -1,20 +1,13 @@
+import { CRUDReturn } from './crud_return.interface';
 export declare class UserService {
     private users;
-    private systemMessage;
-    private idNumber;
-    private generateID;
-    private isCredentialsComplete;
-    private isEmailValid;
-    private isIdExist;
-    private isEmailExist;
-    register(user: any): any;
-    getUser(id: number): any;
-    getAllUser(): any;
-    putUser(id: number, user: any): any;
-    testa(): boolean;
-    testb(): boolean;
-    patchUser(id: number, user: any): any;
-    deleteUser(id: number): any;
-    userLogin(newUser: any): any;
-    searchTerm(term: any): any;
+    constructor();
+    register(newUser: any): CRUDReturn;
+    getUser(id: string): CRUDReturn;
+    getAllUser(): CRUDReturn;
+    putUser(id: string, user: any): CRUDReturn;
+    patchUser(id: string, user: any): CRUDReturn;
+    deleteUser(id: string): CRUDReturn;
+    userLogin(newUser: any): CRUDReturn;
+    searchTerm(query: any): CRUDReturn | String[];
 }

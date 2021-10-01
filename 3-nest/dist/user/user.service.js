@@ -5,117 +5,95 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
+const helper_1 = require("./helper");
 const common_1 = require("@nestjs/common");
-const user_model_1 = require("./user.model");
 let UserService = class UserService {
     constructor() {
         this.users = new Map();
-        this.systemMessage = new user_model_1.SystemMessage();
-        this.idNumber = 0;
+        this.users = helper_1.Process.populateDatabase();
     }
-    generateID() {
-        return 20000 + (this.idNumber += 10);
-    }
-    isCredentialsComplete(user, option) {
-        switch (option.toUpperCase()) {
-            case "REGISTER": return user.name && user.age && user.email && user.password;
-            case "LOGIN": return user.email && user.password;
+    register(newUser) {
+        try {
+            helper_1.Verification.verifyCredentials(newUser, 'REGISTER');
+            helper_1.Verification.verifyAge(newUser);
+            helper_1.Verification.verifyEmail(newUser, this.users);
+            return helper_1.Process.registerUser(newUser, this.users);
+        }
+        catch (error) {
+            return error;
         }
     }
-    isEmailValid(newUser) {
-        return newUser.email.trim() ? newUser.email.includes("@") : false;
-    }
-    isIdExist(id) {
-        return this.users.has(id);
-    }
-    isEmailExist(newUser) {
-        for (const user of this.users.values())
-            if (user.verifyEmail(newUser.email.trim()) && !user.verifyID(newUser.id))
-                return true;
-        return false;
-    }
-    register(user) {
-        if (!this.isCredentialsComplete(user, "REGISTER"))
-            return this.systemMessage.error(502);
-        if (!this.isEmailValid(user))
-            return this.systemMessage.error(508);
-        if (this.isEmailExist(user))
-            return this.systemMessage.error(503);
-        user.id = this.generateID();
-        this.users.set(user.id, new user_model_1.User(user));
-        return this.systemMessage.success(101);
-    }
     getUser(id) {
-        if (!this.isIdExist(id))
-            return this.systemMessage.error(506);
-        return this.users.get(id).toJson();
+        try {
+            helper_1.Verification.verifyID(id, this.users);
+            return helper_1.Process.getUser(id, this.users);
+        }
+        catch (error) {
+            return error;
+        }
     }
     getAllUser() {
-        var populatedData = [];
-        for (const user of this.users.values())
-            populatedData.push(user.toJson());
-        return populatedData;
+        return helper_1.Process.getAllUser(this.users);
     }
     putUser(id, user) {
-        user.id = id;
-        if (!this.isCredentialsComplete(user, "REGISTER"))
-            return this.systemMessage.error(502);
-        if (!this.isIdExist(id))
-            return this.systemMessage.error(506);
-        if (!this.isEmailValid(user))
-            return this.systemMessage.error(508);
-        if (this.isEmailExist(user))
-            return this.systemMessage.error(504);
-        this.users.set(user.id, new user_model_1.User(user));
-        return this.systemMessage.success(102);
-    }
-    testa() {
-        console.log("yoyoyo");
-        return true;
-    }
-    testb() {
-        return false;
+        try {
+            helper_1.Verification.verifyCredentials(user, 'REGISTER');
+            helper_1.Verification.verifyAge(user);
+            helper_1.Verification.verifyID(id, this.users);
+            helper_1.Verification.verifyEmail(user, this.users, id);
+            return helper_1.Process.overwriteUser(id, user, this.users);
+        }
+        catch (error) {
+            return error;
+        }
     }
     patchUser(id, user) {
-        user.id = id;
-        if (!this.isIdExist(id))
-            return this.systemMessage.error(506);
-        if (user.email && !this.isEmailValid(user))
-            return this.systemMessage.error(508);
-        if (user.email && this.isEmailExist(user))
-            return this.systemMessage.error(504);
-        this.users.get(id).modifyUser(user);
-        return this.systemMessage.success(102);
+        try {
+            helper_1.Verification.verifyCredentials(user, 'PATCH');
+            helper_1.Verification.verifyAge(user);
+            helper_1.Verification.verifyID(id, this.users);
+            helper_1.Verification.verifyEmail(user, this.users, id);
+            return helper_1.Process.updateUser(id, user, this.users);
+        }
+        catch (error) {
+            return error;
+        }
     }
     deleteUser(id) {
-        if (!this.isIdExist(id))
-            return this.systemMessage.error(506);
-        this.users.delete(id);
-        return this.systemMessage.success(103);
+        try {
+            helper_1.Verification.verifyID(id, this.users);
+            return helper_1.Process.deleteUser(id, this.users);
+        }
+        catch (error) {
+            return error;
+        }
     }
     userLogin(newUser) {
-        if (!this.isCredentialsComplete(newUser, "LOGIN"))
-            return this.systemMessage.error(502);
-        for (const user of this.users.values())
-            if (user.login(newUser.email, newUser.password))
-                return this.systemMessage.success(104);
-        return this.systemMessage.error(505);
+        try {
+            helper_1.Verification.verifyCredentials(newUser, 'LOGIN');
+            return helper_1.Process.loginUser(newUser, this.users);
+        }
+        catch (error) {
+            return error;
+        }
     }
-    searchTerm(term) {
-        var resultData = [];
-        for (const user of this.users.values())
-            if (user.searchTerm(term))
-                resultData.push(user.toJson());
-        if (!resultData.length)
-            return this.systemMessage.error(507);
-        resultData.unshift({ keyword: term, result: resultData.length });
-        return resultData;
+    searchTerm(query) {
+        try {
+            return helper_1.Process.searchInUser(query, this.users);
+        }
+        catch (error) {
+            return error;
+        }
     }
 };
 UserService = __decorate([
-    (0, common_1.Injectable)()
+    (0, common_1.Injectable)(),
+    __metadata("design:paramtypes", [])
 ], UserService);
 exports.UserService = UserService;
 //# sourceMappingURL=user.service.js.map

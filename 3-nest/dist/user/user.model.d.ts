@@ -1,29 +1,29 @@
 export declare class User {
-    private id;
+    id: string;
     private name;
     private age;
     private email;
     private password;
-    constructor(user: any);
+    constructor(user: any | string, age?: number, email?: string, password?: string);
     searchTerm(term: any): boolean;
     verifyEmail(email: string): boolean;
-    verifyID(id: number): boolean;
-    modifyUser(user: any): void;
+    verifyID(id: string): boolean;
+    replaceValues(user: any): void;
     login(email: string, password: string): boolean;
     log(): void;
     toJson(): {
-        id: number;
+        id: string;
         name: string;
         age: number;
         email: string;
     };
 }
 export declare class SystemMessage {
-    private status;
-    private statusCode;
-    private message;
+    private isSuccess;
+    private data;
     private systemMessage;
-    success(code: number): any;
-    error(code: number): any;
+    custom(data: any): any;
+    success(code: number | any): any;
+    error(code: number | any): any;
     private toJson;
 }

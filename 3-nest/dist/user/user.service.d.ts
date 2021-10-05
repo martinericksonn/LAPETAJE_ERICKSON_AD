@@ -1,7 +1,6 @@
-import { CRUDReturn } from './crud_return.interface';
+import { CRUDReturn } from '../user.resource/crud_return.interface';
 export declare class UserService {
     private users;
-    private DB;
     constructor();
     register(newUser: any): CRUDReturn;
     getUser(id: string): CRUDReturn;

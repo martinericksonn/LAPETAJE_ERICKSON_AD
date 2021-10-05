@@ -10,13 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
-const helper_1 = require("./helper");
+const helper_1 = require("../user.resource/helper");
 const common_1 = require("@nestjs/common");
+const firebase_database_1 = require("../user.resource/firebase.database");
 let UserService = class UserService {
     constructor() {
         this.users = new Map();
-        this.DB = admin.firebase();
-        this.users = helper_1.Process.populateDatabase();
     }
     register(newUser) {
         try {

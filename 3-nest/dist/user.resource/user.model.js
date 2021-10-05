@@ -12,13 +12,14 @@ class User {
             this.age = age;
             this.email = email;
             this.password = password;
-            return;
         }
-        this.id = helper_1.Helper.generateUID();
-        this.name = user.name.trim();
-        this.age = user.age;
-        this.email = user.email.trim();
-        this.password = user.password.trim();
+        else {
+            this.id = helper_1.Helper.generateUID();
+            this.name = user.name.trim();
+            this.age = user.age;
+            this.email = user.email.trim();
+            this.password = user.password.trim();
+        }
     }
     searchTerm(term) {
         for (var attributename in this) {
@@ -93,6 +94,7 @@ class SystemMessage {
         return data;
     }
     success(code) {
+        console.log(isNaN(code));
         if (isNaN(code)) {
             this.isSuccess = true;
             this.data = code;
@@ -103,7 +105,7 @@ class SystemMessage {
         return this.toJson();
     }
     error(code) {
-        if (!isNaN(code)) {
+        if (isNaN(code)) {
             this.isSuccess = false;
             this.data = code;
             return this.toJson();

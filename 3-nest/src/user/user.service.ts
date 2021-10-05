@@ -1,17 +1,16 @@
-import  *  from 'firebase/app';
-
-import { Process, Verification } from './helper';
-import { CRUDReturn } from './crud_return.interface';
+import * as firebase from 'firebase/app';
+import { Process, Verification } from '../user.resource/helper';
+import { CRUDReturn } from '../user.resource/crud_return.interface';
 import { Injectable } from '@nestjs/common';
-import { User } from './user.model';
+import { User } from '../user.resource/user.model';
+import { Database } from 'src/user.resource/firebase.database';
 
 @Injectable()
 export class UserService {
   private users = new Map<string, User>();
-  private DB = admin.firebase();
 
   constructor() {
-    this.users = Process.populateDatabase();
+    //this.users = Process.populateDatabase();
   }
 
   register(newUser: any): CRUDReturn {

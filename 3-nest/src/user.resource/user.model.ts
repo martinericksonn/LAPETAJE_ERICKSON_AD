@@ -1,22 +1,24 @@
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
-import { Helper } from './helper'
-import  *  from 'firebase/app';
+import { Helper } from './helper';
+// You don't need to import firebase/app either since it's being imported above
+import 'firebase/auth';
+import 'firebase/firestore';
+import { Database } from './firebase.database';
 
 export class User {
-
   public id: string;
   private name: string;
   private age: number;
   private email: string;
   private password: string;
 
-static async retrieve(id:string):Promise<User>{
-  try{
+  // static async retrieve(id:string):Promise<User>{
+  //   try{
 
-  }catch(){
+  //   }catch(){
 
-  }
-}
+  //   }
+  // }
   constructor(
     user: any | string,
     age?: number,
@@ -26,16 +28,18 @@ static async retrieve(id:string):Promise<User>{
     if (typeof user === 'string') {
       this.id = Helper.generateUID();
       this.name = user;
-      this.age = age; 
+      this.age = age;
       this.email = email;
+
       this.password = password;
-      return;
+    } else {
+      this.id = Helper.generateUID();
+      this.name = user.name.trim();
+      this.age = user.age;
+      this.email = user.email.trim();
+      this.password = user.password.trim();
     }
-    this.id = Helper.generateUID();
-    this.name = user.name.trim();
-    this.age = user.age;
-    this.email = user.email.trim();
-    this.password = user.password.trim();
+    // ConnectDatabase.commit(this.id, this);
   }
 
   // }
@@ -130,6 +134,8 @@ export class SystemMessage {
   }
 
   success(code: number | any): any {
+    console.log(isNaN(code));
+
     if (isNaN(code)) {
       this.isSuccess = true;
       this.data = code;
@@ -142,7 +148,7 @@ export class SystemMessage {
   }
 
   error(code: number | any): any {
-    if (!isNaN(code)) {
+    if (isNaN(code)) {
       this.isSuccess = false;
       this.data = code;
       return this.toJson();

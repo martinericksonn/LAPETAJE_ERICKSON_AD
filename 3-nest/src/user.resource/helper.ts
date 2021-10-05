@@ -1,5 +1,6 @@
 import { User, SystemMessage } from './user.model';
 import { v4 as uid } from 'uuid';
+import { Database } from './firebase.database';
 
 export class Helper {
   private static systemMessage = new SystemMessage();
@@ -116,7 +117,7 @@ export class Verification {
 
   static verifyEmail(newUser: any, users?: any, id?: string) {
     if (!newUser.email) return;
-    
+
     if (!(newUser.email.trim() && newUser.email.includes('@')))
       throw this.systemMessage.error(508);
 
@@ -148,15 +149,16 @@ export class Process {
 
   static updateUser(id: string, user: any, users: any) {
     var newUser = users.get(id);
-
     newUser.replaceValues(user);
+
     return this.systemMessage.success(newUser.toJson());
   }
 
   static registerUser(newUser: any, users: any) {
     var user = new User(newUser);
-
     users.set(user.id, user);
+
+    Database.commit(user.id, user);
     return this.systemMessage.success(user.toJson());
   }
 
@@ -177,6 +179,7 @@ export class Process {
     var user = new User(newUser);
     user.id = id;
     users.set(newUser.id, user);
+
     return this.systemMessage.success(user.toJson());
   }
 

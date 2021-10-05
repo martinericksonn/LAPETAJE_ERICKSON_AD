@@ -1,9 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.bootstrap = void 0;
+const app_module_1 = require("./user.resource/app.module");
 const core_1 = require("@nestjs/core");
-const app_module_1 = require("./app.module");
-'firebase-admin';
 async function bootstrap() {
+    var admin = require('firebase-admin');
+    var serviceAccount = require('../../my-key.json');
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+    });
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.enableCors({
         origin: true,
@@ -12,5 +17,6 @@ async function bootstrap() {
     });
     await app.listen(3000);
 }
+exports.bootstrap = bootstrap;
 bootstrap();
 //# sourceMappingURL=main.js.map

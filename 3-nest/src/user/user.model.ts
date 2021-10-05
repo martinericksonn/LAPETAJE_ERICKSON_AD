@@ -1,13 +1,22 @@
 import { AnyFilesInterceptor } from '@nestjs/platform-express';
-import { Helper } from './helper';
+import { Helper } from './helper'
+import  *  from 'firebase/app';
 
 export class User {
+
   public id: string;
   private name: string;
   private age: number;
   private email: string;
   private password: string;
 
+static async retrieve(id:string):Promise<User>{
+  try{
+
+  }catch(){
+
+  }
+}
   constructor(
     user: any | string,
     age?: number,
@@ -17,7 +26,7 @@ export class User {
     if (typeof user === 'string') {
       this.id = Helper.generateUID();
       this.name = user;
-      this.age = age;
+      this.age = age; 
       this.email = email;
       this.password = password;
       return;

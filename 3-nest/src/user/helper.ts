@@ -116,6 +116,7 @@ export class Verification {
 
   static verifyEmail(newUser: any, users?: any, id?: string) {
     if (!newUser.email) return;
+    
     if (!(newUser.email.trim() && newUser.email.includes('@')))
       throw this.systemMessage.error(508);
 
@@ -199,7 +200,6 @@ export class Process {
       if (user.searchTerm(query)) result.push(user.toJson());
 
     if (!result.length) return this.systemMessage.error(result);
-
     return this.systemMessage.success(result);
   }
 

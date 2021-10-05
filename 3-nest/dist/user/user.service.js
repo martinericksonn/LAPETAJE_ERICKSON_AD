@@ -15,6 +15,7 @@ const common_1 = require("@nestjs/common");
 let UserService = class UserService {
     constructor() {
         this.users = new Map();
+        this.DB = admin.firebase();
         this.users = helper_1.Process.populateDatabase();
     }
     register(newUser) {

@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@types/passport": "^1.0.7"
+    "@types/passport": "^1.0.7",
+    "firebase-admin": "^9.12.0"
   }
 }

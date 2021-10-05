@@ -1,3 +1,5 @@
+import  *  from 'firebase/app';
+
 import { Process, Verification } from './helper';
 import { CRUDReturn } from './crud_return.interface';
 import { Injectable } from '@nestjs/common';
@@ -6,6 +8,7 @@ import { User } from './user.model';
 @Injectable()
 export class UserService {
   private users = new Map<string, User>();
+  private DB = admin.firebase();
 
   constructor() {
     this.users = Process.populateDatabase();

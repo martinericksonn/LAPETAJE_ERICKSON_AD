@@ -5,14 +5,14 @@ import { SystemMessage, User } from './user.model';
 import { collection, query, where } from 'firebase/firestore';
 
 const admin = require('firebase-admin');
-const db = admin.firestore();
 
 export class Database {
+  static db = admin.firestore();
   static async commit(id: string, user: User): Promise<CRUDReturn> {
     var systemMessage = new SystemMessage();
 
     try {
-      await db.collection('users').doc(user.id).set(user.toJson());
+      await Database.db.collection('users').doc(user.id).set(user.toJson());
 
       return systemMessage.success(user.toJson());
     } catch (error) {
@@ -20,8 +20,8 @@ export class Database {
     }
   }
 }
-export class DatabaseQuerry {
-  verifyID(id: string) {
-    const usersref = collection(db, 'users');
-  }
-}
+// export class DatabaseQuerry {
+//   verifyID(id: string) {
+//     const usersref = collection(db, 'users');
+//   }
+// }

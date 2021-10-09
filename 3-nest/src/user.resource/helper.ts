@@ -1,6 +1,6 @@
 import { User, SystemMessage } from './user.model';
 import { v4 as uid } from 'uuid';
-import { Database } from './firebase.database';
+import { DatabaseQuery } from './firebase.database';
 
 export class Helper {
   private static systemMessage = new SystemMessage();
@@ -46,7 +46,6 @@ export class Helper {
       });
       return result;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }
@@ -139,8 +138,10 @@ export class Verification {
     if (newUser.age < 0) throw this.systemMessage.error(509);
   }
 
-  static verifyID(id: string, users: any) {
-    if (!users.has(id)) throw this.systemMessage.error(506);
+  static async verifyID(id: string) {
+    if (await DatabaseQuery.verifyID(id)) {
+      throw this.systemMessage.error(506);
+    }
   }
 }
 
@@ -158,8 +159,7 @@ export class Process {
     var user = new User(newUser);
     users.set(user.id, user);
 
-    Database.commit(user.id, user);
-    return this.systemMessage.success(user.toJson());
+    return DatabaseQuery.commit(user.id, user);
   }
 
   static getUser(id: any, users: any) {
@@ -183,9 +183,8 @@ export class Process {
     return this.systemMessage.success(user.toJson());
   }
 
-  static deleteUser(id: string, users: any) {
-    users.delete(id);
-    return this.systemMessage.success(103);
+  static deleteUser(id: string) {
+    return DatabaseQuery.delete(id);
   }
 
   static loginUser(newUser: any, users: any) {

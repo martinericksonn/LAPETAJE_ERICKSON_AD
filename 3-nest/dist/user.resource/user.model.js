@@ -32,9 +32,6 @@ class User {
     verifyEmail(email) {
         return email ? this.email.toLowerCase() == email.toLowerCase() : false;
     }
-    verifyID(id) {
-        return this.id == id;
-    }
     replaceValues(user) {
         for (var attributename in user) {
             this[attributename] = user[attributename];
@@ -94,7 +91,6 @@ class SystemMessage {
         return data;
     }
     success(code) {
-        console.log(isNaN(code));
         if (isNaN(code)) {
             this.isSuccess = true;
             this.data = code;

@@ -40,7 +40,6 @@ class Helper {
             return result;
         }
         catch (error) {
-            console.log(error);
             return null;
         }
     }
@@ -122,9 +121,10 @@ class Verification {
         if (newUser.age < 0)
             throw this.systemMessage.error(509);
     }
-    static verifyID(id, users) {
-        if (!users.has(id))
+    static async verifyID(id) {
+        if (await firebase_database_1.DatabaseQuery.verifyID(id)) {
             throw this.systemMessage.error(506);
+        }
     }
 }
 exports.Verification = Verification;
@@ -138,8 +138,7 @@ class Process {
     static registerUser(newUser, users) {
         var user = new user_model_1.User(newUser);
         users.set(user.id, user);
-        firebase_database_1.Database.commit(user.id, user);
-        return this.systemMessage.success(user.toJson());
+        return firebase_database_1.DatabaseQuery.commit(user.id, user);
     }
     static getUser(id, users) {
         return this.systemMessage.success(users.get(id).toJson());
@@ -157,9 +156,8 @@ class Process {
         users.set(newUser.id, user);
         return this.systemMessage.success(user.toJson());
     }
-    static deleteUser(id, users) {
-        users.delete(id);
-        return this.systemMessage.success(103);
+    static deleteUser(id) {
+        return firebase_database_1.DatabaseQuery.delete(id);
     }
     static loginUser(newUser, users) {
         for (const user of users.values())

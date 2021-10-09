@@ -3,7 +3,7 @@ import { Helper } from './helper';
 // You don't need to import firebase/app either since it's being imported above
 import 'firebase/auth';
 import 'firebase/firestore';
-import { Database } from './firebase.database';
+import { DatabaseQuery } from './firebase.database';
 
 export class User {
   public id: string;
@@ -57,10 +57,6 @@ export class User {
 
   verifyEmail(email: string): boolean {
     return email ? this.email.toLowerCase() == email.toLowerCase() : false;
-  }
-
-  verifyID(id: string): boolean {
-    return this.id == id;
   }
 
   replaceValues(user: any) {
@@ -134,8 +130,6 @@ export class SystemMessage {
   }
 
   success(code: number | any): any {
-    console.log(isNaN(code));
-
     if (isNaN(code)) {
       this.isSuccess = true;
       this.data = code;

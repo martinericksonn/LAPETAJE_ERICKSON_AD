@@ -19,6 +19,7 @@ export class Helper {
 
     return array;
   }
+
   static generateUID(): string {
     return uid().toString().replace(/-/g, '').substring(0, 27);
   }
@@ -74,7 +75,6 @@ export class Helper {
   }
 
   static validBodyPut(body: any): { success: boolean; data: string } {
-    var systemMessage = new SystemMessage();
     var keys: Array<string> = Helper.describeClassUser();
 
     keys = Helper.removeItemOnce(keys, 'id');
@@ -114,23 +114,14 @@ export class Verification {
     }
   }
 
-  static verifyEmail(newUser: any, users?: any, id?: string) {
+  static async verifyEmail(newUser: any, users?: any, id?: string) {
     if (!newUser.email) return;
 
     if (!(newUser.email.trim() && newUser.email.includes('@')))
       throw this.systemMessage.error(508);
 
-    if (id) {
-      for (const user of users.values()) {
-        if (user.verifyEmail(newUser.email.trim()) && !user.verifyID(id))
-          throw this.systemMessage.error(503);
-      }
-      return;
-    }
-
-    for (const user of users.values())
-      if (user.verifyEmail(newUser.email.trim()))
-        throw this.systemMessage.error(503);
+    if (await DatabaseQuery.alreadyExistEmail(newUser.email, id))
+      throw this.systemMessage.error(504);
   }
 
   static verifyAge(newUser: any) {
@@ -139,7 +130,7 @@ export class Verification {
   }
 
   static async verifyID(id: string) {
-    if (await DatabaseQuery.verifyID(id)) {
+    if (await DatabaseQuery.hasID(id)) {
       throw this.systemMessage.error(506);
     }
   }
@@ -148,11 +139,8 @@ export class Verification {
 export class Process {
   private static systemMessage = new SystemMessage();
 
-  static updateUser(id: string, user: any, users: any) {
-    var newUser = users.get(id);
-    newUser.replaceValues(user);
-
-    return this.systemMessage.success(newUser.toJson());
+  static async updateUser(id: string, user: any, users: any) {
+    return await DatabaseQuery.updateValues(id, user);
   }
 
   static registerUser(newUser: any, users: any) {
@@ -175,12 +163,12 @@ export class Process {
     return this.systemMessage.success(populatedData);
   }
 
-  static overwriteUser(id: string, newUser: any, users: any) {
+  static async overwriteUser(id: string, newUser: any, users: any) {
     var user = new User(newUser);
     user.id = id;
-    users.set(newUser.id, user);
+    //users.set(newUser.id, user);
 
-    return this.systemMessage.success(user.toJson());
+    return await DatabaseQuery.replaceValues(id, user);
   }
 
   static deleteUser(id: string) {

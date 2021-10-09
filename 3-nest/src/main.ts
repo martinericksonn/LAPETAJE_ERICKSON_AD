@@ -4,6 +4,7 @@ import * as admin from 'firebase-admin';
 
 export async function bootstrap() {
   var admin = require('firebase-admin');
+
   var serviceAccount = require('../../my-key.json');
 
   admin.initializeApp({

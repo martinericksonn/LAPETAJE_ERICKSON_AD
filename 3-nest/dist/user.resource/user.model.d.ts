@@ -18,6 +18,13 @@ export declare class User {
         age: number;
         email: string;
     };
+    toJsonPass(): {
+        id: string;
+        name: string;
+        age: number;
+        email: string;
+        password: string;
+    };
 }
 export declare class SystemMessage {
     private isSuccess;

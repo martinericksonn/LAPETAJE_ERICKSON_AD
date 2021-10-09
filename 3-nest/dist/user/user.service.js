@@ -17,20 +17,20 @@ let UserService = class UserService {
     constructor() {
         this.users = new Map();
     }
-    register(newUser) {
+    async register(newUser) {
         try {
             helper_1.Verification.verifyCredentials(newUser, 'REGISTER');
             helper_1.Verification.verifyAge(newUser);
-            helper_1.Verification.verifyEmail(newUser, this.users);
+            await helper_1.Verification.verifyEmail(newUser, this.users);
             return helper_1.Process.registerUser(newUser, this.users);
         }
         catch (error) {
             return error;
         }
     }
-    getUser(id) {
+    async getUser(id) {
         try {
-            helper_1.Verification.verifyID(id);
+            await helper_1.Verification.verifyID(id);
             return helper_1.Process.getUser(id, this.users);
         }
         catch (error) {
@@ -40,25 +40,25 @@ let UserService = class UserService {
     getAllUser() {
         return helper_1.Process.getAllUser(this.users);
     }
-    putUser(id, user) {
+    async putUser(id, user) {
         try {
             helper_1.Verification.verifyCredentials(user, 'REGISTER');
             helper_1.Verification.verifyAge(user);
-            helper_1.Verification.verifyID(id);
-            helper_1.Verification.verifyEmail(user, this.users, id);
-            return helper_1.Process.overwriteUser(id, user, this.users);
+            await helper_1.Verification.verifyID(id);
+            await helper_1.Verification.verifyEmail(user, this.users, id);
+            return await helper_1.Process.overwriteUser(id, user, this.users);
         }
         catch (error) {
             return error;
         }
     }
-    patchUser(id, user) {
+    async patchUser(id, user) {
         try {
             helper_1.Verification.verifyCredentials(user, 'PATCH');
             helper_1.Verification.verifyAge(user);
-            helper_1.Verification.verifyID(id);
-            helper_1.Verification.verifyEmail(user, this.users, id);
-            return helper_1.Process.updateUser(id, user, this.users);
+            await helper_1.Verification.verifyID(id);
+            await helper_1.Verification.verifyEmail(user, this.users, id);
+            return await helper_1.Process.updateUser(id, user, this.users);
         }
         catch (error) {
             return error;

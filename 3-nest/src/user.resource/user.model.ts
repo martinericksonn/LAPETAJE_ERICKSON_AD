@@ -86,6 +86,16 @@ export class User {
       email: this.email,
     };
   }
+
+  toJsonPass() {
+    return {
+      id: this.id,
+      name: this.name,
+      age: this.age,
+      email: this.email,
+      password: this.password,
+    };
+  }
 }
 
 export class SystemMessage {

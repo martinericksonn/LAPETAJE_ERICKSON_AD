@@ -13,11 +13,11 @@ export class UserService {
     //this.users = Process.populateDatabase();
   }
 
-  register(newUser: any): Promise<CRUDReturn> {
+  async register(newUser: any): Promise<CRUDReturn> {
     try {
       Verification.verifyCredentials(newUser, 'REGISTER');
       Verification.verifyAge(newUser);
-      Verification.verifyEmail(newUser, this.users);
+      await Verification.verifyEmail(newUser, this.users);
 
       return Process.registerUser(newUser, this.users);
     } catch (error) {
@@ -25,9 +25,9 @@ export class UserService {
     }
   }
 
-  getUser(id: string): CRUDReturn {
+  async getUser(id: string): Promise<CRUDReturn> {
     try {
-      Verification.verifyID(id);
+      await Verification.verifyID(id);
 
       return Process.getUser(id, this.users);
     } catch (error) {
@@ -39,27 +39,27 @@ export class UserService {
     return Process.getAllUser(this.users);
   }
 
-  putUser(id: string, user: any): CRUDReturn {
+  async putUser(id: string, user: any): Promise<CRUDReturn> {
     try {
       Verification.verifyCredentials(user, 'REGISTER');
       Verification.verifyAge(user);
-      Verification.verifyID(id);
-      Verification.verifyEmail(user, this.users, id);
+      await Verification.verifyID(id);
+      await Verification.verifyEmail(user, this.users, id);
 
-      return Process.overwriteUser(id, user, this.users);
+      return await Process.overwriteUser(id, user, this.users);
     } catch (error) {
       return error;
     }
   }
 
-  patchUser(id: string, user: any): CRUDReturn {
+  async patchUser(id: string, user: any): Promise<CRUDReturn> {
     try {
       Verification.verifyCredentials(user, 'PATCH');
       Verification.verifyAge(user);
-      Verification.verifyID(id);
-      Verification.verifyEmail(user, this.users, id);
+      await Verification.verifyID(id);
+      await Verification.verifyEmail(user, this.users, id);
 
-      return Process.updateUser(id, user, this.users);
+      return await Process.updateUser(id, user, this.users);
     } catch (error) {
       return error;
     }

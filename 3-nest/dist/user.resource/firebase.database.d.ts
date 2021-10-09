@@ -5,5 +5,8 @@ import { User } from './user.model';
 export declare class DatabaseQuery {
     static commit(id: string, user: User): Promise<CRUDReturn>;
     static delete(id: string): Promise<CRUDReturn>;
-    static verifyID(id: string): Promise<boolean | any>;
+    static hasID(id: string): Promise<boolean | any>;
+    static alreadyExistEmail(email: string, id?: string): Promise<boolean | any>;
+    static replaceValues(id: string, user: User): Promise<any>;
+    static updateValues(id: string, user: User): Promise<any>;
 }

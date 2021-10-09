@@ -64,7 +64,6 @@ class Helper {
         }
     }
     static validBodyPut(body) {
-        var systemMessage = new user_model_1.SystemMessage();
         var keys = Helper.describeClassUser();
         keys = Helper.removeItemOnce(keys, 'id');
         for (const key of Object.keys(body)) {
@@ -99,21 +98,13 @@ class Verification {
                 break;
         }
     }
-    static verifyEmail(newUser, users, id) {
+    static async verifyEmail(newUser, users, id) {
         if (!newUser.email)
             return;
         if (!(newUser.email.trim() && newUser.email.includes('@')))
             throw this.systemMessage.error(508);
-        if (id) {
-            for (const user of users.values()) {
-                if (user.verifyEmail(newUser.email.trim()) && !user.verifyID(id))
-                    throw this.systemMessage.error(503);
-            }
-            return;
-        }
-        for (const user of users.values())
-            if (user.verifyEmail(newUser.email.trim()))
-                throw this.systemMessage.error(503);
+        if (await firebase_database_1.DatabaseQuery.alreadyExistEmail(newUser.email, id))
+            throw this.systemMessage.error(504);
     }
     static verifyAge(newUser) {
         if (!newUser.age)
@@ -122,7 +113,7 @@ class Verification {
             throw this.systemMessage.error(509);
     }
     static async verifyID(id) {
-        if (await firebase_database_1.DatabaseQuery.verifyID(id)) {
+        if (await firebase_database_1.DatabaseQuery.hasID(id)) {
             throw this.systemMessage.error(506);
         }
     }
@@ -130,10 +121,8 @@ class Verification {
 exports.Verification = Verification;
 Verification.systemMessage = new user_model_1.SystemMessage();
 class Process {
-    static updateUser(id, user, users) {
-        var newUser = users.get(id);
-        newUser.replaceValues(user);
-        return this.systemMessage.success(newUser.toJson());
+    static async updateUser(id, user, users) {
+        return await firebase_database_1.DatabaseQuery.updateValues(id, user);
     }
     static registerUser(newUser, users) {
         var user = new user_model_1.User(newUser);
@@ -150,11 +139,10 @@ class Process {
         }
         return this.systemMessage.success(populatedData);
     }
-    static overwriteUser(id, newUser, users) {
+    static async overwriteUser(id, newUser, users) {
         var user = new user_model_1.User(newUser);
         user.id = id;
-        users.set(newUser.id, user);
-        return this.systemMessage.success(user.toJson());
+        return await firebase_database_1.DatabaseQuery.replaceValues(id, user);
     }
     static deleteUser(id) {
         return firebase_database_1.DatabaseQuery.delete(id);

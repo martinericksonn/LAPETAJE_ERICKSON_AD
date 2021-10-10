@@ -1,75 +1,37 @@
-import { AnyFilesInterceptor } from '@nestjs/platform-express';
-import { Helper } from './helper'
-import  *  from 'firebase/app';
+import { Helper } from './helper';
+import 'firebase/auth';
+import 'firebase/firestore';
 
 export class User {
-
   public id: string;
   private name: string;
   private age: number;
   private email: string;
   private password: string;
 
-static async retrieve(id:string):Promise<User>{
-  try{
-
-  }catch(){
-
-  }
-}
   constructor(
     user: any | string,
     age?: number,
     email?: string,
     password?: string,
   ) {
+    if (user.id) {
+      this.id = user.id;
+    }
     if (typeof user === 'string') {
       this.id = Helper.generateUID();
       this.name = user;
-      this.age = age; 
+      this.age = age;
       this.email = email;
       this.password = password;
-      return;
+    } else {
+      this.id = user.id ? user.id : Helper.generateUID();
+      this.name = user.name.trim();
+      this.age = user.age;
+      this.email = user.email.trim();
+      this.password = user.password.trim();
     }
-    this.id = Helper.generateUID();
-    this.name = user.name.trim();
-    this.age = user.age;
-    this.email = user.email.trim();
-    this.password = user.password.trim();
-  }
-
-  // }
-
-  searchTerm(term: any): boolean {
-    for (var attributename in this) {
-      if (
-        attributename != 'password' &&
-        this[attributename] == term.trim().toLowerCase()
-      )
-        return true;
-    }
-    return false;
-  }
-
-  verifyEmail(email: string): boolean {
-    return email ? this.email.toLowerCase() == email.toLowerCase() : false;
-  }
-
-  verifyID(id: string): boolean {
-    return this.id == id;
-  }
-
-  replaceValues(user: any) {
-    for (var attributename in user) {
-      this[attributename] = user[attributename];
-    }
-  }
-
-  login(email: string, password: string): boolean {
-    return (
-      this.email.toLowerCase() == email.toLowerCase() &&
-      this.password == password
-    );
+    // ConnectDatabase.commit(this.id, this);
   }
 
   log() {
@@ -84,6 +46,16 @@ static async retrieve(id:string):Promise<User>{
       name: this.name,
       age: this.age,
       email: this.email,
+    };
+  }
+
+  toJsonPass() {
+    return {
+      id: this.id,
+      name: this.name,
+      age: this.age,
+      email: this.email,
+      password: this.password,
     };
   }
 }
@@ -120,6 +92,8 @@ export class SystemMessage {
         return 'Sorry this email is not a valid email';
       case 509:
         return 'Sorry this age is not a valid age';
+      case 509:
+        return 'No result found';
       default:
         return 'Unknown request';
     }
@@ -142,7 +116,7 @@ export class SystemMessage {
   }
 
   error(code: number | any): any {
-    if (!isNaN(code)) {
+    if (isNaN(code)) {
       this.isSuccess = false;
       this.data = code;
       return this.toJson();

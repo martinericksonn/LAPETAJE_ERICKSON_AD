@@ -6,42 +6,23 @@ require("firebase/auth");
 require("firebase/firestore");
 class User {
     constructor(user, age, email, password) {
+        if (user.id) {
+            this.id = user.id;
+        }
         if (typeof user === 'string') {
             this.id = helper_1.Helper.generateUID();
             this.name = user;
             this.age = age;
             this.email = email;
             this.password = password;
-            return;
         }
-        this.id = helper_1.Helper.generateUID();
-        this.name = user.name.trim();
-        this.age = user.age;
-        this.email = user.email.trim();
-        this.password = user.password.trim();
-    }
-    searchTerm(term) {
-        for (var attributename in this) {
-            if (attributename != 'password' &&
-                this[attributename] == term.trim().toLowerCase())
-                return true;
+        else {
+            this.id = user.id ? user.id : helper_1.Helper.generateUID();
+            this.name = user.name.trim();
+            this.age = user.age;
+            this.email = user.email.trim();
+            this.password = user.password.trim();
         }
-        return false;
-    }
-    verifyEmail(email) {
-        return email ? this.email.toLowerCase() == email.toLowerCase() : false;
-    }
-    verifyID(id) {
-        return this.id == id;
-    }
-    replaceValues(user) {
-        for (var attributename in user) {
-            this[attributename] = user[attributename];
-        }
-    }
-    login(email, password) {
-        return (this.email.toLowerCase() == email.toLowerCase() &&
-            this.password == password);
     }
     log() {
         console.log(`${this.id} ${this.name} ${this.age} ${this.email} ${this.password}`);
@@ -52,6 +33,15 @@ class User {
             name: this.name,
             age: this.age,
             email: this.email,
+        };
+    }
+    toJsonPass() {
+        return {
+            id: this.id,
+            name: this.name,
+            age: this.age,
+            email: this.email,
+            password: this.password,
         };
     }
 }
@@ -85,6 +75,8 @@ class SystemMessage {
                 return 'Sorry this email is not a valid email';
             case 509:
                 return 'Sorry this age is not a valid age';
+            case 509:
+                return 'No result found';
             default:
                 return 'Unknown request';
         }
@@ -103,7 +95,7 @@ class SystemMessage {
         return this.toJson();
     }
     error(code) {
-        if (!isNaN(code)) {
+        if (isNaN(code)) {
             this.isSuccess = false;
             this.data = code;
             return this.toJson();

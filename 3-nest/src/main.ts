@@ -1,16 +1,18 @@
+import { AppModule } from './user.resource/app.module';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import * as admin from 'firebase-admin';
 
-import * as firebase from 'firebase/app';
-// You don't need to import firebase/app either since it's being imported above
-import 'firebase/auth';
-import 'firebase/firestore';
-async function bootstrap() {
+export async function bootstrap() {
+  var admin = require('firebase-admin');
 
-admin.initializeApp({
-  credential: admin.credential.cert(DB_ CREDENTIALS),
-})   
+  var serviceAccount = require('../../my-key.json');
+
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
+
   const app = await NestFactory.create(AppModule);
+
   app.enableCors({
     origin: true,
     methods: 'GET,HEAD,PUT,PATCH,DELETE,OPTIONS',
@@ -18,4 +20,5 @@ admin.initializeApp({
   });
   await app.listen(3000);
 }
+
 bootstrap();

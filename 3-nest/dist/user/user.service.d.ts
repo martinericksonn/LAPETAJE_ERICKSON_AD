@@ -1,14 +1,12 @@
-import { CRUDReturn } from './crud_return.interface';
+import { CRUDReturn } from '../user.resource/crud_return.interface';
 export declare class UserService {
-    private users;
-    private DB;
     constructor();
-    register(newUser: any): CRUDReturn;
-    getUser(id: string): CRUDReturn;
-    getAllUser(): CRUDReturn;
-    putUser(id: string, user: any): CRUDReturn;
-    patchUser(id: string, user: any): CRUDReturn;
-    deleteUser(id: string): CRUDReturn;
-    userLogin(newUser: any): CRUDReturn;
-    searchTerm(query: any): CRUDReturn | String[];
+    register(newUser: any): Promise<CRUDReturn>;
+    getUser(id: string): Promise<CRUDReturn>;
+    getAllUser(): Promise<CRUDReturn>;
+    putUser(id: string, user: any): Promise<CRUDReturn>;
+    patchUser(id: string, user: any): Promise<CRUDReturn>;
+    deleteUser(id: string): Promise<CRUDReturn>;
+    loginUser(newUser: any): Promise<CRUDReturn>;
+    searchTerm(query: any): Promise<CRUDReturn> | String[];
 }

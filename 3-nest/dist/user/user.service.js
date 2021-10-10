@@ -12,17 +12,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const helper_1 = require("../user.resource/helper");
 const common_1 = require("@nestjs/common");
-const firebase_database_1 = require("../user.resource/firebase.database");
 let UserService = class UserService {
     constructor() {
-        this.users = new Map();
+        helper_1.Process.populateDatabase();
     }
     async register(newUser) {
         try {
             helper_1.Verification.verifyCredentials(newUser, 'REGISTER');
             helper_1.Verification.verifyAge(newUser);
-            await helper_1.Verification.verifyEmail(newUser, this.users);
-            return helper_1.Process.registerUser(newUser, this.users);
+            await helper_1.Verification.verifyEmail(newUser);
+            return helper_1.Process.registerUser(newUser);
         }
         catch (error) {
             return error;
@@ -31,22 +30,22 @@ let UserService = class UserService {
     async getUser(id) {
         try {
             await helper_1.Verification.verifyID(id);
-            return helper_1.Process.getUser(id, this.users);
+            return helper_1.Process.getUser(id);
         }
         catch (error) {
             return error;
         }
     }
-    getAllUser() {
-        return helper_1.Process.getAllUser(this.users);
+    async getAllUser() {
+        return helper_1.Process.getAllUsers();
     }
     async putUser(id, user) {
         try {
             helper_1.Verification.verifyCredentials(user, 'REGISTER');
             helper_1.Verification.verifyAge(user);
             await helper_1.Verification.verifyID(id);
-            await helper_1.Verification.verifyEmail(user, this.users, id);
-            return await helper_1.Process.overwriteUser(id, user, this.users);
+            await helper_1.Verification.verifyEmail(user);
+            return await helper_1.Process.overwriteUser(id, user);
         }
         catch (error) {
             return error;
@@ -57,8 +56,8 @@ let UserService = class UserService {
             helper_1.Verification.verifyCredentials(user, 'PATCH');
             helper_1.Verification.verifyAge(user);
             await helper_1.Verification.verifyID(id);
-            await helper_1.Verification.verifyEmail(user, this.users, id);
-            return await helper_1.Process.updateUser(id, user, this.users);
+            await helper_1.Verification.verifyEmail(user, id);
+            return await helper_1.Process.updateUser(user, id);
         }
         catch (error) {
             return error;
@@ -73,10 +72,10 @@ let UserService = class UserService {
             return error;
         }
     }
-    userLogin(newUser) {
+    async loginUser(newUser) {
         try {
             helper_1.Verification.verifyCredentials(newUser, 'LOGIN');
-            return helper_1.Process.loginUser(newUser, this.users);
+            return await helper_1.Process.loginUser(newUser);
         }
         catch (error) {
             return error;
@@ -84,7 +83,7 @@ let UserService = class UserService {
     }
     searchTerm(query) {
         try {
-            return helper_1.Process.searchInUser(query, this.users);
+            return helper_1.Process.searchInUser(query);
         }
         catch (error) {
             return error;

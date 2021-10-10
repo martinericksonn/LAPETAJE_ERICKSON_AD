@@ -1,9 +1,6 @@
-import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { Helper } from './helper';
-// You don't need to import firebase/app either since it's being imported above
 import 'firebase/auth';
 import 'firebase/firestore';
-import { DatabaseQuery } from './firebase.database';
 
 export class User {
   public id: string;
@@ -12,64 +9,29 @@ export class User {
   private email: string;
   private password: string;
 
-  // static async retrieve(id:string):Promise<User>{
-  //   try{
-
-  //   }catch(){
-
-  //   }
-  // }
   constructor(
     user: any | string,
     age?: number,
     email?: string,
     password?: string,
   ) {
+    if (user.id) {
+      this.id = user.id;
+    }
     if (typeof user === 'string') {
       this.id = Helper.generateUID();
       this.name = user;
       this.age = age;
       this.email = email;
-
       this.password = password;
     } else {
-      this.id = Helper.generateUID();
+      this.id = user.id ? user.id : Helper.generateUID();
       this.name = user.name.trim();
       this.age = user.age;
       this.email = user.email.trim();
       this.password = user.password.trim();
     }
     // ConnectDatabase.commit(this.id, this);
-  }
-
-  // }
-
-  searchTerm(term: any): boolean {
-    for (var attributename in this) {
-      if (
-        attributename != 'password' &&
-        this[attributename] == term.trim().toLowerCase()
-      )
-        return true;
-    }
-    return false;
-  }
-
-  verifyEmail(email: string): boolean {
-    return email ? this.email.toLowerCase() == email.toLowerCase() : false;
-  }
-
-  replaceValues(user: any) {
-    for (var attributename in user) {
-      this[attributename] = user[attributename];
-    }
-  }
-
-  login(email: string, password: string): boolean {
-    return (
-      this.email.toLowerCase() == email.toLowerCase() &&
-      this.password == password
-    );
   }
 
   log() {
@@ -130,6 +92,8 @@ export class SystemMessage {
         return 'Sorry this email is not a valid email';
       case 509:
         return 'Sorry this age is not a valid age';
+      case 509:
+        return 'No result found';
       default:
         return 'Unknown request';
     }

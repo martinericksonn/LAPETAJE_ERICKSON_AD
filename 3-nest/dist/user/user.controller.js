@@ -38,7 +38,7 @@ let UserController = class UserController {
         return this.userService.deleteUser(id);
     }
     userLogin(body) {
-        return this.userService.userLogin(body);
+        return this.userService.loginUser(body);
     }
     searchTerm(term) {
         return this.userService.searchTerm(term);

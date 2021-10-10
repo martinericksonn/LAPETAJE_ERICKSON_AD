@@ -33,7 +33,7 @@ export class Helper {
     return arr;
   }
 
-  static populate(): Map<string, User> {
+  static populate() {
     var result: Map<string, User> = new Map<string, User>();
     try {
       var users = [
@@ -42,10 +42,16 @@ export class Helper {
         new User('Nathan Plains', 25, 'nathan@yesenia.net', 'NP_812415'),
         new User('Patricia Lebsack', 18, 'patty@kory.org', 'PL_12345'),
       ];
-      users.forEach((user) => {
+
+      users.forEach(async (user) => {
+        try {
+          await Verification.verifyEmail(user);
+
+          await DatabaseQuery.commit(user.id, user);
+        } catch (error) {}
+
         result.set(user.id, user);
       });
-      return result;
     } catch (error) {
       return null;
     }
@@ -114,7 +120,7 @@ export class Verification {
     }
   }
 
-  static async verifyEmail(newUser: any, users?: any, id?: string) {
+  static async verifyEmail(newUser: any, id?: string) {
     if (!newUser.email) return;
 
     if (!(newUser.email.trim() && newUser.email.includes('@')))
@@ -139,57 +145,49 @@ export class Verification {
 export class Process {
   private static systemMessage = new SystemMessage();
 
-  static async updateUser(id: string, user: any, users: any) {
+  static async updateUser(user: any, id: string) {
     return await DatabaseQuery.updateValues(id, user);
   }
 
-  static registerUser(newUser: any, users: any) {
+  static registerUser(newUser: any) {
     var user = new User(newUser);
-    users.set(user.id, user);
 
     return DatabaseQuery.commit(user.id, user);
   }
 
-  static getUser(id: any, users: any) {
-    return this.systemMessage.success(users.get(id).toJson());
+  static async getUser(id: any) {
+    var user = await DatabaseQuery.getUser(id);
+    return this.systemMessage.success(user);
   }
 
-  static getAllUser(users: any) {
-    var populatedData = [];
-    for (const user of users.values()) {
-      populatedData.push(user.toJson());
-    }
-
+  static async getAllUsers() {
+    var populatedData = await DatabaseQuery.getAllUsers();
     return this.systemMessage.success(populatedData);
   }
 
-  static async overwriteUser(id: string, newUser: any, users: any) {
+  static async overwriteUser(id: string, newUser: any) {
     var user = new User(newUser);
     user.id = id;
-    //users.set(newUser.id, user);
 
     return await DatabaseQuery.replaceValues(id, user);
   }
 
-  static deleteUser(id: string) {
+  static async deleteUser(id: string) {
     return DatabaseQuery.delete(id);
   }
 
-  static loginUser(newUser: any, users: any) {
-    for (const user of users.values())
-      if (user.login(newUser.email, newUser.password))
-        return this.systemMessage.success(user.toJson());
+  static async loginUser(newUser: any) {
+    var user: User;
+    if ((user = await DatabaseQuery.loginUser(newUser.email, newUser.password)))
+      return this.systemMessage.success(user.toJson());
 
     throw this.systemMessage.error(505);
   }
 
-  static searchInUser(query: any, users: any) {
-    var result: string[] = [];
+  static async searchInUser(query: string) {
+    var result = await DatabaseQuery.searchInUser(query);
 
-    for (const user of users.values())
-      if (user.searchTerm(query)) result.push(user.toJson());
-
-    if (!result.length) return this.systemMessage.error(result);
+    if (!result.length) return this.systemMessage.error(509);
     return this.systemMessage.success(result);
   }
 

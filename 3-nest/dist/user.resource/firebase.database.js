@@ -44,7 +44,6 @@ class DatabaseQuery {
             var db = admin.firestore();
             const userRef = db.collection(users);
             const userResults = await userRef.where('email', '==', email).get();
-            console.log(!userResults.empty && id);
             if (!userResults.empty && id)
                 for (const user of userResults.docs) {
                     if (user.id == id)
@@ -75,6 +74,71 @@ class DatabaseQuery {
             await db.collection(users).doc(id).update(user);
             var newUser = await db.collection(users).doc(id).get();
             return systemMessage.success(newUser.data());
+        }
+        catch (error) {
+            console.log(error);
+            throw systemMessage.error(error);
+        }
+    }
+    static async getAllUsers() {
+        try {
+            var db = admin.firestore();
+            var userRef = await db.collection(users).get();
+            var populatedData = [];
+            userRef.forEach((doc) => {
+                var user = new user_model_1.User(doc.data());
+                populatedData.push(user.toJson());
+            });
+            return populatedData;
+        }
+        catch (error) {
+            console.log(error);
+            throw systemMessage.error(error);
+        }
+    }
+    static async getUser(id) {
+        try {
+            var db = admin.firestore();
+            var userRef = await db.collection(users).doc(id).get();
+            return userRef.data();
+        }
+        catch (error) {
+            console.log(error);
+            throw systemMessage.error(error);
+        }
+    }
+    static async loginUser(email, password) {
+        try {
+            var db = admin.firestore();
+            var userRef = await db.collection(users);
+            var userResult = await userRef
+                .where('email', '==', email)
+                .where('password', '==', password)
+                .get();
+            var user;
+            userResult.forEach((doc) => {
+                user = new user_model_1.User(doc.data());
+            });
+            return user;
+        }
+        catch (error) {
+            console.log(error);
+            throw systemMessage.error(error);
+        }
+    }
+    static async searchInUser(term) {
+        try {
+            var db = admin.firestore();
+            var userRef = await db.collection(users).get();
+            var populatedData = [];
+            userRef.forEach((doc) => {
+                var user = new user_model_1.User(doc.data());
+                for (var attributename in doc.data())
+                    if (user[attributename] == term) {
+                        populatedData.push(user.toJson());
+                    }
+            });
+            return populatedData;
         }
         catch (error) {
             console.log(error);

@@ -9,4 +9,8 @@ export declare class DatabaseQuery {
     static alreadyExistEmail(email: string, id?: string): Promise<boolean | any>;
     static replaceValues(id: string, user: User): Promise<any>;
     static updateValues(id: string, user: User): Promise<any>;
+    static getAllUsers(): Promise<any[]>;
+    static getUser(id: string): Promise<any>;
+    static loginUser(email: string, password: string): Promise<User>;
+    static searchInUser(term: string): Promise<any>;
 }

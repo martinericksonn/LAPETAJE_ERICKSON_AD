@@ -6,6 +6,9 @@ require("firebase/auth");
 require("firebase/firestore");
 class User {
     constructor(user, age, email, password) {
+        if (user.id) {
+            this.id = user.id;
+        }
         if (typeof user === 'string') {
             this.id = helper_1.Helper.generateUID();
             this.name = user;
@@ -14,32 +17,12 @@ class User {
             this.password = password;
         }
         else {
-            this.id = helper_1.Helper.generateUID();
+            this.id = user.id ? user.id : helper_1.Helper.generateUID();
             this.name = user.name.trim();
             this.age = user.age;
             this.email = user.email.trim();
             this.password = user.password.trim();
         }
-    }
-    searchTerm(term) {
-        for (var attributename in this) {
-            if (attributename != 'password' &&
-                this[attributename] == term.trim().toLowerCase())
-                return true;
-        }
-        return false;
-    }
-    verifyEmail(email) {
-        return email ? this.email.toLowerCase() == email.toLowerCase() : false;
-    }
-    replaceValues(user) {
-        for (var attributename in user) {
-            this[attributename] = user[attributename];
-        }
-    }
-    login(email, password) {
-        return (this.email.toLowerCase() == email.toLowerCase() &&
-            this.password == password);
     }
     log() {
         console.log(`${this.id} ${this.name} ${this.age} ${this.email} ${this.password}`);
@@ -92,6 +75,8 @@ class SystemMessage {
                 return 'Sorry this email is not a valid email';
             case 509:
                 return 'Sorry this age is not a valid age';
+            case 509:
+                return 'No result found';
             default:
                 return 'Unknown request';
         }

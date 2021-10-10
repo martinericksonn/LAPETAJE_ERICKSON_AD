@@ -1,25 +1,20 @@
-import * as firebase from 'firebase/app';
 import { Process, Verification } from '../user.resource/helper';
 import { CRUDReturn } from '../user.resource/crud_return.interface';
 import { Injectable } from '@nestjs/common';
-import { User } from '../user.resource/user.model';
-import { DatabaseQuery } from 'src/user.resource/firebase.database';
 
 @Injectable()
 export class UserService {
-  private users = new Map<string, User>();
-
   constructor() {
-    //this.users = Process.populateDatabase();
+    Process.populateDatabase();
   }
 
   async register(newUser: any): Promise<CRUDReturn> {
     try {
       Verification.verifyCredentials(newUser, 'REGISTER');
       Verification.verifyAge(newUser);
-      await Verification.verifyEmail(newUser, this.users);
+      await Verification.verifyEmail(newUser);
 
-      return Process.registerUser(newUser, this.users);
+      return Process.registerUser(newUser);
     } catch (error) {
       return error;
     }
@@ -29,14 +24,14 @@ export class UserService {
     try {
       await Verification.verifyID(id);
 
-      return Process.getUser(id, this.users);
+      return Process.getUser(id);
     } catch (error) {
       return error;
     }
   }
 
-  getAllUser(): CRUDReturn {
-    return Process.getAllUser(this.users);
+  async getAllUser(): Promise<CRUDReturn> {
+    return Process.getAllUsers();
   }
 
   async putUser(id: string, user: any): Promise<CRUDReturn> {
@@ -44,9 +39,9 @@ export class UserService {
       Verification.verifyCredentials(user, 'REGISTER');
       Verification.verifyAge(user);
       await Verification.verifyID(id);
-      await Verification.verifyEmail(user, this.users, id);
+      await Verification.verifyEmail(user);
 
-      return await Process.overwriteUser(id, user, this.users);
+      return await Process.overwriteUser(id, user);
     } catch (error) {
       return error;
     }
@@ -57,9 +52,9 @@ export class UserService {
       Verification.verifyCredentials(user, 'PATCH');
       Verification.verifyAge(user);
       await Verification.verifyID(id);
-      await Verification.verifyEmail(user, this.users, id);
+      await Verification.verifyEmail(user, id);
 
-      return await Process.updateUser(id, user, this.users);
+      return await Process.updateUser(user, id);
     } catch (error) {
       return error;
     }
@@ -75,19 +70,19 @@ export class UserService {
     }
   }
 
-  userLogin(newUser: any): CRUDReturn {
+  async loginUser(newUser: any): Promise<CRUDReturn> {
     try {
       Verification.verifyCredentials(newUser, 'LOGIN');
 
-      return Process.loginUser(newUser, this.users);
+      return await Process.loginUser(newUser);
     } catch (error) {
       return error;
     }
   }
 
-  searchTerm(query: any): CRUDReturn | String[] {
+  searchTerm(query: any): Promise<CRUDReturn> | String[] {
     try {
-      return Process.searchInUser(query, this.users);
+      return Process.searchInUser(query);
     } catch (error) {
       return error;
     }

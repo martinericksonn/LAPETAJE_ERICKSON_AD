@@ -46,7 +46,7 @@ export class UserController {
 
   @Post('/login')
   userLogin(@Body() body: any) {
-    return this.userService.userLogin(body);
+    return this.userService.loginUser(body);
   }
 
   @Get('/search/:term')

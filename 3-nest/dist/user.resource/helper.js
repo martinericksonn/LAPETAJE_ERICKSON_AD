@@ -34,10 +34,14 @@ class Helper {
                 new user_model_1.User('Nathan Plains', 25, 'nathan@yesenia.net', 'NP_812415'),
                 new user_model_1.User('Patricia Lebsack', 18, 'patty@kory.org', 'PL_12345'),
             ];
-            users.forEach((user) => {
+            users.forEach(async (user) => {
+                try {
+                    await Verification.verifyEmail(user);
+                    await firebase_database_1.DatabaseQuery.commit(user.id, user);
+                }
+                catch (error) { }
                 result.set(user.id, user);
             });
-            return result;
         }
         catch (error) {
             return null;
@@ -98,7 +102,7 @@ class Verification {
                 break;
         }
     }
-    static async verifyEmail(newUser, users, id) {
+    static async verifyEmail(newUser, id) {
         if (!newUser.email)
             return;
         if (!(newUser.email.trim() && newUser.email.includes('@')))
@@ -121,45 +125,39 @@ class Verification {
 exports.Verification = Verification;
 Verification.systemMessage = new user_model_1.SystemMessage();
 class Process {
-    static async updateUser(id, user, users) {
+    static async updateUser(user, id) {
         return await firebase_database_1.DatabaseQuery.updateValues(id, user);
     }
-    static registerUser(newUser, users) {
+    static registerUser(newUser) {
         var user = new user_model_1.User(newUser);
-        users.set(user.id, user);
         return firebase_database_1.DatabaseQuery.commit(user.id, user);
     }
-    static getUser(id, users) {
-        return this.systemMessage.success(users.get(id).toJson());
+    static async getUser(id) {
+        var user = await firebase_database_1.DatabaseQuery.getUser(id);
+        return this.systemMessage.success(user);
     }
-    static getAllUser(users) {
-        var populatedData = [];
-        for (const user of users.values()) {
-            populatedData.push(user.toJson());
-        }
+    static async getAllUsers() {
+        var populatedData = await firebase_database_1.DatabaseQuery.getAllUsers();
         return this.systemMessage.success(populatedData);
     }
-    static async overwriteUser(id, newUser, users) {
+    static async overwriteUser(id, newUser) {
         var user = new user_model_1.User(newUser);
         user.id = id;
         return await firebase_database_1.DatabaseQuery.replaceValues(id, user);
     }
-    static deleteUser(id) {
+    static async deleteUser(id) {
         return firebase_database_1.DatabaseQuery.delete(id);
     }
-    static loginUser(newUser, users) {
-        for (const user of users.values())
-            if (user.login(newUser.email, newUser.password))
-                return this.systemMessage.success(user.toJson());
+    static async loginUser(newUser) {
+        var user;
+        if ((user = await firebase_database_1.DatabaseQuery.loginUser(newUser.email, newUser.password)))
+            return this.systemMessage.success(user.toJson());
         throw this.systemMessage.error(505);
     }
-    static searchInUser(query, users) {
-        var result = [];
-        for (const user of users.values())
-            if (user.searchTerm(query))
-                result.push(user.toJson());
+    static async searchInUser(query) {
+        var result = await firebase_database_1.DatabaseQuery.searchInUser(query);
         if (!result.length)
-            return this.systemMessage.error(result);
+            return this.systemMessage.error(509);
         return this.systemMessage.success(result);
     }
     static populateDatabase() {

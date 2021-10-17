@@ -2,8 +2,7 @@ import 'firebase/auth';
 import 'firebase/firestore';
 import { CRUDReturn } from './crud_return.interface';
 import { SystemMessage, User } from './user.model';
-import { collection, query, where } from 'firebase/firestore';
-import { user } from 'firebase-functions/v1/auth';
+
 
 const admin = require('firebase-admin');
 const systemMessage = new SystemMessage();

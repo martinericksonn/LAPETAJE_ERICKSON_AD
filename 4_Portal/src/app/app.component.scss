@@ -1,34 +1,58 @@
-.inputs {
-    display: flex;
-    flex-direction: column;
-}
-
-label {
-    padding-top: 4px;
-    padding-bottom: 4px;
-}
-
-input {
-    padding: 10px 5px;
-}
-
-button {
-    height: 35px;
-}
-
-h1 {
-    margin: auto;
-    padding-bottom: 20px;
-}
-
-.login {
-    background-color: white;
-    width: 350px;
-    height: 250px;
-    border-radius: 5px;
-    padding: 24px;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
-}
+    .inputs {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    label {
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+    
+    input {
+        padding: 10px 5px;
+    }
+    
+    button {
+        width: 100px;
+        margin: 0 auto;
+        padding: 0;
+        display: inline-block;
+        line-height: 35px;
+        text-align: center;
+    }
+    
+    h1 {
+        margin: auto;
+        padding-bottom: 20px;
+    }
+    
+    .login {
+        background-color: white;
+        width: 350px;
+        height: 350px;
+        border-radius: 5px;
+        padding: 24px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+    }
+    
+    .hello_image {
+        background-image: url("https://ibb.co/dp4PgtJ");
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    
+    .button-login {
+        margin: auto;
+        padding: 20px
+    }
+    
+    .main-content {
+        display: flex;
+        flex-direction: row;
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+    }

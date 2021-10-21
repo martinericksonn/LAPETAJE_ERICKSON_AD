@@ -1,0 +1,22 @@
+.main-content {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+img {
+    width: 450px;
+    height: auto
+}
+
+.login-btn {
+    background-color: #4E73B9;
+    border-color: #4E73B9;
+    color: white;
+}
+
+.link-primary {
+    color: #EA472C;
+}

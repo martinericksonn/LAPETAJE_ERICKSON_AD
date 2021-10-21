@@ -1,0 +1,27 @@
+<div class=" main-content ">
+    <div class="hello_image ">
+        <img src="assets/Hello.png " alt="Hello " border="0 ">
+    </div>
+    <div class="card" style="width:350px">
+        <form class="m-4">
+            <div class="form-group">
+                <h1 font-weight-bold class="m-1">Hello World!</h1>
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group pt-">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+            <div class="d-flex flex-column justify-content-around mt-4 ">
+
+                <div class="btn-group" style="width:100%">
+                    <button (click)="login()" type="login" class="login-btn btn btn-primary btn-block">Login</button>
+                </div>
+                <hr mt-1>
+                <a (click)="gotoRegister()" hre class="link-primary m-auto">Create an Account</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -12,41 +12,19 @@ input {
     padding: 10px 5px;
 }
 
-button {
-    width: 100px;
-    margin: 0 auto;
-    padding: 0;
-    display: inline-block;
-    line-height: 35px;
-    text-align: center;
-}
-
 h1 {
     margin: auto;
     padding-bottom: 20px;
 }
 
-.login {
-    background-color: white;
-    width: 350px;
-    height: 430px;
-    border-radius: 5px;
-    padding: 24px;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+.card {
+    width: 380px;
 }
 
 .hello_image {
     background-image: url("https://ibb.co/dp4PgtJ");
     background-position: center;
     background-repeat: no-repeat;
-}
-
-.button-login {
-    margin: auto;
-    padding: 20px
 }
 
 .main-content {
@@ -64,7 +42,12 @@ h1 {
 }
 
 .link-primary {
-    color: #EA472C;
+    color: #4E73B9;
+}
+
+.error-msg {
+    font-size: 14px;
+    color: red
 }
 
 img {

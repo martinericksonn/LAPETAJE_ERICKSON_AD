@@ -2,25 +2,25 @@
     <div class="hello_image ">
         <img src="assets/Hello.png " alt="Hello " border="0 ">
     </div>
-    <div class="card" style="width:350px">
-        <form class="m-4">
-            <div class="form-group">
-                <h1 font-weight-bold class="m-1">Hello World!</h1>
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    <div class="card">
+        <form class="m-3">
+            <h1 font-weight-bold class="p-3 text-center">Hello World!</h1>
+            <div class="form-group m-3">
+                <label for="exampleInputEmail1">Email</label>
+                <input [formControl]="fcEmail" type="email" class="form-control">
             </div>
-            <div class="form-group pt-">
+            <div class="form-group m-3">
                 <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
+                <input [formControl]="fcPassword" type="password" class="form-control">
             </div>
-            <div class="d-flex flex-column justify-content-around mt-4 ">
-
-                <div class="btn-group" style="width:100%">
-                    <button (click)="login()" type="login" class="login-btn btn btn-primary btn-block">Login</button>
+            <div class=" d-flex flex-column justify-content-around mt-4 
+            ">
+                <div style="height: 50px;">
+                    <p class="text-center error-msg">{{requestResult}}</p>
                 </div>
-                <hr mt-1>
-                <a (click)="gotoRegister()" hre class="link-primary m-auto">Create an Account</a>
+                <button onclick="return false" (click)="login()" type="login" class=" ms-3 me-3 login-btn btn btn-primary btn-block">Login</button>
+                <hr class='ms-3 me-3'>
+                <a (click)="gotoRegister()" class="link-primary m-auto">Create an Account</a>
             </div>
         </form>
     </div>

@@ -38,6 +38,10 @@ export class RegisterComponent implements OnInit {
   }
 
   async createAccount() {
+    if (!this.registerForm.valid) {
+      this.requestResult = 'Invalid or missing credentials';
+      return;
+    }
     if (
       this.registerForm.value['fcPassword'] !==
       this.registerForm.value['fcPassword2']
@@ -62,7 +66,7 @@ export class RegisterComponent implements OnInit {
       this.requestResult = result.data;
     }
   }
-  nav(arg0: string) {
-    throw new Error('Method not implemented.');
+  nav(destination: string) {
+    this.router.navigate([destination]);
   }
 }

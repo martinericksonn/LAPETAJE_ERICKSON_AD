@@ -108,7 +108,7 @@ class Verification {
         if (!(newUser.email.trim() && newUser.email.includes('@')))
             throw this.systemMessage.error(508);
         if (await firebase_database_1.DatabaseQuery.alreadyExistEmail(newUser.email, id))
-            throw this.systemMessage.error(504);
+            throw this.systemMessage.error(503);
     }
     static verifyAge(newUser) {
         if (!newUser.age)

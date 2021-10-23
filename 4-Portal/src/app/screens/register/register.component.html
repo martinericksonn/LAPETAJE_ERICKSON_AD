@@ -1,0 +1,42 @@
+<div class=" flex-row main-content d-flex justify-content-center align-items-center m-auto ">
+    <div class="sign-up-image m-4 ">
+        <img src="assets/Sign-up.png" alt="Sign-up " border="0 ">
+    </div>
+    <div class="card" [formGroup]="registerForm">
+
+        <form class="m-3 ">
+
+            <h2 class="p-3 text-center">Register</h2>
+            <div class="form-group m-3">
+                <label for="inputName4">Name</label>
+                <input type="name" class="form-control" formControlName="fcName">
+            </div>
+            <div class="form-group m-3">
+                <label for="inputEmail4">Email</label>
+                <input type="email" class="form-control" formControlName="fcEmail">
+            </div>
+            <div class="form-group  m-3">
+                <label for="inputEmail4">Age</label>
+                <input type="number" class="form-control" formControlName='fcAge'>
+            </div>
+            <div class=" form-group m-3 ">
+                <label for="inputPassword4 ">Password</label>
+                <input type="password" class="form-control" formControlName="fcPassword">
+            </div>
+            <div class="form-group m-3 ">
+                <label for="inputPassword4 ">Confirm Password</label>
+                <input type="password" class="form-control" formControlName="fcPassword2">
+            </div>
+
+            <div class="d-flex flex-column justify-content-around mt-4 ">
+                <div style="height: 50px; ">
+                    <p class="text-center error-msg ">{{requestResult}}</p>
+                </div>
+                <button (click)="createAccount()" type="submit " class="login-btn btn btn-primary ms-3 me-3 ">Sign up</button>
+                <hr class=" ms-3 me-3 ">
+                <a href=" " (click)="gotoLogin()" class="link-primary m-auto ">Already have an Account? </a>
+            </div>
+        </form>
+    </div>
+
+</div>

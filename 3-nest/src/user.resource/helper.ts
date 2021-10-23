@@ -127,7 +127,7 @@ export class Verification {
       throw this.systemMessage.error(508);
 
     if (await DatabaseQuery.alreadyExistEmail(newUser.email, id))
-      throw this.systemMessage.error(504);
+      throw this.systemMessage.error(503);
   }
 
   static verifyAge(newUser: any) {

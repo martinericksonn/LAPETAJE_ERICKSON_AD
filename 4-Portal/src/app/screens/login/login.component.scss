@@ -1,0 +1,56 @@
+.inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+input {
+    padding: 10px 5px;
+}
+
+h1 {
+    margin: auto;
+    padding-bottom: 20px;
+}
+
+.card {
+    width: 380px;
+}
+
+.hello_image {
+    background-image: url("https://ibb.co/dp4PgtJ");
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.main-content {
+    height: 100vh;
+}
+
+.login-btn {
+    background-color: #4E73B9;
+    border-color: #4E73B9;
+    color: white;
+}
+
+.link-primary {
+    color: #4E73B9;
+}
+
+.error-msg {
+    font-size: 14px;
+    color: red
+}
+
+img {
+    width: 550px;
+    height: auto
+}
+
+a:hover {
+    cursor: pointer;
+}

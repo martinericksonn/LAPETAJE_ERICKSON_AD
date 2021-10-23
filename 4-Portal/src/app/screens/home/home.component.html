@@ -1,0 +1,23 @@
+<nav class="navbar navbar-dark bg-theme">
+    <div class="container-fluid">
+        <a class="navbar-brand">Home</a>
+        <form class="d-flex">
+            <button (click)='gotoLogin()' class="btn btn-outline " type="submit ">Log out</button>
+        </form>
+    </div>
+</nav>
+<div style="height: 5vh"></div>
+<div class=" display-users d-flex flex-wrap m-20 justify-content-center">
+    <div class="card  m-2" *ngFor="let i of apiResult(data)">
+        <div class=" card-body ">
+            <p class="card-title ">
+                <b>ID: </b>{{ data[i].id }}</p>
+            <p class="card-title ">
+                <b>Name: </b>{{ data[i].name }}</p>
+            <p class="card-title ">
+                <b>Email: </b>{{ data[i].email }}</p>
+            <p class="card-title ">
+                <b>Age: </b>{{ data[i].age }}</p>
+        </div>
+    </div>
+</div>

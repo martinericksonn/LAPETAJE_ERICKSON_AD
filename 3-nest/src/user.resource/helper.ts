@@ -125,11 +125,17 @@ export class Verification {
       /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     if (!newUser.email) return;
 
-    if (!(newUser.email.trim() && newUser.email.includes('@')))
+    if (!(newUser.email.trim() && emailRegexp.test(newUser.email)))
       throw this.systemMessage.error(508);
 
     if (await DatabaseQuery.alreadyExistEmail(newUser.email, id))
       throw this.systemMessage.error(503);
+  }
+
+  static verifyName(newUser: any) {
+    const nameRegexp = /^[a-zA-Z]+ [a-zA-Z]+$/;
+
+    if (!nameRegexp.test(newUser.name)) throw this.systemMessage.error(510);
   }
 
   static verifyAge(newUser: any) {
@@ -190,7 +196,7 @@ export class Process {
   static async searchInUser(query: string) {
     var result = await DatabaseQuery.searchInUser(query);
 
-    if (!result.length) return this.systemMessage.error(509);
+    if (!result.length) return this.systemMessage.error(511);
     return this.systemMessage.success(result);
   }
 

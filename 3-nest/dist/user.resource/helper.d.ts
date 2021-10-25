@@ -16,6 +16,7 @@ export declare class Verification {
     private static systemMessage;
     static verifyCredentials(newUser: any, option: string): void;
     static verifyEmail(newUser: any, id?: string): Promise<void>;
+    static verifyName(newUser: any): void;
     static verifyAge(newUser: any): void;
     static verifyID(id: string): Promise<void>;
 }

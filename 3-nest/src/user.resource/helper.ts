@@ -133,9 +133,9 @@ export class Verification {
   }
 
   static verifyName(newUser: any) {
-    const nameRegexp = /^[a-zA-Z]+ [a-zA-Z]+$/;
-
-    if (!nameRegexp.test(newUser.name)) throw this.systemMessage.error(510);
+    // const nameRegexp =
+    //   /^[a-z\u00C0-\u02AB'´`]+\.?\s([a-z\u00C0-\u02AB'´`]+\.?\s?)+$/;
+    // if (!nameRegexp.test(newUser.name)) throw this.systemMessage.error(510);
   }
 
   static verifyAge(newUser: any) {

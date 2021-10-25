@@ -75,7 +75,9 @@ class SystemMessage {
                 return 'Sorry this email is not a valid email';
             case 509:
                 return 'Sorry this age is not a valid age';
-            case 509:
+            case 510:
+                return 'Sorry this name is not a valid name';
+            case 511:
                 return 'No result found';
             default:
                 return 'Unknown request';

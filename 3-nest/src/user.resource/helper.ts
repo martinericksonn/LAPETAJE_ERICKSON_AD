@@ -121,6 +121,8 @@ export class Verification {
   }
 
   static async verifyEmail(newUser: any, id?: string) {
+    const emailRegexp =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     if (!newUser.email) return;
 
     if (!(newUser.email.trim() && newUser.email.includes('@')))
@@ -132,7 +134,8 @@ export class Verification {
 
   static verifyAge(newUser: any) {
     if (!newUser.age) return;
-    if (newUser.age < 0) throw this.systemMessage.error(509);
+    if (newUser.age > 0 && newUser.age < 100)
+      throw this.systemMessage.error(509);
   }
 
   static async verifyID(id: string) {

@@ -112,9 +112,6 @@ class Verification {
             throw this.systemMessage.error(503);
     }
     static verifyName(newUser) {
-        const nameRegexp = /^[a-zA-Z]+ [a-zA-Z]+$/;
-        if (!nameRegexp.test(newUser.name))
-            throw this.systemMessage.error(510);
     }
     static verifyAge(newUser) {
         if (!newUser.age)

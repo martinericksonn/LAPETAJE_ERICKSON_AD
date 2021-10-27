@@ -1,0 +1,24 @@
+<div class="body d-flex ">
+    <table class="table table-hover ">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Age</th>
+                <th scope="col">Email</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users | slice: (page-1) * pageSize : page * pageSize">
+                <td>{{user.name}}</td>
+                <td>{{user.age}}</td>
+                <td>{{user.email}}</td>
+                <td>action</td>
+            </tr>
+        </tbody>
+        <tfoot>
+
+            <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="users.length"></ngb-pagination>
+        </tfoot>
+    </table>
+</div>

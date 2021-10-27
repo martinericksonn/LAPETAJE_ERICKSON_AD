@@ -1,13 +1,24 @@
 <nav class="navbar navbar-dark bg-theme">
     <div class="container-fluid">
-        <a class="navbar-brand">Home</a>
+        <a class="navbar-brand" href="#">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4Igp3aWR0aD0iNDgiIGhlaWdodD0iNDgiCnZpZXdCb3g9IjAgMCAxNzIgMTcyIgpzdHlsZT0iIGZpbGw6IzAwMDAwMDsiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0ibm9uemVybyIgc3Ryb2tlPSJub25lIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJidXR0IiBzdHJva2UtbGluZWpvaW49Im1pdGVyIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1kYXNoYXJyYXk9IiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjAiIGZvbnQtZmFtaWx5PSJub25lIiBmb250LXdlaWdodD0ibm9uZSIgZm9udC1zaXplPSJub25lIiB0ZXh0LWFuY2hvcj0ibm9uZSIgc3R5bGU9Im1peC1ibGVuZC1tb2RlOiBub3JtYWwiPjxwYXRoIGQ9Ik0wLDE3MnYtMTcyaDE3MnYxNzJ6IiBmaWxsPSJub25lIj48L3BhdGg+PGcgZmlsbD0iI2ZmZmZmZiI+PHBhdGggZD0iTTg1LjgyNTAzLDE0LjMzMzMzYy0xLjE0NjExLDAuMDM5MTQgLTIuMjQ5NjYsMC40NDM3OCAtMy4xNDk0MSwxLjE1NDc5bC01MC45Mjk1Myw0MC4xMjM1M2MtNi40NjM5Nyw1LjA5NDE4IC0xMC4yNDYwOSwxMi44Nzg0MSAtMTAuMjQ2MDksMjEuMTA4MDd2NjguNDA1MjdjMCw0Ljg4NjIxIDQuMDcyMTIsOC45NTgzMyA4Ljk1ODMzLDguOTU4MzNoMzUuODMzMzNjNC44ODYyMSwwIDguOTU4MzMsLTQuMDcyMTIgOC45NTgzMywtOC45NTgzM3YtMzUuODMzMzNjMCwtMS4wNTcyNCAwLjczNDQyLC0xLjc5MTY3IDEuNzkxNjcsLTEuNzkxNjdoMTcuOTE2NjdjMS4wNTcyNCwwIDEuNzkxNjcsMC43MzQ0MiAxLjc5MTY3LDEuNzkxNjd2MzUuODMzMzNjMCw0Ljg4NjIxIDQuMDcyMTIsOC45NTgzMyA4Ljk1ODMzLDguOTU4MzNoMzUuODMzMzNjNC44ODYyMSwwIDguOTU4MzMsLTQuMDcyMTIgOC45NTgzMywtOC45NTgzM3YtNjguNDA1MjdjMCwtOC4yMjk2NiAtMy43ODIxMywtMTYuMDEzODkgLTEwLjI0NjA5LC0yMS4xMDgwN2wtNTAuOTI5NTMsLTQwLjEyMzUzYy0wLjk5Mzk2LC0wLjc4NTIgLTIuMjMzMjcsLTEuMTk0MTcgLTMuNDk5MzUsLTEuMTU0Nzl6TTg2LDI2LjU1MzA2bDQ3LjYwNTE0LDM3LjUwNjAyYzMuODg0NywzLjA2MTQ5IDYuMTQ0ODYsNy43MTc5OCA2LjE0NDg2LDEyLjY2MDY0djY2LjYxMzYxaC0zMi4yNXYtMzQuMDQxNjdjMCwtNi44NjE5MiAtNS42Nzk3NCwtMTIuNTQxNjcgLTEyLjU0MTY3LC0xMi41NDE2N2gtMTcuOTE2NjdjLTYuODYxOTIsMCAtMTIuNTQxNjcsNS42Nzk3NCAtMTIuNTQxNjcsMTIuNTQxNjd2MzQuMDQxNjdoLTMyLjI1di02Ni42MTM2MWMwLC00Ljk0MjY3IDIuMjYwMTYsLTkuNTk5MTYgNi4xNDQ4NiwtMTIuNjYwNjR6Ij48L3BhdGg+PC9nPjwvZz48L3N2Zz4="
+                alt="" width="30" height="24" class="d-inline-block align-text-top"> Dashboard
+        </a>
         <form class="d-flex">
             <button (click)='gotoLogin()' class="btn btn-outline " type="submit ">Log out</button>
         </form>
     </div>
 </nav>
+
 <div style="height: 5vh"></div>
-<div class=" display-users d-flex flex-wrap m-20 justify-content-center">
+
+<div class="body d-flex ">
+
+    <app-table></app-table>
+</div>
+
+<!-- </div> -->
+<!-- <div class=" display-users d-flex flex-wrap m-20 justify-content-center">
     <div class="card  m-2" *ngFor="let i of apiResult(data)">
         <div class=" card-body ">
             <p class="card-title ">
@@ -20,4 +31,4 @@
                 <b>Age: </b>{{ data[i].age }}</p>
         </div>
     </div>
-</div>
+</div> -->

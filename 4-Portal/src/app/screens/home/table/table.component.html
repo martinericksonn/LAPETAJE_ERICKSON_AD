@@ -1,5 +1,5 @@
-<div class="body d-flex ">
-    <table class="table table-hover ">
+<div class="body d-flex flex-column justify-content-center align-items-center ">
+    <table class="table table-hover w-90">
         <thead>
             <tr>
                 <th scope="col">Name</th>
@@ -8,17 +8,29 @@
                 <th scope="col">Actions</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="align-items-center">
             <tr *ngFor="let user of users | slice: (page-1) * pageSize : page * pageSize">
                 <td>{{user.name}}</td>
                 <td>{{user.age}}</td>
                 <td>{{user.email}}</td>
-                <td>action</td>
+                <td>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-outline">
+                        <!-- <label class="btn btn-outline-primary "> -->
+                            <img src="assets/edit.png" alt="" >
+                            <!-- <input type="radio" name="options" id="option1" autocomplete="off"> Edit -->
+                        </label>
+                        <label class="btn btn-outline">
+                        <!-- <label class="btn btn-outline-danger"> -->
+                            <img src="assets/delete.png" alt="">
+                          <!-- <img class="edit-button" src="assets/edit.png" type="radio" name="options" id="option2" autocomplete="off"> Delete -->
+                        </label>
+                    </div>
+                </td>
             </tr>
         </tbody>
         <tfoot>
-
-            <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="users.length"></ngb-pagination>
         </tfoot>
     </table>
+    <ngb-pagination aria-label="Default pagination" [(page)]="page" [pageSize]="pageSize" [collectionSize]="users.length"></ngb-pagination>
 </div>

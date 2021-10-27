@@ -14,7 +14,7 @@ export class TableComponent implements OnInit {
   users: any[] = [];
   requestResult = '';
   page = 1;
-  pageSize = 5;
+  pageSize = 8;
 
   constructor(private api: HttpClient) {}
 

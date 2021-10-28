@@ -14,12 +14,16 @@ export class TableComponent implements OnInit {
   users: any[] = [];
   requestResult = '';
   page = 1;
-  pageSize = 8;
+  pageSize = 10;
 
   constructor(private api: HttpClient) {}
 
   async ngOnInit() {
     this.displayAllUsers();
+  }
+
+  rowSelected(row: any) {
+    console.log(row);
   }
 
   private async displayAllUsers() {

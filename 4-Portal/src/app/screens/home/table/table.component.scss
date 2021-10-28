@@ -1,10 +1,25 @@
 th,
 td {
-    padding: 20px;
+    padding: 12px;
     font-size: 14px;
-    background: white;
+    font-weight: bold;
 }
 
-table {
-    width: fit-content;
+th {
+    font-weight: normal;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+}
+
+.btn-option:hover,
+.btn-option:focus,
+.btn-option:active,
+.btn-option.active,
+.open>.dropdown-toggle.btn-option {
+    border-color: grey;
+    /*set the color you want here*/
+}
+
+.below-navbar {
+    height: 10vh;
 }

@@ -1,5 +1,5 @@
-<div class="body d-flex flex-column justify-content-center align-items-center ">
-    <table class="table table-hover w-90">
+<div class="body d-flex flex-column justify-content-center align-items-center p=20">
+    <table class="table table-hover  table-striped  table-borderless">
         <thead>
             <tr>
                 <th scope="col">Name</th>
@@ -7,24 +7,30 @@
                 <th scope="col">Email</th>
                 <th scope="col">Actions</th>
             </tr>
+
         </thead>
         <tbody class="align-items-center">
             <tr *ngFor="let user of users | slice: (page-1) * pageSize : page * pageSize">
-                <td>{{user.name}}</td>
-                <td>{{user.age}}</td>
-                <td>{{user.email}}</td>
-                <td>
+                <td style="width:20%">{{user.name}}</td>
+                <td style="width:10%">{{user.age}}</td>
+                <td style="width:40%">{{user.email}}</td>
+                <td style="width:20%">
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-outline">
-                        <!-- <label class="btn btn-outline-primary "> -->
-                            <img src="assets/edit.png" alt="" >
-                            <!-- <input type="radio" name="options" id="option1" autocomplete="off"> Edit -->
-                        </label>
-                        <label class="btn btn-outline">
-                        <!-- <label class="btn btn-outline-danger"> -->
-                            <img src="assets/delete.png" alt="">
-                          <!-- <img class="edit-button" src="assets/edit.png" type="radio" name="options" id="option2" autocomplete="off"> Delete -->
-                        </label>
+
+                        <label class="btn btn-option ">
+                                <!-- <input type="radio" name="Edit" src="assets/edit.png" autocomplete="off" (click)="rowSelected(user)">    -->
+                                <img src="assets/edit.png" alt="edit button" (click)="rowSelected(user)" >
+                            </label>
+                        <label class="btn btn-option ">
+                                <!-- <input type="radio" name="Delete" src="assets/delete.png" autocomplete="off">                -->
+                                <img src="assets/delete.png" alt="edit button" (click)="rowSelected(user)">
+                                
+                            </label>
+                        <!-- 
+                            <label class="btn btn-outline">
+                            </label>
+                            <label class="btn btn-outline">
+                            </label> -->
                     </div>
                 </td>
             </tr>

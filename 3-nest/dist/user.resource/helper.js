@@ -116,7 +116,7 @@ class Verification {
     static verifyAge(newUser) {
         if (!newUser.age)
             return;
-        if (newUser.age > 0 && newUser.age == 100)
+        if (newUser.age > 0 && newUser.age < 100)
             throw this.systemMessage.error(509);
     }
     static async verifyID(id) {

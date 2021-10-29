@@ -2,11 +2,13 @@
     <div class="d-flex">
 
         <div class="input-group" style="width: 40vh">
-            <form (submit)="search(term.value)" action="#"></form>
-            <input #term type="term" class="form-control rounded" placeholder="Search users" aria-label="Search" aria-describedby="search-addon" />
+
+
+            <input #term type="term" class="form-control rounded" placeholder="Search users" aria-label="Search" aria-describedby="search-addon" [(ngModel)]="searchValue">
             <button type="button" class="btn btn-clr btn-outline-primary" (click)='search(term.value)'>search</button>
+
         </div>
-        <button type="button" class="btn btn-outline-primary">clear search</button>
+        <button type="button" class="btn btn-outline-primary" (click)="ngOnInit() " (click)="clearSearch() ">clear search</button>
     </div>
     <label class="btn btn-primary">
     <img src="assets/add-user.png" alt="edit button" /> Add user

@@ -2,13 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { nav } from 'src/app/app.api-request';
-
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
+  searchValue: string = '';
+  clearSearch() {
+    this.searchValue = '';
+  }
+
   readonly PATH_ALL = '/user/all';
   readonly PATH_SEARCH = '/user/search/';
 
@@ -29,6 +34,10 @@ export class TableComponent implements OnInit {
 
   rowSelected(row: any) {
     console.log(row);
+  }
+
+  async searchClear() {
+    this.displayAllUsers();
   }
 
   async search(query: string) {

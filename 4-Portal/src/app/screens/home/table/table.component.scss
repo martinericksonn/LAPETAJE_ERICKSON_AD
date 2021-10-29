@@ -11,6 +11,10 @@ th {
     border-top: 1px solid black;
 }
 
+.ngb {
+    margin-left: 4vh;
+}
+
 .btn-option:hover,
 .btn-option:focus,
 .btn-option:active,
@@ -23,4 +27,8 @@ th {
 .below-navbar {
     margin: 4vh;
     width: auto;
+}
+
+.btn-clr {
+    margin-right: 10px;
 }

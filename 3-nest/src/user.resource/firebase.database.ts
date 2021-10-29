@@ -3,13 +3,12 @@ import 'firebase/firestore';
 import { CRUDReturn } from './crud_return.interface';
 import { SystemMessage, User } from './user.model';
 
-
 const admin = require('firebase-admin');
 const systemMessage = new SystemMessage();
 const users = 'users';
 
 export class DatabaseQuery {
-  static async commit(id: string, user: User): Promise<CRUDReturn> {
+  static async commit(user: User): Promise<CRUDReturn> {
     try {
       var db = admin.firestore();
       await db.collection(users).doc(user.id).set(user.toJsonPass());
@@ -147,10 +146,23 @@ export class DatabaseQuery {
 
       userRef.forEach((doc) => {
         var user = new User(doc.data());
-        for (var attributename in doc.data())
-          if (user[attributename] == term) {
+
+        for (var attributename in doc.data()) {
+          if (user['id'] == term) {
             populatedData.push(user.toJson());
+            break;
           }
+
+          var docData = `${user[attributename]}`.toLowerCase();
+          if (
+            attributename != 'password' &&
+            attributename != 'id' &&
+            docData.includes(term.toLowerCase())
+          ) {
+            populatedData.push(user.toJson());
+            break;
+          }
+        }
       });
 
       return populatedData;

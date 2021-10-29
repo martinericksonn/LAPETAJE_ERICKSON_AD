@@ -47,7 +47,7 @@ export class Helper {
         try {
           await Verification.verifyEmail(user);
 
-          await DatabaseQuery.commit(user.id, user);
+          await DatabaseQuery.commit(user);
         } catch (error) {}
 
         result.set(user.id, user);
@@ -140,7 +140,7 @@ export class Verification {
 
   static verifyAge(newUser: any) {
     if (!newUser.age) return;
-    if (newUser.age > 0 && newUser.age < 100)
+    if (!(newUser.age > 0 && newUser.age < 100))
       throw this.systemMessage.error(509);
   }
 
@@ -161,7 +161,7 @@ export class Process {
   static registerUser(newUser: any) {
     var user = new User(newUser);
 
-    return DatabaseQuery.commit(user.id, user);
+    return DatabaseQuery.commit(user);
   }
 
   static async getUser(id: any) {

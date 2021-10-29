@@ -37,7 +37,7 @@ class Helper {
             users.forEach(async (user) => {
                 try {
                     await Verification.verifyEmail(user);
-                    await firebase_database_1.DatabaseQuery.commit(user.id, user);
+                    await firebase_database_1.DatabaseQuery.commit(user);
                 }
                 catch (error) { }
                 result.set(user.id, user);
@@ -116,7 +116,7 @@ class Verification {
     static verifyAge(newUser) {
         if (!newUser.age)
             return;
-        if (newUser.age > 0 && newUser.age < 100)
+        if (!(newUser.age > 0 && newUser.age < 100))
             throw this.systemMessage.error(509);
     }
     static async verifyID(id) {
@@ -133,7 +133,7 @@ class Process {
     }
     static registerUser(newUser) {
         var user = new user_model_1.User(newUser);
-        return firebase_database_1.DatabaseQuery.commit(user.id, user);
+        return firebase_database_1.DatabaseQuery.commit(user);
     }
     static async getUser(id) {
         var user = await firebase_database_1.DatabaseQuery.getUser(id);

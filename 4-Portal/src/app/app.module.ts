@@ -10,6 +10,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TableComponent } from './screens/home/table/table.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NavbarComponent } from './layout/navbar/navbar.component';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
+import { DefaultLayoutComponent } from './layout/default-layout/default-layout.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +21,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     LoginComponent,
     HomeComponent,
     TableComponent,
+    NavbarComponent,
+    SidebarComponent,
+    DefaultLayoutComponent,
   ],
   imports: [
     HttpClientModule,

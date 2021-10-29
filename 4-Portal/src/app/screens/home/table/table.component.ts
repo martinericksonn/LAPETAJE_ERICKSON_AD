@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { nav } from 'src/app/app.api-request';
 
 @Component({
   selector: 'app-table',
@@ -8,11 +9,15 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
-  readonly API_PATH = '/user/all';
+  readonly PATH_ALL = '/user/all';
+  readonly PATH_SEARCH = '/user/search/';
 
   apiResult = Object.keys;
   users: any[] = [];
+
   requestResult = '';
+  searchRestult = '';
+
   page = 1;
   pageSize = 10;
 
@@ -26,18 +31,32 @@ export class TableComponent implements OnInit {
     console.log(row);
   }
 
+  async search(query: string) {
+    this.getResult(await this.searchTerm(query));
+  }
+
+  private async searchTerm(term: string): Promise<any> {
+    try {
+      return await this.api
+        .get(environment.API_URL + this.PATH_SEARCH + term)
+        .toPromise();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   private async displayAllUsers() {
-    var users: any = await this.getUsers();
-    this.getResult(users);
+    this.getResult(await this.getUsers());
   }
 
   private async getUsers(): Promise<any> {
-    return await this.api.get(environment.API_URL + this.API_PATH).toPromise();
+    return await this.api.get(environment.API_URL + this.PATH_ALL).toPromise();
   }
 
   private getResult(result: any) {
     if (result.success) {
       this.users = this.toArray(result.data);
+      console.log(this.users);
     } else {
       this.requestResult = result.data;
     }

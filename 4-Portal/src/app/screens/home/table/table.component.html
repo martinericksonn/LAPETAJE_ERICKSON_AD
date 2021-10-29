@@ -1,5 +1,14 @@
+<div class="below-navbar d-flex flex-row justify-content-between">
+    <div class="input-group" style="width: 40vh">
+        <input #term type="term" class="form-control rounded" placeholder="Search users" aria-label="Search" aria-describedby="search-addon" />
+        <button type="button" class="btn btn-outline-primary" (click)='search(term.value)'>search</button>
+    </div>
+    <label class="btn btn-primary">
+    <img src="assets/add-user.png" alt="edit button" /> Add user
+  </label>
+</div>
 <div class="body d-flex flex-column justify-content-center align-items-center p=20">
-    <table class="table table-hover  table-striped  table-borderless">
+    <table class="table table-hover table-striped table-borderless">
         <thead>
             <tr>
                 <th scope="col">Name</th>
@@ -7,36 +16,34 @@
                 <th scope="col">Email</th>
                 <th scope="col">Actions</th>
             </tr>
-
         </thead>
         <tbody class="align-items-center">
-            <tr *ngFor="let user of users | slice: (page-1) * pageSize : page * pageSize">
-                <td style="width:20%">{{user.name}}</td>
-                <td style="width:10%">{{user.age}}</td>
-                <td style="width:40%">{{user.email}}</td>
-                <td style="width:20%">
+            <tr *ngFor="
+          let user of users | slice: (page - 1) * pageSize:page * pageSize
+        ">
+                <td style="width: 20%">{{ user.name }}</td>
+                <td style="width: 10%">{{ user.age }}</td>
+                <td style="width: 40%">{{ user.email }}</td>
+                <td style="width: 20%">
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-
-                        <label class="btn btn-option ">
-                                <!-- <input type="radio" name="Edit" src="assets/edit.png" autocomplete="off" (click)="rowSelected(user)">    -->
-                                <img src="assets/edit.png" alt="edit button" (click)="rowSelected(user)" >
-                            </label>
-                        <label class="btn btn-option ">
-                                <!-- <input type="radio" name="Delete" src="assets/delete.png" autocomplete="off">                -->
-                                <img src="assets/delete.png" alt="edit button" (click)="rowSelected(user)">
-                                
-                            </label>
-                        <!-- 
-                            <label class="btn btn-outline">
-                            </label>
-                            <label class="btn btn-outline">
-                            </label> -->
+                        <label class="btn btn-option">
+              <img
+                src="assets/edit.png"
+                alt="edit button"
+                (click)="rowSelected(user)"
+              />
+            </label>
+                        <label class="btn btn-option">
+              <img
+                src="assets/delete.png"
+                alt="edit button"
+                (click)="rowSelected(user)"
+              />
+            </label>
                     </div>
                 </td>
             </tr>
         </tbody>
-        <tfoot>
-        </tfoot>
     </table>
     <ngb-pagination aria-label="Default pagination" [(page)]="page" [pageSize]="pageSize" [collectionSize]="users.length"></ngb-pagination>
 </div>

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-table',
@@ -86,4 +87,12 @@ export class TableComponent implements OnInit {
   openVerticallyCentered(content: any) {
     this.modalService.open(content, { centered: true });
   }
+
+  registerForm: FormGroup = new FormGroup({
+    fcName: new FormControl('', Validators.required),
+    fcAge: new FormControl('', Validators.min(1)),
+    fcEmail: new FormControl('', Validators.required),
+    fcPassword: new FormControl('', Validators.required),
+    fcPassword2: new FormControl('', Validators.required),
+  });
 }

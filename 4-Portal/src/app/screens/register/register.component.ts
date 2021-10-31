@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
   }
 
   private createAccountResult(result: any) {
-    this.requestResult = this.registerForm.value.fcName;
+    // this.requestResult = this.registerForm.value.fcName;
     if (result.success) {
       this.nav('home');
     } else {

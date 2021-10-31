@@ -32,3 +32,22 @@ th {
 .btn-clr {
     margin-right: 10px;
 }
+
+.dark-modal .modal-content {
+    background-color: #292b2c;
+    color: white;
+}
+
+.dark-modal .close {
+    color: white;
+}
+
+.light-blue-backdrop {
+    background-color: #5cb3fd;
+}
+
+.close {
+    outline: none;
+    border: none;
+    background-color: transparent;
+}

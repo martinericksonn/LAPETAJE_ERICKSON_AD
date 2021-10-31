@@ -1,18 +1,16 @@
 <div class="below-navbar d-flex flex-row justify-content-between">
     <div class="d-flex">
-
         <div class="input-group" style="width: 40vh">
-
-
             <input #term type="term" class="form-control rounded" placeholder="Search users" aria-label="Search" aria-describedby="search-addon" [(ngModel)]="searchValue">
             <button type="button" class="btn btn-clr btn-outline-primary" (click)='search(term.value)'>search</button>
 
         </div>
-        <button type="button" class="btn btn-outline-primary" (click)="ngOnInit() " (click)="clearSearch() ">clear search</button>
+        <button type="button" class="btn btn-outline-primary" (click)="ngOnInit() " (click)="clearSearch() ">clear
+            search</button>
     </div>
     <label class="btn btn-primary">
-    <img src="assets/add-user.png" alt="edit button" /> Add user
-  </label>
+        <img src="assets/add-user.png" alt="edit button" /> Add user
+    </label>
 </div>
 <div class="body d-flex flex-column justify-content-center align-items-center p=20">
     <table class="table table-hover table-striped table-borderless">
@@ -25,28 +23,20 @@
             </tr>
         </thead>
         <tbody class="align-items-center">
-            <tr *ngFor="
-          let user of users | slice: (page - 1) * pageSize:page * pageSize
-        ">
+            <tr *ngFor="let user of users | slice: (page - 1) * pageSize:page * pageSize">
                 <td style="width: 20%">{{ user.name }}</td>
                 <td style="width: 10%">{{ user.age }}</td>
                 <td style="width: 40%">{{ user.email }}</td>
                 <td style="width: 20%">
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-option">
-              <img
-                src="assets/edit.png"
-                alt="edit button"
-                (click)="rowSelected(user)"
-              />
-            </label>
+                            <img src="assets/edit.png" alt="edit button" (click)="rowSelected(user)" (click)="openVerticallyCentered(content)" />
+                        </label>
+
+
                         <label class="btn btn-option">
-              <img
-                src="assets/delete.png"
-                alt="edit button"
-                (click)="rowSelected(user)"
-              />
-            </label>
+                            <img src="assets/delete.png" alt="edit button" (click)="rowSelected(user)" />
+                        </label>
                     </div>
                 </td>
             </tr>
@@ -57,3 +47,18 @@
 
     <ngb-pagination aria-label="Default pagination" [(page)]="page" [pageSize]="pageSize" [collectionSize]="users.length"></ngb-pagination>
 </div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Edit {{userSelected.name}}?</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <p>Nays&hellip;</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>

@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { nav } from 'src/app/app.api-request';
-import { FormsModule } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -19,6 +19,7 @@ export class TableComponent implements OnInit {
 
   apiResult = Object.keys;
   users: any[] = [];
+  userSelected: any;
 
   requestResult = '';
   searchRestult = '';
@@ -26,14 +27,16 @@ export class TableComponent implements OnInit {
   page = 1;
   pageSize = 10;
 
-  constructor(private api: HttpClient) {}
+  closeResult: string | undefined;
+
+  constructor(private api: HttpClient, private modalService: NgbModal) {}
 
   async ngOnInit() {
     this.displayAllUsers();
   }
 
   rowSelected(row: any) {
-    console.log(row);
+    this.userSelected = row;
   }
 
   async searchClear() {
@@ -78,5 +81,9 @@ export class TableComponent implements OnInit {
     }
 
     return list;
+  }
+
+  openVerticallyCentered(content: any) {
+    this.modalService.open(content, { centered: true });
   }
 }

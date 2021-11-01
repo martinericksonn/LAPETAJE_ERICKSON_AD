@@ -105,8 +105,24 @@
         </h6>
     </div>
     <div class="modal-footer ">
-        <button type="button " class="btn btn-outline-success " (click)="modal.close( 'Close click') ">Cancel</button>
-        <button type="button " class="btn btn-outline-danger " (click)="modal.close( 'Close click') ">Delete</button>
+        <button type="button " class="btn btn-outline-success " (click)="modal.close( 'Close click')">Cancel </button>
+        <button type="button " class="btn btn-outline-danger " (click)="modal.close( 'Close click') " (click)="openVerticallyCentered(success)"> Delete</button>
+    </div>
+</ng-template>
+
+<ng-template #success let-modal>
+    <div class=" modal-header ">
+        <h4 class="modal-title "><span class="text-success ">Success</span> </h4>
+        <button type="button " class="close " aria-label="Close " (click)="modal.dismiss( 'Cross click') ">
+        <span aria-hidden="true ">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body ">
+        <h6> User<b> {{userSelected.name}}</b>is successfully deleted
+        </h6>
+    </div>
+    <div class="modal-footer ">
+        <button type="button " class="btn btn-outline-success " (click)="modal.close( 'Close click') ">Ok</button>
     </div>
 </ng-template>
 
@@ -123,7 +139,6 @@
             <div class="form-group m-3 ">
                 <label for="inputName4 ">Name</label>
                 <input type="name " class="form-control " formControlName="fcName ">
-
             </div>
             <div class="form-group m-3 ">
                 <label for="inputEmail4 ">Email</label>

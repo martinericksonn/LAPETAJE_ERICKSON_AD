@@ -34,7 +34,7 @@
                         <label class="btn btn-option " (click)="rowSelected(user) " (click)="openVerticallyCentered(content) ">
                                 <img src="assets/edit.png " alt="edit button "  />
                             </label>
-                        <label class="btn btn-option " (click)="rowSelected(user) " (click)="openVerticallyCentered(deleteUserModal) ">
+                        <label class="btn btn-option " (click)="rowSelected(user);" (click)="openVerticallyCentered(deleteUserModal) ">
                                 <img src="assets/delete.png " alt="edit button " />
                             </label>
                     </div>
@@ -105,7 +105,7 @@
     </div>
     <div class="modal-footer ">
         <button type="button " class="btn btn-outline-success " (click)="modal.close( 'Close click')">Cancel </button>
-        <button type="button " class="btn btn-outline-danger " (click)="modal.close( 'Close click') " (click)="openVerticallyCentered(success)"> Delete</button>
+        <button type="button " class="btn btn-outline-danger " (click)="modal.close( 'Close click') " (click)="openVerticallyCentered(success);  delete()"> Delete</button>
     </div>
 </ng-template>
 

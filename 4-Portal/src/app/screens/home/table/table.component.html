@@ -66,24 +66,24 @@
         <form class="m-3 " [formGroup]="registerForm ">
             <div class="form-group m-3 ">
                 <label for="inputName4 ">Name</label>
-                <input type="name " class="form-control " formControlName="fcName " placeholder="{{userSelected.name}} ">
+                <input type="name" class="form-control " formControlName="fcName " placeholder="{{userSelected.name}} ">
 
             </div>
             <div class="form-group m-3 ">
                 <label for="inputEmail4 ">Email</label>
-                <input type="email " class="form-control " formControlName="fcEmail " placeholder="{{userSelected.email}} ">
+                <input type="email" class="form-control " formControlName="fcEmail " placeholder="{{userSelected.email}} ">
             </div>
             <div class="form-group m-3 ">
                 <label for="inputEmail4 ">Age</label>
-                <input type="number " class="form-control " formControlName='fcAge' placeholder="{{userSelected.age}} ">
+                <input type="number" class="form-control " formControlName='fcAge' placeholder="{{userSelected.age}} ">
             </div>
             <div class=" form-group m-3 ">
                 <label for="inputPassword4 ">Password</label>
-                <input type="password " class="form-control " formControlName="fcPassword " placeholder="****** ">
+                <input type="password" class="form-control " formControlName="fcPassword " placeholder="****** ">
             </div>
             <div class="form-group m-3 ">
                 <label for="inputPassword4 ">Confirm Password</label>
-                <input type="password " class="form-control " formControlName="fcPassword2 " placeholder="****** ">
+                <input type="password" class="form-control " formControlName="fcPassword2 " placeholder="****** ">
             </div>
         </form>
     </div>
@@ -118,7 +118,7 @@
       </button>
     </div>
     <div class="modal-body ">
-        <h6> User<b> {{userSelected.name}}</b>is successfully deleted
+        <h6> User<b> </b>is successfully deleted
         </h6>
     </div>
     <div class="modal-footer ">
@@ -128,6 +128,7 @@
 
 
 <ng-template #addUser let-modal>
+
     <div class="modal-header ">
         <h4 class="modal-title text-dark ">Add User </h4>
         <button type="button " class="close " aria-label="Close " (click)="modal.dismiss( 'Cross click') ">
@@ -135,31 +136,36 @@
       </button>
     </div>
     <div class="modal-body ">
-        <form class="m-3 " [formGroup]="registerForm ">
+        <form class="m-3 " [formGroup]="registerForm">
             <div class="form-group m-3 ">
                 <label for="inputName4 ">Name</label>
-                <input type="name " class="form-control " formControlName="fcName ">
+                <input type="name" class="form-control " formControlName="fcName">
             </div>
             <div class="form-group m-3 ">
                 <label for="inputEmail4 ">Email</label>
-                <input type="email " class="form-control " formControlName="fcEmail ">
+                <input type="email" class="form-control " formControlName="fcEmail">
             </div>
             <div class="form-group m-3 ">
                 <label for="inputEmail4 ">Age</label>
-                <input type="number " class="form-control " formControlName='fcAge'>
+                <input type="number" class="form-control " formControlName="fcAge">
             </div>
             <div class=" form-group m-3 ">
                 <label for="inputPassword4 ">Password</label>
-                <input type="password " class="form-control " formControlName="fcPassword ">
+                <input type="password" class="form-control " formControlName="fcPassword">
             </div>
             <div class="form-group m-3 ">
                 <label for="inputPassword4 ">Confirm Password</label>
-                <input type="password " class="form-control " formControlName="fcPassword2 ">
+                <input type="password" class="form-control " formControlName="fcPassword2">
+            </div>
+            <div class="text-danger">
+                <p class="text-center error-msg ">{{requestResult}}</p>
             </div>
         </form>
     </div>
     <div class="modal-footer ">
-        <button type="button " class="btn btn-outline-success " (click)="modal.close( 'Close click') ">Save</button>
-        <button type="button " class="btn btn-outline-danger " (click)="modal.close( 'Close click') ">Cancel</button>
+        <button type="button " class="btn btn-outline-success " (click)="createAccount(success);">Save</button>
+        <button id="close" type="button " class="btn btn-outline-danger " (click)="modal.close( 'Close click') ">Cancel</button>
     </div>
+
 </ng-template>
+<!-- openSuc? modal.close()  -->

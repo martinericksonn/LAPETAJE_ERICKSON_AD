@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { nav } from 'src/app/app.api-request';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -7,11 +7,15 @@ import { nav } from 'src/app/app.api-request';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
   gotoLogin() {
-    nav('login');
+    this.nav('login');
+  }
+
+  private nav(destination: string) {
+    this.router.navigate([destination]);
   }
 }

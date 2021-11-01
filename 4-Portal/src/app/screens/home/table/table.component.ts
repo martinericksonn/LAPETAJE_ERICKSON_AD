@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
+import { ElementRef, ViewChild } from '@angular/core';
+
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
@@ -12,9 +13,13 @@ import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 export class TableComponent implements OnInit {
   searchValue: string = '';
 
+  @ViewChild('close', { static: true })
+  close: ElementRef | undefined;
+
   readonly PATH_ALL = '/user/all';
   readonly PATH_SEARCH = '/user/search/';
   readonly PATH_DELETE = '/user/delete/';
+  readonly PATH_REGISTER = '/user/register';
 
   apiResult = Object.keys;
   users: any[] = [];
@@ -92,9 +97,10 @@ export class TableComponent implements OnInit {
     return list;
   }
 
-  openSuccuessModal = false;
+  openSuc = false;
+
   openSuccessModal(content: any) {
-    if (this.openSuccuessModal) {
+    if (this.openSuc) {
       this.openVerticallyCentered(content);
     }
   }
@@ -110,4 +116,58 @@ export class TableComponent implements OnInit {
     fcPassword: new FormControl('', Validators.required),
     fcPassword2: new FormControl('', Validators.required),
   });
+
+  async createAccount(suc: any) {
+    if (!this.isFormValid()) return;
+    if (!this.isPasswordEqual()) return;
+
+    var result: any = await this.registerUser();
+    this.createAccountResult(result, suc);
+  }
+
+  private createAccountResult(result: any, suc?: any) {
+    // this.requestResult = this.registerForm.value.fcName;
+    if (result.success) {
+      this.openSuc = true;
+      this.openSuccessModal(suc);
+      console.log('suc');
+      if (this.close) this.close.nativeElement.click();
+    } else {
+      console.log('fuc');
+      this.openSuc = false;
+      this.requestResult = result.data;
+    }
+  }
+
+  private async registerUser(): Promise<any> {
+    return await this.api
+      .post(environment.API_URL + this.PATH_REGISTER, {
+        name: this.registerForm.value.fcName,
+        email: this.registerForm.value.fcEmail,
+        age: this.registerForm.value.fcAge,
+        password: this.registerForm.value.fcPassword,
+      })
+      .toPromise();
+  }
+
+  private isPasswordEqual(): boolean {
+    if (
+      this.registerForm.value['fcPassword'] !==
+      this.registerForm.value['fcPassword2']
+    ) {
+      this.requestResult = 'Password doesnt match!';
+      return false;
+    }
+
+    this.requestResult = '';
+    return true;
+  }
+
+  private isFormValid(): boolean {
+    if (!this.registerForm.valid) {
+      this.requestResult = 'invalid or missing credentials';
+      return false;
+    }
+    return true;
+  }
 }

@@ -7,11 +7,7 @@ const LOGIN = '/user/login';
 const REGISTER = '/user/register';
 
 var router: Router;
-function nav(destination: string) {
-  router.navigate([destination]);
-}
 
-export { nav };
 // export class ApiRequest {
 
 //   static staticConstructor( _api: HttpClient,  _router: Router) {

@@ -20,6 +20,7 @@ export class TableComponent implements OnInit {
   readonly PATH_SEARCH = '/user/search/';
   readonly PATH_DELETE = '/user/delete/';
   readonly PATH_REGISTER = '/user/register';
+  readonly PATH_EDIT = '/user/';
 
   apiResult = Object.keys;
   users: any[] = [];
@@ -125,6 +126,14 @@ export class TableComponent implements OnInit {
     this.createAccountResult(result, suc, modal);
   }
 
+  async updateUser(suc: any, modal: any) {
+    var attributes = this.formToJson();
+
+    if (attributes == null) return;
+    var result: any = await this.editUser(attributes);
+    this.createAccountResult(result, suc, modal);
+  }
+
   closeModal(modal: any) {
     modal.click();
   }
@@ -135,10 +144,13 @@ export class TableComponent implements OnInit {
       console.log('suc');
       this.closeModal(modal);
       this.clearFields();
+      this.displayAllUsers();
     } else {
       console.log('fuc');
       this.openSuc = false;
-      this.requestResult = result.data;
+      console.log(result.data);
+      this.requestResult = result.success;
+      this.clearFields();
     }
   }
 
@@ -151,6 +163,7 @@ export class TableComponent implements OnInit {
     this.registerForm.controls.fcPassword2.reset();
     this.requestResult = '';
   }
+
   private async registerUser(): Promise<any> {
     return await this.api
       .post(environment.API_URL + this.PATH_REGISTER, {
@@ -162,15 +175,47 @@ export class TableComponent implements OnInit {
       .toPromise();
   }
 
-  private async editUser(): Promise<any> {
+  private async editUser(attributes: any): Promise<any> {
     return await this.api
-      .patch(environment.API_URL + this.PATH_REGISTER, {
-        name: this.registerForm.value.fcName,
-        email: this.registerForm.value.fcEmail,
-        age: this.registerForm.value.fcAge,
-        password: this.registerForm.value.fcPassword,
-      })
+      .patch(
+        environment.API_URL + this.PATH_EDIT + this.userSelected.id,
+        attributes
+      )
       .toPromise();
+  }
+
+  map_to_object(map: any) {
+    const out = Object.create(null);
+    map.forEach((value: any, key: string | number) => {
+      if (value instanceof Map) {
+        out[key] = this.map_to_object(value);
+      } else {
+        out[key] = value;
+      }
+    });
+    return out;
+  }
+  private formToJson(): any {
+    var attributes = new Map<string, any>();
+
+    if (!this.registerForm.value.fcName.includes('', null))
+      attributes.set('name', this.registerForm.value.fcName.trim());
+
+    if (!this.registerForm.value.fcEmail.includes('', null))
+      attributes.set('email', this.registerForm.value.fcEmail.trim());
+
+    if (this.registerForm.value.fcAge)
+      attributes.set('age', this.registerForm.value.fcAge);
+
+    if (!this.registerForm.value.fcPassword.includes('', null))
+      attributes.set('password', this.registerForm.value.fcPassword.trim());
+
+    console.log(attributes.size);
+    if (attributes.size <= 0) {
+      this.requestResult = 'empty fields';
+      return null;
+    }
+    return this.map_to_object(attributes);
   }
 
   private isPasswordEqual(): boolean {

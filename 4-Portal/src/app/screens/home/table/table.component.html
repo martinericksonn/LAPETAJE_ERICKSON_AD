@@ -81,15 +81,14 @@
                 <label for="inputPassword4 ">Password</label>
                 <input type="password" class="form-control " formControlName="fcPassword" placeholder="****** ">
             </div>
-            <div class="form-group m-3 ">
-                <label for="inputPassword4 ">Confirm Password</label>
-                <input type="password" class="form-control " formControlName="fcPassword2" placeholder="****** ">
+            <div class="text-danger">
+                <p class="text-center error-msg ">{{requestResult}}</p>
             </div>
         </form>
     </div>
     <div class="modal-footer ">
-        <button type="button " class="btn btn-outline-success " (click)="modal.close( 'Close click') ">Save</button>
-        <button type="button " class="btn btn-outline-danger " (click)="modal.close( 'Close click') ">Cancel</button>
+        <button type="button " class="btn btn-outline-success " (click)="updateUser(success,closeEdit) ">Save</button>
+        <button #closeEdit type="button " class="btn btn-outline-danger " (click)="modal.close( 'Close click') ">Cancel</button>
     </div>
 </ng-template>
 
@@ -163,8 +162,8 @@
         </form>
     </div>
     <div class="modal-footer ">
-        <button type="button " class="btn btn-outline-success " (click)="createAccount(success,close);">Save</button>
-        <button #close type="button " class="btn btn-outline-danger " (click)="modal.close( 'Close click') ">Cancel</button>
+        <button type="button " class="btn btn-outline-success " (click)="createAccount(success,closeAddUser);">Save</button>
+        <button #closeAddUser type="button " class="btn btn-outline-danger " (click)="modal.close( 'Close click') ">Cancel</button>
     </div>
 
 </ng-template>

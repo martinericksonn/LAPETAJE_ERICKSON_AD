@@ -162,6 +162,17 @@ export class TableComponent implements OnInit {
       .toPromise();
   }
 
+  private async editUser(): Promise<any> {
+    return await this.api
+      .patch(environment.API_URL + this.PATH_REGISTER, {
+        name: this.registerForm.value.fcName,
+        email: this.registerForm.value.fcEmail,
+        age: this.registerForm.value.fcAge,
+        password: this.registerForm.value.fcPassword,
+      })
+      .toPromise();
+  }
+
   private isPasswordEqual(): boolean {
     if (
       this.registerForm.value['fcPassword'] !==

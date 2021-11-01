@@ -18,7 +18,7 @@ export class TableComponent implements OnInit {
 
   readonly PATH_ALL = '/user/all';
   readonly PATH_SEARCH = '/user/search/';
-  readonly PATH_DELETE = '/user/delete/';
+  readonly PATH_DELETE = '/user/';
   readonly PATH_REGISTER = '/user/register';
   readonly PATH_EDIT = '/user/';
 
@@ -45,7 +45,10 @@ export class TableComponent implements OnInit {
   }
 
   async delete(): Promise<any> {
-    await this.api.get(environment.API_URL + this.userSelected.id).toPromise();
+    await this.api
+      .delete(environment.API_URL + this.PATH_DELETE + this.userSelected.id)
+      .toPromise();
+    this.displayAllUsers();
   }
 
   async ngOnInit() {

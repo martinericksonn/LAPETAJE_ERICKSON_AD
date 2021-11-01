@@ -14,7 +14,6 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { DefaultLayoutComponent } from './layout/default-layout/default-layout.component';
 import { FormsModule } from '@angular/forms';
-import { RegisterFormComponent } from './component/register-form/register-form.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +25,6 @@ import { RegisterFormComponent } from './component/register-form/register-form.c
     NavbarComponent,
     SidebarComponent,
     DefaultLayoutComponent,
-    RegisterFormComponent,
   ],
   imports: [
     HttpClientModule,

@@ -49,7 +49,9 @@ export class DatabaseQuery {
     try {
       var db = admin.firestore();
       const userRef = db.collection(users);
-      const userResults = await userRef.where('email', '==', email).get();
+      const userResults = await userRef
+        .where('email', '==', email.toLowerCase())
+        .get();
       if (!userResults.empty && id)
         for (const user of userResults.docs) {
           if (user.id == id) return false;

@@ -13,14 +13,14 @@ class User {
             this.id = helper_1.Helper.generateUID();
             this.name = user;
             this.age = age;
-            this.email = email;
+            this.email = email.toLowerCase();
             this.password = password;
         }
         else {
             this.id = user.id ? user.id : helper_1.Helper.generateUID();
             this.name = user.name.trim();
             this.age = user.age;
-            this.email = user.email.trim();
+            this.email = user.email.trim().toLowerCase();
             this.password = user.password.trim();
         }
     }

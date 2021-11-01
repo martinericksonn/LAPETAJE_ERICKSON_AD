@@ -148,8 +148,8 @@ export class TableComponent implements OnInit {
     } else {
       console.log('fuc');
       this.openSuc = false;
+      this.requestResult = result.data;
       console.log(result.data);
-      this.requestResult = result.success;
       this.clearFields();
     }
   }
@@ -198,16 +198,22 @@ export class TableComponent implements OnInit {
   private formToJson(): any {
     var attributes = new Map<string, any>();
 
-    if (!this.registerForm.value.fcName.includes('', null))
+    if (this.registerForm.value.fcName && this.registerForm.value.fcName.trim())
       attributes.set('name', this.registerForm.value.fcName.trim());
 
-    if (!this.registerForm.value.fcEmail.includes('', null))
+    if (
+      this.registerForm.value.fcEmail &&
+      this.registerForm.value.fcEmail.trim()
+    )
       attributes.set('email', this.registerForm.value.fcEmail.trim());
 
     if (this.registerForm.value.fcAge)
       attributes.set('age', this.registerForm.value.fcAge);
 
-    if (!this.registerForm.value.fcPassword.includes('', null))
+    if (
+      this.registerForm.value.fcPassword &&
+      this.registerForm.value.fcPassword.trim()
+    )
       attributes.set('password', this.registerForm.value.fcPassword.trim());
 
     console.log(attributes.size);

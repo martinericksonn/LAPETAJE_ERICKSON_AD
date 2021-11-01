@@ -92,6 +92,13 @@ export class TableComponent implements OnInit {
     return list;
   }
 
+  openSuccuessModal = false;
+  openSuccessModal(content: any) {
+    if (this.openSuccuessModal) {
+      this.openVerticallyCentered(content);
+    }
+  }
+
   openVerticallyCentered(content: any) {
     this.modalService.open(content, { centered: true });
   }
@@ -103,56 +110,4 @@ export class TableComponent implements OnInit {
     fcPassword: new FormControl('', Validators.required),
     fcPassword2: new FormControl('', Validators.required),
   });
-
-  alerts!: Alert[];
-
-  close(alert: Alert) {
-    this.alerts.splice(this.alerts.indexOf(alert), 1);
-  }
-
-  reset() {
-    this.alerts = Array.from(ALERTS);
-  }
-  // style="z-index: 999; width: 100%;"
-  success = 'success';
 }
-
-interface Alert {
-  type: string;
-  message: string;
-}
-
-const ALERTS: Alert[] = [
-  {
-    type: 'success',
-    message: 'This is an success alert',
-  },
-  {
-    type: 'info',
-    message: 'This is an info alert',
-  },
-  {
-    type: 'warning',
-    message: 'This is a warning alert',
-  },
-  {
-    type: 'danger',
-    message: 'This is a danger alert',
-  },
-  {
-    type: 'primary',
-    message: 'This is a primary alert',
-  },
-  {
-    type: 'secondary',
-    message: 'This is a secondary alert',
-  },
-  {
-    type: 'light',
-    message: 'This is a light alert',
-  },
-  {
-    type: 'dark',
-    message: 'This is a dark alert',
-  },
-];

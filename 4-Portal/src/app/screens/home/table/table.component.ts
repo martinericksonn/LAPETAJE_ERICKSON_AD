@@ -108,6 +108,7 @@ export class TableComponent implements OnInit {
 
   openVerticallyCentered(content: any) {
     this.modalService.open(content, { centered: true });
+    this.clearFields();
   }
 
   registerForm: FormGroup = new FormGroup({
@@ -150,7 +151,6 @@ export class TableComponent implements OnInit {
       this.openSuc = false;
       this.requestResult = result.data;
       console.log(result.data);
-      this.clearFields();
     }
   }
 

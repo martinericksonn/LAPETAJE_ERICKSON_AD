@@ -117,21 +117,24 @@ export class TableComponent implements OnInit {
     fcPassword2: new FormControl('', Validators.required),
   });
 
-  async createAccount(suc: any) {
+  async createAccount(suc: any, modal: any) {
     if (!this.isFormValid()) return;
     if (!this.isPasswordEqual()) return;
 
     var result: any = await this.registerUser();
-    this.createAccountResult(result, suc);
+    this.createAccountResult(result, suc, modal);
   }
 
-  private createAccountResult(result: any, suc?: any) {
-    // this.requestResult = this.registerForm.value.fcName;
+  closeModal(modal: any) {
+    modal.click();
+  }
+  private createAccountResult(result: any, suc?: any, modal?: any) {
     if (result.success) {
       this.openSuc = true;
       this.openSuccessModal(suc);
       console.log('suc');
-      if (this.close) this.close.nativeElement.click();
+      this.closeModal(modal);
+      this.clearFields();
     } else {
       console.log('fuc');
       this.openSuc = false;
@@ -139,6 +142,15 @@ export class TableComponent implements OnInit {
     }
   }
 
+  private clearFields() {
+    this.registerForm.controls.fcName.reset();
+    this.registerForm.controls.fcAge.reset();
+    this.registerForm.controls.fcEmail.reset();
+    this.registerForm.controls.fcPassword.reset();
+    this.registerForm.controls.fcPassword2.reset();
+    this.registerForm.controls.fcPassword2.reset();
+    this.requestResult = '';
+  }
   private async registerUser(): Promise<any> {
     return await this.api
       .post(environment.API_URL + this.PATH_REGISTER, {

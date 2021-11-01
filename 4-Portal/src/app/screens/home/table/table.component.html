@@ -66,12 +66,12 @@
         <form class="m-3 " [formGroup]="registerForm ">
             <div class="form-group m-3 ">
                 <label for="inputName4 ">Name</label>
-                <input type="name" class="form-control " formControlName="fcName " placeholder="{{userSelected.name}} ">
+                <input type="name" class="form-control " formControlName="fcName" placeholder="{{userSelected.name}} ">
 
             </div>
             <div class="form-group m-3 ">
                 <label for="inputEmail4 ">Email</label>
-                <input type="email" class="form-control " formControlName="fcEmail " placeholder="{{userSelected.email}} ">
+                <input type="email" class="form-control " formControlName="fcEmail" placeholder="{{userSelected.email}} ">
             </div>
             <div class="form-group m-3 ">
                 <label for="inputEmail4 ">Age</label>
@@ -79,11 +79,11 @@
             </div>
             <div class=" form-group m-3 ">
                 <label for="inputPassword4 ">Password</label>
-                <input type="password" class="form-control " formControlName="fcPassword " placeholder="****** ">
+                <input type="password" class="form-control " formControlName="fcPassword" placeholder="****** ">
             </div>
             <div class="form-group m-3 ">
                 <label for="inputPassword4 ">Confirm Password</label>
-                <input type="password" class="form-control " formControlName="fcPassword2 " placeholder="****** ">
+                <input type="password" class="form-control " formControlName="fcPassword2" placeholder="****** ">
             </div>
         </form>
     </div>
@@ -163,8 +163,8 @@
         </form>
     </div>
     <div class="modal-footer ">
-        <button type="button " class="btn btn-outline-success " (click)="createAccount(success);">Save</button>
-        <button id="close" type="button " class="btn btn-outline-danger " (click)="modal.close( 'Close click') ">Cancel</button>
+        <button type="button " class="btn btn-outline-success " (click)="createAccount(success,close);">Save</button>
+        <button #close type="button " class="btn btn-outline-danger " (click)="modal.close( 'Close click') ">Cancel</button>
     </div>
 
 </ng-template>

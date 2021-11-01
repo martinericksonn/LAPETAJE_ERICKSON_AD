@@ -23,7 +23,7 @@ export class TableComponent implements OnInit {
   userSelected: any;
 
   requestResult = '';
-  searchRestult = '';
+  isEmptySearch = false;
 
   page = 1;
   pageSize = 10;
@@ -41,10 +41,11 @@ export class TableComponent implements OnInit {
   }
 
   async searchClear() {
-    this.displayAllUsers();
+    this.isEmptySearch = false;
   }
 
   async search(query: string) {
+    if (query.trim() == '') return;
     this.getResult(await this.searchTerm(query));
   }
 
@@ -69,8 +70,9 @@ export class TableComponent implements OnInit {
   private getResult(result: any) {
     if (result.success) {
       this.users = this.toArray(result.data);
-      console.log(this.users);
+      this.isEmptySearch = false;
     } else {
+      this.isEmptySearch = true;
       this.requestResult = result.data;
     }
   }

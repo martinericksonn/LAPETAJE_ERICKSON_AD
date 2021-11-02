@@ -52,7 +52,7 @@ export class TableComponent implements OnInit {
       .delete(environment.API_URL + this.PATH_DELETE + this.userSelected.id)
       .toPromise();
 
-    this.successAction = `deleted`;
+    this.successAction = `delete`;
     this.users.splice(this.users.indexOf(this.userSelected), 1);
   }
 

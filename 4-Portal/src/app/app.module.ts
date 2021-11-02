@@ -16,6 +16,8 @@ import { DefaultLayoutComponent } from './layout/default-layout/default-layout.c
 import { FormsModule } from '@angular/forms';
 import { SettingsComponent } from './screens/settings/settings.component';
 import { DatabaseComponent } from './screens/database/database.component';
+import { DashboardComponent } from './screens/dashboard/dashboard.component';
+import { StatisticsComponent } from './screens/statistics/statistics.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import { DatabaseComponent } from './screens/database/database.component';
     DefaultLayoutComponent,
     SettingsComponent,
     DatabaseComponent,
+    DashboardComponent,
+    StatisticsComponent,
   ],
   imports: [
     HttpClientModule,

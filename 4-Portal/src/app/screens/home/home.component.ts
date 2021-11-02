@@ -16,6 +16,22 @@ export class HomeComponent implements OnInit {
     this.nav('login');
   }
 
+  gotoStats() {
+    this.nav('statistics');
+  }
+  gotoDatabase() {
+    this.nav('database');
+  }
+  gotoSettings() {
+    this.nav('settings');
+  }
+  gotoHome() {
+    this.nav('home');
+  }
+  gotoDashboard() {
+    this.nav('dashboard');
+  }
+
   private nav(destination: string) {
     this.router.navigate([destination]);
   }

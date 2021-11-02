@@ -6,6 +6,7 @@ import { HomeComponent } from './screens/home/home.component';
 import { LoginComponent } from './screens/login/login.component';
 import { RegisterComponent } from './screens/register/register.component';
 import { SettingsComponent } from './screens/settings/settings.component';
+import { StatisticsComponent } from './screens/statistics/statistics.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path: 'database',
     component: DatabaseComponent,
+  },
+  {
+    path: 'statistics',
+    component: StatisticsComponent,
   },
 ];
 

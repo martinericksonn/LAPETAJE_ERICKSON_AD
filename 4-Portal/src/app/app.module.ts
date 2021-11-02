@@ -14,7 +14,8 @@ import { NavbarComponent } from './layout/navbar/navbar.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { DefaultLayoutComponent } from './layout/default-layout/default-layout.component';
 import { FormsModule } from '@angular/forms';
-import { DashboardComponent } from './screens/home/dashboard/dashboard.component';
+import { SettingsComponent } from './screens/settings/settings.component';
+import { DatabaseComponent } from './screens/database/database.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { DashboardComponent } from './screens/home/dashboard/dashboard.component
     NavbarComponent,
     SidebarComponent,
     DefaultLayoutComponent,
-    DashboardComponent,
+    SettingsComponent,
+    DatabaseComponent,
   ],
   imports: [
     HttpClientModule,

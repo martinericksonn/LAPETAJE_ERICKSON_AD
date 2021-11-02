@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-table',
@@ -11,28 +10,21 @@ import { ElementRef, ViewChild } from '@angular/core';
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements OnInit {
-  searchValue: string = '';
-
-  @ViewChild('close', { static: true })
-  close: ElementRef | undefined;
-
   readonly PATH_ALL = '/user/all';
   readonly PATH_SEARCH = '/user/search/';
   readonly PATH_DELETE = '/user/';
   readonly PATH_REGISTER = '/user/register';
   readonly PATH_EDIT = '/user/';
 
-  apiResult = Object.keys;
   users: any[] = [];
   userSelected: any;
 
+  searchValue: string = '';
   requestResult = '';
   isEmptySearch = false;
 
   page = 1;
   pageSize = 10;
-
-  closeResult: string | undefined;
 
   constructor(private api: HttpClient, private modalService: NgbModal) {}
 
@@ -44,19 +36,21 @@ export class TableComponent implements OnInit {
     this.userSelected = row;
   }
 
+  openVerticallyCentered(content: any) {
+    this.modalService.open(content, { centered: true });
+    this.clearFields();
+  }
+
   async delete(): Promise<any> {
     await this.api
       .delete(environment.API_URL + this.PATH_DELETE + this.userSelected.id)
       .toPromise();
-    this.displayAllUsers();
+
+    this.users.splice(this.users.indexOf(this.userSelected), 1);
   }
 
   async ngOnInit() {
     this.displayAllUsers();
-  }
-
-  async searchClear() {
-    this.isEmptySearch = false;
   }
 
   async search(query: string) {
@@ -64,6 +58,9 @@ export class TableComponent implements OnInit {
     this.getResult(await this.getSearch(query));
   }
 
+  // private async searchClear() {
+  //   this.isEmptySearch = false;
+  // }
   private async displayAllUsers() {
     this.getResult(await this.getUsers());
   }
@@ -103,24 +100,11 @@ export class TableComponent implements OnInit {
 
   openSuc = false;
 
-  openSuccessModal(content: any) {
+  private openSuccessModal(content: any) {
     if (this.openSuc) {
       this.openVerticallyCentered(content);
     }
   }
-
-  openVerticallyCentered(content: any) {
-    this.modalService.open(content, { centered: true });
-    this.clearFields();
-  }
-
-  registerForm: FormGroup = new FormGroup({
-    fcName: new FormControl('', Validators.required),
-    fcAge: new FormControl('', Validators.min(1)),
-    fcEmail: new FormControl('', Validators.required),
-    fcPassword: new FormControl('', Validators.required),
-    fcPassword2: new FormControl('', Validators.required),
-  });
 
   async createAccount(suc: any, modal: any) {
     if (!this.isFormValid()) return;
@@ -138,19 +122,25 @@ export class TableComponent implements OnInit {
     this.createAccountResult(result, suc, modal);
   }
 
-  closeModal(modal: any) {
+  registerForm: FormGroup = new FormGroup({
+    fcName: new FormControl('', Validators.required),
+    fcAge: new FormControl('', Validators.min(1)),
+    fcEmail: new FormControl('', Validators.required),
+    fcPassword: new FormControl('', Validators.required),
+    fcPassword2: new FormControl('', Validators.required),
+  });
+
+  private closeModal(modal: any) {
     modal.click();
   }
   private createAccountResult(result: any, suc?: any, modal?: any) {
     if (result.success) {
       this.openSuc = true;
       this.openSuccessModal(suc);
-      console.log('suc');
       this.closeModal(modal);
       this.clearFields();
       this.displayAllUsers();
     } else {
-      console.log('fuc');
       this.openSuc = false;
       this.requestResult = result.data;
       console.log(result.data);
@@ -187,7 +177,7 @@ export class TableComponent implements OnInit {
       .toPromise();
   }
 
-  map_to_object(map: any) {
+  private map_to_object(map: any) {
     const out = Object.create(null);
     map.forEach((value: any, key: string | number) => {
       if (value instanceof Map) {
@@ -198,6 +188,7 @@ export class TableComponent implements OnInit {
     });
     return out;
   }
+
   private formToJson(): any {
     var attributes = new Map<string, any>();
 

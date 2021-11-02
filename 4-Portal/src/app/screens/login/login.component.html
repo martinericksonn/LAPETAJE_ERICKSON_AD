@@ -1,10 +1,10 @@
 <div class="flex-row main-content d-flex justify-content-center align-items-center m-auto ">
     <div class="hello_image ">
-        <img src="assets/Hello.png " alt="Hello " border="0 ">
+        <img src="assets/page-images/login.png " alt="Hello " border="0 ">
     </div>
     <div class="card">
         <form class="m-3">
-            <h1 font-weight-bold class="p-3 text-center">Hello World</h1>
+            <h2 class="p-3 text-center">Sign In</h2>
             <div class="form-group m-3">
                 <label for="exampleInputEmail1">Email</label>
                 <input [formControl]="fcEmail" type="email" class="form-control">
@@ -18,10 +18,21 @@
                 <div style="height: 50px;">
                     <p class="text-center error-msg">{{requestResult}}</p>
                 </div>
-                <button onclick="return false" (click)="login()" type="login" class=" ms-3 me-3 login-btn btn btn-primary btn-block">Login</button>
+                <button onclick="return false" (click)="login()" type="login" class=" ms-3 me-3 login-btn btn btn-outline-primary btn-block">Login</button>
                 <hr class='ms-3 me-3'>
                 <a (click)="gotoRegister()" class="link-primary m-auto">Create an Account</a>
             </div>
         </form>
     </div>
 </div>
+<!-- Footer -->
+<footer class="page-footer font-small blue">
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 Copyright:
+        <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+
+</footer>
+<!-- Footer -->

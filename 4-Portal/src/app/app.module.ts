@@ -18,6 +18,7 @@ import { SettingsComponent } from './screens/settings/settings.component';
 import { DatabaseComponent } from './screens/database/database.component';
 import { DashboardComponent } from './screens/dashboard/dashboard.component';
 import { StatisticsComponent } from './screens/statistics/statistics.component';
+import { FooterComponent } from './layout/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { StatisticsComponent } from './screens/statistics/statistics.component';
     DatabaseComponent,
     DashboardComponent,
     StatisticsComponent,
+    FooterComponent,
   ],
   imports: [
     HttpClientModule,

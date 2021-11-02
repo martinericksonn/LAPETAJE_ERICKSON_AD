@@ -9,7 +9,7 @@
             search</button>
     </div>
 
-    <label class="btn btn-primary" (click)="openVerticallyCentered(addUser)">
+    <label class="btn btn-primary" (click)="centeredModal(addUser)">
         <img src="assets/add-user.png" alt="edit button"/> Add user
     </label>
 </div>
@@ -31,10 +31,10 @@
                 <td style="width: 40% ">{{ user.email }}</td>
                 <td style="width: 20% ">
                     <div class="btn-group btn-group-toggle " data-toggle="buttons ">
-                        <label class="btn btn-option " (click)="rowSelected(user) " (click)="openVerticallyCentered(content) ">
+                        <label class="btn btn-option " (click)="rowSelected(user) " (click)="centeredModal(content) ">
                                 <img src="assets/edit.png " alt="edit button "  />
                             </label>
-                        <label class="btn btn-option " (click)="rowSelected(user);" (click)="openVerticallyCentered(deleteUserModal) ">
+                        <label class="btn btn-option " (click)="rowSelected(user);" (click)="centeredModal(deleteUserModal) ">
                                 <img src="assets/delete.png " alt="edit button " />
                             </label>
                     </div>
@@ -50,9 +50,8 @@
     </div>
 </div>
 
-<div *ngIf="isEmptySearch ">
-
-    <p>empty search</p>
+<div *ngIf="isEmptySearch " class="search-result d-flex align-items-center justify-content-center">
+    <h3><span class="text-black">No result found</span> </h3>
 </div>
 
 <ng-template #content let-modal>
@@ -105,7 +104,7 @@
     </div>
     <div class="modal-footer ">
         <button type="button " class="btn btn-outline-success " (click)="modal.close( 'Close click')">Cancel </button>
-        <button type="button " class="btn btn-outline-danger " (click)="modal.close( 'Close click') " (click)="openVerticallyCentered(success);  delete()"> Delete</button>
+        <button type="button " class="btn btn-outline-danger " (click)="modal.close( 'Close click') " (click)="centeredModal(success);  delete()"> Delete</button>
     </div>
 </ng-template>
 
@@ -117,8 +116,16 @@
       </button>
     </div>
     <div class="modal-body ">
-        <h6> User<b> </b>is successfully deleted
-        </h6>
+        <div *ngIf="successAction == 'registered'">
+            <h6> User <strong>{{successUsername}}</strong> is successfully {{successAction}}
+            </h6>
+        </div>
+        <div *ngIf="successAction != 'registered'">
+
+            <h6> User <strong>{{userSelected.name}}</strong> is successfully {{successAction}}
+            </h6>
+        </div>
+
     </div>
     <div class="modal-footer ">
         <button type="button " class="btn btn-outline-success " (click)="modal.close( 'Close click') ">Ok</button>
@@ -167,4 +174,3 @@
     </div>
 
 </ng-template>
-<!-- openSuc? modal.close()  -->

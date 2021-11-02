@@ -19,14 +19,20 @@ export class TableComponent implements OnInit {
   users: any[] = [];
   userSelected: any;
 
-  searchValue: string = '';
+  searchValue = '';
   requestResult = '';
+  successAction = '';
+  successUsername = '';
   isEmptySearch = false;
 
   page = 1;
   pageSize = 10;
 
   constructor(private api: HttpClient, private modalService: NgbModal) {}
+
+  ngOnInit() {
+    this.displayAllUsers();
+  }
 
   clearSearch() {
     this.searchValue = '';
@@ -36,7 +42,7 @@ export class TableComponent implements OnInit {
     this.userSelected = row;
   }
 
-  openVerticallyCentered(content: any) {
+  centeredModal(content: any) {
     this.modalService.open(content, { centered: true });
     this.clearFields();
   }
@@ -46,23 +52,33 @@ export class TableComponent implements OnInit {
       .delete(environment.API_URL + this.PATH_DELETE + this.userSelected.id)
       .toPromise();
 
+    this.successAction = `deleted`;
     this.users.splice(this.users.indexOf(this.userSelected), 1);
-  }
-
-  async ngOnInit() {
-    this.displayAllUsers();
   }
 
   async search(query: string) {
     if (query.trim() == '') return;
-    this.getResult(await this.getSearch(query));
+    this.searchResult(await this.getSearch(query));
   }
 
-  // private async searchClear() {
-  //   this.isEmptySearch = false;
-  // }
+  async createAccount(suc: any, modal: any) {
+    if (!this.isFormValid()) return;
+    if (!this.isPasswordEqual()) return;
+
+    var result: any = await this.registerUser();
+    this.processResult(result, suc, modal);
+  }
+
+  async updateUser(suc: any, modal: any) {
+    var attributes = this.formToJson();
+
+    if (attributes == null) return;
+    var result: any = await this.editUser(attributes);
+    this.processResult(result, suc, modal);
+  }
+
   private async displayAllUsers() {
-    this.getResult(await this.getUsers());
+    this.searchResult(await this.getUsers());
   }
 
   private async getSearch(term: string): Promise<any> {
@@ -79,7 +95,7 @@ export class TableComponent implements OnInit {
     return await this.api.get(environment.API_URL + this.PATH_ALL).toPromise();
   }
 
-  private getResult(result: any) {
+  private searchResult(result: any) {
     if (result.success) {
       this.users = this.toArray(result.data);
       this.isEmptySearch = false;
@@ -100,43 +116,20 @@ export class TableComponent implements OnInit {
 
   openSuc = false;
 
-  private openSuccessModal(content: any) {
+  private openModal(content: any) {
     if (this.openSuc) {
-      this.openVerticallyCentered(content);
+      this.centeredModal(content);
     }
   }
-
-  async createAccount(suc: any, modal: any) {
-    if (!this.isFormValid()) return;
-    if (!this.isPasswordEqual()) return;
-
-    var result: any = await this.registerUser();
-    this.createAccountResult(result, suc, modal);
-  }
-
-  async updateUser(suc: any, modal: any) {
-    var attributes = this.formToJson();
-
-    if (attributes == null) return;
-    var result: any = await this.editUser(attributes);
-    this.createAccountResult(result, suc, modal);
-  }
-
-  registerForm: FormGroup = new FormGroup({
-    fcName: new FormControl('', Validators.required),
-    fcAge: new FormControl('', Validators.min(1)),
-    fcEmail: new FormControl('', Validators.required),
-    fcPassword: new FormControl('', Validators.required),
-    fcPassword2: new FormControl('', Validators.required),
-  });
 
   private closeModal(modal: any) {
     modal.click();
   }
-  private createAccountResult(result: any, suc?: any, modal?: any) {
+
+  private processResult(result: any, suc?: any, modal?: any) {
     if (result.success) {
       this.openSuc = true;
-      this.openSuccessModal(suc);
+      this.openModal(suc);
       this.closeModal(modal);
       this.clearFields();
       this.displayAllUsers();
@@ -146,6 +139,14 @@ export class TableComponent implements OnInit {
       console.log(result.data);
     }
   }
+
+  registerForm: FormGroup = new FormGroup({
+    fcName: new FormControl('', Validators.required),
+    fcAge: new FormControl('', Validators.min(1)),
+    fcEmail: new FormControl('', Validators.required),
+    fcPassword: new FormControl('', Validators.required),
+    fcPassword2: new FormControl('', Validators.required),
+  });
 
   private clearFields() {
     this.registerForm.controls.fcName.reset();
@@ -158,6 +159,8 @@ export class TableComponent implements OnInit {
   }
 
   private async registerUser(): Promise<any> {
+    this.successAction = `registered`;
+    this.successUsername = this.registerForm.value.fcName;
     return await this.api
       .post(environment.API_URL + this.PATH_REGISTER, {
         name: this.registerForm.value.fcName,
@@ -169,6 +172,7 @@ export class TableComponent implements OnInit {
   }
 
   private async editUser(attributes: any): Promise<any> {
+    this.successAction = `updated`;
     return await this.api
       .patch(
         environment.API_URL + this.PATH_EDIT + this.userSelected.id,

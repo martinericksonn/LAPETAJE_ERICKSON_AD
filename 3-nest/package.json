@@ -82,7 +82,7 @@
         "coverageDirectory": "../coverage",
         "testEnvironment": "node"
     },
-    "main": "dist/src/main.js",
+    "main": "dist/main.js",
     "engines": {
         "node": "10"
     }

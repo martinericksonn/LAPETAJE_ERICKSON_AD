@@ -16,7 +16,7 @@ const createNestServer = async (expressInstance) => {
 exports.createNestServer = createNestServer;
 async function bootstrap() {
     var admin = require('firebase-admin');
-    var serviceAccount = require('./key.json');
+    var serviceAccount = require('./app.key.json');
     admin.initializeApp({
         credential: admin.credential.cert(serviceAccount),
     });

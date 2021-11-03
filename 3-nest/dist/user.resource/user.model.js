@@ -13,14 +13,14 @@ class User {
             this.id = helper_1.Helper.generateUID();
             this.name = user;
             this.age = age;
-            this.email = email;
+            this.email = email.toLowerCase();
             this.password = password;
         }
         else {
             this.id = user.id ? user.id : helper_1.Helper.generateUID();
             this.name = user.name.trim();
             this.age = user.age;
-            this.email = user.email.trim();
+            this.email = user.email.trim().toLowerCase();
             this.password = user.password.trim();
         }
     }
@@ -75,7 +75,9 @@ class SystemMessage {
                 return 'Sorry this email is not a valid email';
             case 509:
                 return 'Sorry this age is not a valid age';
-            case 509:
+            case 510:
+                return 'Sorry this name is not a valid name';
+            case 511:
                 return 'No result found';
             default:
                 return 'Unknown request';

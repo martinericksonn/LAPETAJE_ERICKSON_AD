@@ -12,6 +12,7 @@ export class UserService {
     try {
       Verification.verifyCredentials(newUser, 'REGISTER');
       Verification.verifyAge(newUser);
+      Verification.verifyName(newUser);
       await Verification.verifyEmail(newUser);
 
       return Process.registerUser(newUser);
@@ -38,6 +39,7 @@ export class UserService {
     try {
       Verification.verifyCredentials(user, 'REGISTER');
       Verification.verifyAge(user);
+      Verification.verifyName(user);
       await Verification.verifyID(id);
       await Verification.verifyEmail(user);
 
@@ -51,6 +53,7 @@ export class UserService {
     try {
       Verification.verifyCredentials(user, 'PATCH');
       Verification.verifyAge(user);
+      Verification.verifyName(user);
       await Verification.verifyID(id);
       await Verification.verifyEmail(user, id);
 
@@ -70,11 +73,11 @@ export class UserService {
     }
   }
 
-  async loginUser(newUser: any): Promise<CRUDReturn> {
+  async loginUser(user: any): Promise<CRUDReturn> {
     try {
-      Verification.verifyCredentials(newUser, 'LOGIN');
+      Verification.verifyCredentials(user, 'LOGIN');
 
-      return await Process.loginUser(newUser);
+      return await Process.loginUser(user);
     } catch (error) {
       return error;
     }

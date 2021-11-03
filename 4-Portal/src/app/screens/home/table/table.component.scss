@@ -1,0 +1,61 @@
+th,
+td {
+    padding: 12px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+th {
+    font-weight: normal;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+}
+
+.ngb {
+    margin-left: 4vh;
+}
+
+.btn-option:hover,
+.btn-option:focus,
+.btn-option:active,
+.btn-option.active,
+.open>.dropdown-toggle.btn-option {
+    border-color: grey;
+    /*set the color you want here*/
+}
+
+.bg-primary {
+    background-color: red !important;
+}
+
+.below-navbar {
+    margin: 4vh;
+    width: auto;
+}
+
+.btn-clr {
+    margin-right: 10px;
+}
+
+.dark-modal .modal-content {
+    background-color: #292b2c;
+    color: white;
+}
+
+.dark-modal .close {
+    color: white;
+}
+
+.light-blue-backdrop {
+    background-color: #5cb3fd;
+}
+
+.close {
+    outline: none;
+    border: none;
+    background-color: transparent;
+}
+
+.search-result {
+    height: 30rem;
+}

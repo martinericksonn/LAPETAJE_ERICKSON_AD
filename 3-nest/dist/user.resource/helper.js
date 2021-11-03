@@ -37,7 +37,7 @@ class Helper {
             users.forEach(async (user) => {
                 try {
                     await Verification.verifyEmail(user);
-                    await firebase_database_1.DatabaseQuery.commit(user.id, user);
+                    await firebase_database_1.DatabaseQuery.commit(user);
                 }
                 catch (error) { }
                 result.set(user.id, user);
@@ -103,17 +103,20 @@ class Verification {
         }
     }
     static async verifyEmail(newUser, id) {
+        const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
         if (!newUser.email)
             return;
-        if (!(newUser.email.trim() && newUser.email.includes('@')))
+        if (!(newUser.email.trim() && emailRegexp.test(newUser.email)))
             throw this.systemMessage.error(508);
         if (await firebase_database_1.DatabaseQuery.alreadyExistEmail(newUser.email, id))
             throw this.systemMessage.error(503);
     }
+    static verifyName(newUser) {
+    }
     static verifyAge(newUser) {
         if (!newUser.age)
             return;
-        if (newUser.age < 0)
+        if (!(newUser.age > 0 && newUser.age < 100))
             throw this.systemMessage.error(509);
     }
     static async verifyID(id) {
@@ -130,7 +133,7 @@ class Process {
     }
     static registerUser(newUser) {
         var user = new user_model_1.User(newUser);
-        return firebase_database_1.DatabaseQuery.commit(user.id, user);
+        return firebase_database_1.DatabaseQuery.commit(user);
     }
     static async getUser(id) {
         var user = await firebase_database_1.DatabaseQuery.getUser(id);
@@ -157,7 +160,7 @@ class Process {
     static async searchInUser(query) {
         var result = await firebase_database_1.DatabaseQuery.searchInUser(query);
         if (!result.length)
-            return this.systemMessage.error(509);
+            return this.systemMessage.error(511);
         return this.systemMessage.success(result);
     }
     static populateDatabase() {

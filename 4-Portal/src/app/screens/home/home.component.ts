@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home',
@@ -9,38 +8,28 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  readonly API_PATH = '/user/all';
+  constructor(private router: Router) {}
 
-  apiResult = Object.keys;
-  data: any;
-  requestResult = '';
-
-  constructor(private router: Router, private api: HttpClient) {}
-
-  async ngOnInit() {
-    this.displayAllUsers();
-  }
+  ngOnInit(): void {}
 
   gotoLogin() {
     this.nav('login');
   }
 
-  private async displayAllUsers() {
-    var result: any = await this.displayAll();
-    this.displayResult(result);
+  gotoStats() {
+    this.nav('statistics');
   }
-
-  private async displayAll(): Promise<any> {
-    return await this.api.get(environment.API_URL + this.API_PATH).toPromise();
+  gotoDatabase() {
+    this.nav('database');
   }
-
-  private displayResult(result: any) {
-    if (result.success) {
-      this.nav('home');
-      this.data = result.data;
-    } else {
-      this.requestResult = result.data;
-    }
+  gotoSettings() {
+    this.nav('settings');
+  }
+  gotoHome() {
+    this.nav('home');
+  }
+  gotoDashboard() {
+    this.nav('dashboard');
   }
 
   private nav(destination: string) {

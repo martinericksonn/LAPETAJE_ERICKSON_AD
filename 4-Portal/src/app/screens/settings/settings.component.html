@@ -1,0 +1,58 @@
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <div class="d-flex flex-column vh-100 flex-shrink-0 p-3 text-white bg-dark" style="width: 250px">
+            <a href="/" class="
+              d-flex
+              align-items-center
+              mb-3 mb-md-0
+              me-md-auto
+              text-white text-decoration-none
+            ">
+                <svg class="bi me-2" width="40" height="32"></svg>
+                <span class="fs-4">Hi! Martin</span>
+            </a>
+            <hr />
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li>
+                    <a (click)="gotoDashboard()" class="nav-link text-white">
+                        <i class="fa fa-dashboard"></i><span class="ms-2">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a (click)="gotoHome()" class="nav-link text-white" aria-current="page">
+                        <i class="fa fa-home"></i><span class="ms-2">Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="gotoStats()" class="nav-link text-white">
+                        <i class="fa fa-first-order"></i><span class="ms-2">Statistics</span>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="gotoDatabase()" class="nav-link text-white">
+                        <i class="fa fa-cog"></i><span class="ms-2">Database</span>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="gotoSettings()" class="nav-link active">
+                        <i class="fa fa-bookmark"></i><span class="ms-2">Settings</span>
+                    </a>
+                </li>
+            </ul>
+            <hr />
+            <a (click)="gotoLogin()" class="nav-link text-white">
+                <img src="assets/log-out.png" /> <i class="fa fa-bookmark"></i><span class="ms-2">Logout</span>
+            </a>
+        </div>
+    </div>
+    <div id="page-content-wrapper">
+        <div class="page-content">
+            <app-navbar></app-navbar>
+            <div class="d-flex flex-column align-items-center justify-content-center" style="height: 85vh; margin:auto">
+                <img src="assets/page-images/programmer.png" alt="programmer image" style="width:50vh">
+                <h6>Hi, Martin is currently building this page. </h6>
+                <h6> Report if found any bugs, highly appreciated, thanks!</h6>
+            </div>
+        </div>
+    </div>
+</div>

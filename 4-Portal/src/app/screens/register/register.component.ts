@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-register',
@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
   }
 
   private createAccountResult(result: any) {
-    this.requestResult = this.registerForm.value.fcName;
+    // this.requestResult = this.registerForm.value.fcName;
     if (result.success) {
       this.nav('home');
     } else {

@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DashboardComponent } from './screens/dashboard/dashboard.component';
+import { DatabaseComponent } from './screens/database/database.component';
 import { HomeComponent } from './screens/home/home.component';
 import { LoginComponent } from './screens/login/login.component';
 import { RegisterComponent } from './screens/register/register.component';
+import { SettingsComponent } from './screens/settings/settings.component';
+import { StatisticsComponent } from './screens/statistics/statistics.component';
 
 const routes: Routes = [
   {
@@ -12,6 +16,7 @@ const routes: Routes = [
   {
     path: '',
     component: LoginComponent,
+    //component: LoginComponent,
   },
   {
     path: 'login',
@@ -20,6 +25,22 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+  },
+  {
+    path: 'database',
+    component: DatabaseComponent,
+  },
+  {
+    path: 'statistics',
+    component: StatisticsComponent,
   },
 ];
 

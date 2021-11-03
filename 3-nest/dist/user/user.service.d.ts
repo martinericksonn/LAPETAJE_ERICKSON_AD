@@ -7,6 +7,6 @@ export declare class UserService {
     putUser(id: string, user: any): Promise<CRUDReturn>;
     patchUser(id: string, user: any): Promise<CRUDReturn>;
     deleteUser(id: string): Promise<CRUDReturn>;
-    loginUser(newUser: any): Promise<CRUDReturn>;
+    loginUser(user: any): Promise<CRUDReturn>;
     searchTerm(query: any): Promise<CRUDReturn> | String[];
 }

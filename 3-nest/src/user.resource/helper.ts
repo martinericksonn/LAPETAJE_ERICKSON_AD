@@ -47,7 +47,7 @@ export class Helper {
         try {
           await Verification.verifyEmail(user);
 
-          await DatabaseQuery.commit(user.id, user);
+          await DatabaseQuery.commit(user);
         } catch (error) {}
 
         result.set(user.id, user);
@@ -121,18 +121,27 @@ export class Verification {
   }
 
   static async verifyEmail(newUser: any, id?: string) {
+    const emailRegexp =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
     if (!newUser.email) return;
 
-    if (!(newUser.email.trim() && newUser.email.includes('@')))
+    if (!(newUser.email.trim() && emailRegexp.test(newUser.email)))
       throw this.systemMessage.error(508);
 
     if (await DatabaseQuery.alreadyExistEmail(newUser.email, id))
       throw this.systemMessage.error(503);
   }
 
+  static verifyName(newUser: any) {
+    // const nameRegexp =
+    //   /^[a-z\u00C0-\u02AB'´`]+\.?\s([a-z\u00C0-\u02AB'´`]+\.?\s?)+$/;
+    // if (!nameRegexp.test(newUser.name)) throw this.systemMessage.error(510);
+  }
+
   static verifyAge(newUser: any) {
     if (!newUser.age) return;
-    if (newUser.age < 0) throw this.systemMessage.error(509);
+    if (!(newUser.age > 0 && newUser.age < 100))
+      throw this.systemMessage.error(509);
   }
 
   static async verifyID(id: string) {
@@ -152,7 +161,7 @@ export class Process {
   static registerUser(newUser: any) {
     var user = new User(newUser);
 
-    return DatabaseQuery.commit(user.id, user);
+    return DatabaseQuery.commit(user);
   }
 
   static async getUser(id: any) {
@@ -187,7 +196,7 @@ export class Process {
   static async searchInUser(query: string) {
     var result = await DatabaseQuery.searchInUser(query);
 
-    if (!result.length) return this.systemMessage.error(509);
+    if (!result.length) return this.systemMessage.error(511);
     return this.systemMessage.success(result);
   }
 

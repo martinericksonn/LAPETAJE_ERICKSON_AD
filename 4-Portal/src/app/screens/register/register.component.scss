@@ -1,27 +1,28 @@
 .main-content {
-    height: 100vh;
+    height: 93vh;
 }
 
 img {
-    width: 450px;
+    width: 560px;
     height: auto
 }
 
-.login-btn {
-    background-color: #4E73B9;
-    border-color: #4E73B9;
-    color: white;
-}
-
-.link-primary {
-    color: #4E73B9;
-}
-
 .card {
-    width: 380px;
+    width: 22rem;
 }
 
 .error-msg {
     font-size: 14px;
     color: red
+}
+
+@media (max-width: 1002px) {
+    .flex-row {
+        flex-direction: column !important;
+    }
+    img {
+        width: 250px;
+        height: auto;
+        margin-top: 100px;
+    }
 }

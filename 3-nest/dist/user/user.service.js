@@ -20,6 +20,7 @@ let UserService = class UserService {
         try {
             helper_1.Verification.verifyCredentials(newUser, 'REGISTER');
             helper_1.Verification.verifyAge(newUser);
+            helper_1.Verification.verifyName(newUser);
             await helper_1.Verification.verifyEmail(newUser);
             return helper_1.Process.registerUser(newUser);
         }
@@ -43,6 +44,7 @@ let UserService = class UserService {
         try {
             helper_1.Verification.verifyCredentials(user, 'REGISTER');
             helper_1.Verification.verifyAge(user);
+            helper_1.Verification.verifyName(user);
             await helper_1.Verification.verifyID(id);
             await helper_1.Verification.verifyEmail(user);
             return await helper_1.Process.overwriteUser(id, user);
@@ -55,6 +57,7 @@ let UserService = class UserService {
         try {
             helper_1.Verification.verifyCredentials(user, 'PATCH');
             helper_1.Verification.verifyAge(user);
+            helper_1.Verification.verifyName(user);
             await helper_1.Verification.verifyID(id);
             await helper_1.Verification.verifyEmail(user, id);
             return await helper_1.Process.updateUser(user, id);
@@ -72,10 +75,10 @@ let UserService = class UserService {
             return error;
         }
     }
-    async loginUser(newUser) {
+    async loginUser(user) {
         try {
-            helper_1.Verification.verifyCredentials(newUser, 'LOGIN');
-            return await helper_1.Process.loginUser(newUser);
+            helper_1.Verification.verifyCredentials(user, 'LOGIN');
+            return await helper_1.Process.loginUser(user);
         }
         catch (error) {
             return error;

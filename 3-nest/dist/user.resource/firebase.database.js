@@ -8,7 +8,7 @@ const admin = require('firebase-admin');
 const systemMessage = new user_model_1.SystemMessage();
 const users = 'users';
 class DatabaseQuery {
-    static async commit(id, user) {
+    static async commit(user) {
         try {
             var db = admin.firestore();
             await db.collection(users).doc(user.id).set(user.toJsonPass());
@@ -43,7 +43,9 @@ class DatabaseQuery {
         try {
             var db = admin.firestore();
             const userRef = db.collection(users);
-            const userResults = await userRef.where('email', '==', email).get();
+            const userResults = await userRef
+                .where('email', '==', email.toLowerCase())
+                .get();
             if (!userResults.empty && id)
                 for (const user of userResults.docs) {
                     if (user.id == id)
@@ -133,10 +135,19 @@ class DatabaseQuery {
             var populatedData = [];
             userRef.forEach((doc) => {
                 var user = new user_model_1.User(doc.data());
-                for (var attributename in doc.data())
-                    if (user[attributename] == term) {
+                for (var attributename in doc.data()) {
+                    if (user['id'] == term) {
                         populatedData.push(user.toJson());
+                        break;
                     }
+                    var docData = `${user[attributename]}`.toLowerCase();
+                    if (attributename != 'password' &&
+                        attributename != 'id' &&
+                        docData.includes(term.toLowerCase())) {
+                        populatedData.push(user.toJson());
+                        break;
+                    }
+                }
             });
             return populatedData;
         }

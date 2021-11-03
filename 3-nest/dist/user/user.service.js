@@ -21,6 +21,7 @@ let UserService = class UserService {
             helper_1.Verification.verifyCredentials(newUser, 'REGISTER');
             helper_1.Verification.verifyAge(newUser);
             helper_1.Verification.verifyName(newUser);
+            helper_1.Verification.verifyPassword(newUser);
             await helper_1.Verification.verifyEmail(newUser);
             return helper_1.Process.registerUser(newUser);
         }
@@ -45,6 +46,7 @@ let UserService = class UserService {
             helper_1.Verification.verifyCredentials(user, 'REGISTER');
             helper_1.Verification.verifyAge(user);
             helper_1.Verification.verifyName(user);
+            helper_1.Verification.verifyPassword(user);
             await helper_1.Verification.verifyID(id);
             await helper_1.Verification.verifyEmail(user);
             return await helper_1.Process.overwriteUser(id, user);
@@ -58,6 +60,7 @@ let UserService = class UserService {
             helper_1.Verification.verifyCredentials(user, 'PATCH');
             helper_1.Verification.verifyAge(user);
             helper_1.Verification.verifyName(user);
+            helper_1.Verification.verifyPassword(user);
             await helper_1.Verification.verifyID(id);
             await helper_1.Verification.verifyEmail(user, id);
             return await helper_1.Process.updateUser(user, id);

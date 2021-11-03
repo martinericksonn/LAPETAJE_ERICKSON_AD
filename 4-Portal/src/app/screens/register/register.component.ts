@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from 'src/environments/environment.prod';
 
 @Component({
@@ -10,7 +11,8 @@ import { environment } from 'src/environments/environment.prod';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  readonly API_PATH = '/user/register';
+  readonly PATH_REGISTER = '/user/register';
+  successUsername = '';
 
   requestResult = '';
   registerForm: FormGroup = new FormGroup({
@@ -21,34 +23,54 @@ export class RegisterComponent implements OnInit {
     fcPassword2: new FormControl('', Validators.required),
   });
 
-  constructor(private router: Router, private api: HttpClient) {}
+  constructor(
+    private modalService: NgbModal,
+    private router: Router,
+    private api: HttpClient
+  ) {}
 
   ngOnInit(): void {}
 
-  async createAccount() {
+  async createAccount(modal: any) {
     if (!this.isFormValid()) return;
     if (!this.isPasswordEqual()) return;
 
     var result: any = await this.registerUser();
-    this.createAccountResult(result);
+    this.createAccountResult(result, modal);
   }
 
   gotoLogin() {
     this.nav('login');
   }
 
-  private createAccountResult(result: any) {
-    // this.requestResult = this.registerForm.value.fcName;
+  centeredModal(content: any) {
+    this.modalService.open(content, { centered: true });
+  }
+
+  private clearFields() {
+    this.registerForm.controls.fcName.reset();
+    this.registerForm.controls.fcAge.reset();
+    this.registerForm.controls.fcEmail.reset();
+    this.registerForm.controls.fcPassword.reset();
+    this.registerForm.controls.fcPassword2.reset();
+    this.registerForm.controls.fcPassword2.reset();
+    this.requestResult = '';
+  }
+
+  private createAccountResult(result: any, modal?: any) {
     if (result.success) {
-      this.nav('home');
+      this.successUsername = this.registerForm.value.fcName;
+      this.centeredModal(modal);
+      this.clearFields();
     } else {
       this.requestResult = result.data;
     }
   }
 
   private async registerUser(): Promise<any> {
+    this.successUsername = this.registerForm.value.fcName;
     return await this.api
-      .post(environment.API_URL + this.API_PATH, {
+      .post(environment.API_URL + this.PATH_REGISTER, {
         name: this.registerForm.value.fcName,
         email: this.registerForm.value.fcEmail,
         age: this.registerForm.value.fcAge,

@@ -78,6 +78,8 @@ class SystemMessage {
             case 510:
                 return 'Sorry this name is not a valid name';
             case 511:
+                return 'Password should be at least 6 characters';
+            case 512:
                 return 'No result found';
             default:
                 return 'Unknown request';

@@ -1,47 +1,48 @@
-/* You can add global styles to this file, and also import other style files */
-
-* {
-    margin: 0;
-    padding: 0;
-}
-
-html {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-}
-
-*,
-*:before,
-*:after {
-    -webkit-box-sizing: inherit;
-    -moz-box-sizing: inherit;
-    box-sizing: inherit;
-}
-
-body {
-    background-color: white;
-    font-family: 'calibri', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
-}
-
-.page-link:focus {
-    box-shadow: none !important;
-    border-color: transparent !important;
-}
-
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-}
-
-.bg-dark {
-    background-color: red !important;
-}
-
-// $theme-colors: ( primary: $purple);
+    /* You can add global styles to this file, and also import other style files */
+    
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    html {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    
+    *,
+    *:before,
+    *:after {
+        -webkit-box-sizing: inherit;
+        -moz-box-sizing: inherit;
+        box-sizing: inherit;
+    }
+    
+    body {
+        background-color: white;
+        font-family: 'calibri', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        min-width: 800px;
+    }
+    
+    .page-link:focus {
+        box-shadow: none !important;
+        border-color: transparent !important;
+    }
+    
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+    }
+    
+    .bg-dark {
+        background-color: red !important;
+    }
+    
+    // $theme-colors: ( primary: $purple);

@@ -30,7 +30,7 @@
                 <div style="height: 50px;">
                     <p class="text-center error-msg">{{requestResult}}</p>
                 </div>
-                <button (click)="createAccount()" type="submit " class="login-btn btn btn-outline-primary ms-3 me-3 ">Sign up</button>
+                <button (click)="createAccount(success)" type="submit " class="login-btn btn btn-outline-primary ms-3 me-3 ">Sign up</button>
                 <hr class=" ms-3 me-3 ">
                 <a href=" " (click)="gotoLogin()" class="link-primary m-auto ">Already have an Account? </a>
             </div>
@@ -38,3 +38,24 @@
     </div>
 </div>
 <app-footer></app-footer>
+
+
+<ng-template #success let-modal>
+    <div class=" modal-header ">
+        <h4 class="modal-title "><span class="text-success ">Register Success</span> </h4>
+        <button type="button " class="close " aria-label="Close " (click)="modal.dismiss( 'Cross click') ">
+        <span aria-hidden="true ">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body ">
+
+        <h6> Welcome! <strong>{{successUsername}}</strong>, Thank you for your time in exploring my AppsDev Midterm Project</h6>
+        <h6 class="text-danger fs-6"> <br>Please be ethical on modifying user data as it affect the system and the backend database.</h6>
+
+
+    </div>
+    <div class="modal-footer ">
+        <button type="button " class="btn btn-outline-primary " (click)="gotoLogin(); modal.close( 'Close click')">Login</button>
+        <button type="button " class="btn btn-outline-primary " (click)="modal.close( 'Close click') ">Not now</button>
+    </div>
+</ng-template>

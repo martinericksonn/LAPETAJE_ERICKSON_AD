@@ -113,6 +113,12 @@ class Verification {
     }
     static verifyName(newUser) {
     }
+    static verifyPassword(user) {
+        if (!user.password)
+            return;
+        if (user.password.length < 6)
+            throw this.systemMessage.error(511);
+    }
     static verifyAge(newUser) {
         if (!newUser.age)
             return;

@@ -13,6 +13,7 @@ export class UserService {
       Verification.verifyCredentials(newUser, 'REGISTER');
       Verification.verifyAge(newUser);
       Verification.verifyName(newUser);
+      Verification.verifyPassword(newUser);
       await Verification.verifyEmail(newUser);
 
       return Process.registerUser(newUser);
@@ -40,6 +41,7 @@ export class UserService {
       Verification.verifyCredentials(user, 'REGISTER');
       Verification.verifyAge(user);
       Verification.verifyName(user);
+      Verification.verifyPassword(user);
       await Verification.verifyID(id);
       await Verification.verifyEmail(user);
 
@@ -54,6 +56,7 @@ export class UserService {
       Verification.verifyCredentials(user, 'PATCH');
       Verification.verifyAge(user);
       Verification.verifyName(user);
+      Verification.verifyPassword(user);
       await Verification.verifyID(id);
       await Verification.verifyEmail(user, id);
 

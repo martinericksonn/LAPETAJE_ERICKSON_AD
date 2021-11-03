@@ -138,6 +138,11 @@ export class Verification {
     // if (!nameRegexp.test(newUser.name)) throw this.systemMessage.error(510);
   }
 
+  static verifyPassword(user: any) {
+    if (!user.password) return;
+    if (user.password.length < 6) throw this.systemMessage.error(511);
+  }
+
   static verifyAge(newUser: any) {
     if (!newUser.age) return;
     if (!(newUser.age > 0 && newUser.age < 100))

@@ -24,6 +24,7 @@ export class TableComponent implements OnInit {
   successAction = '';
   successUsername = '';
   isEmptySearch = false;
+  openSuccess = false;
 
   page = 1;
   pageSize = 10;
@@ -105,59 +106,6 @@ export class TableComponent implements OnInit {
     }
   }
 
-  private toArray(result: any): any[] {
-    var list = [];
-    for (var items in result) {
-      list.push(result[items]);
-    }
-
-    return list;
-  }
-
-  openSuc = false;
-
-  private openModal(content: any) {
-    if (this.openSuc) {
-      this.centeredModal(content);
-    }
-  }
-
-  private closeModal(modal: any) {
-    modal.click();
-  }
-
-  private processResult(result: any, suc?: any, modal?: any) {
-    if (result.success) {
-      this.openSuc = true;
-      this.openModal(suc);
-      this.closeModal(modal);
-      this.clearFields();
-      this.displayAllUsers();
-    } else {
-      this.openSuc = false;
-      this.requestResult = result.data;
-      console.log(result.data);
-    }
-  }
-
-  registerForm: FormGroup = new FormGroup({
-    fcName: new FormControl('', Validators.required),
-    fcAge: new FormControl('', Validators.min(1)),
-    fcEmail: new FormControl('', Validators.required),
-    fcPassword: new FormControl('', Validators.required),
-    fcPassword2: new FormControl('', Validators.required),
-  });
-
-  private clearFields() {
-    this.registerForm.controls.fcName.reset();
-    this.registerForm.controls.fcAge.reset();
-    this.registerForm.controls.fcEmail.reset();
-    this.registerForm.controls.fcPassword.reset();
-    this.registerForm.controls.fcPassword2.reset();
-    this.registerForm.controls.fcPassword2.reset();
-    this.requestResult = '';
-  }
-
   private async registerUser(): Promise<any> {
     this.successAction = `registered`;
     this.successUsername = this.registerForm.value.fcName;
@@ -181,11 +129,62 @@ export class TableComponent implements OnInit {
       .toPromise();
   }
 
-  private map_to_object(map: any) {
+  private toArray(result: any): any[] {
+    var list = [];
+    for (var items in result) {
+      list.push(result[items]);
+    }
+
+    return list;
+  }
+
+  private openModal(content: any) {
+    if (this.openSuccess) {
+      this.centeredModal(content);
+    }
+  }
+
+  private closeModal(modal: any) {
+    modal.click();
+  }
+
+  private processResult(result: any, suc?: any, modal?: any) {
+    if (result.success) {
+      this.openSuccess = true;
+      this.openModal(suc);
+      this.closeModal(modal);
+      this.clearFields();
+      this.displayAllUsers();
+    } else {
+      this.openSuccess = false;
+      this.requestResult = result.data;
+      console.log(result.data);
+    }
+  }
+
+  registerForm: FormGroup = new FormGroup({
+    fcName: new FormControl('', Validators.required),
+    fcAge: new FormControl('', Validators.min(1)),
+    fcEmail: new FormControl('', Validators.required),
+    fcPassword: new FormControl('', Validators.required),
+    fcPassword2: new FormControl('', Validators.required),
+  });
+
+  private clearFields() {
+    this.registerForm.controls.fcName.reset();
+    this.registerForm.controls.fcAge.reset();
+    this.registerForm.controls.fcEmail.reset();
+    this.registerForm.controls.fcPassword.reset();
+    this.registerForm.controls.fcPassword2.reset();
+    this.registerForm.controls.fcPassword2.reset();
+    this.requestResult = '';
+  }
+
+  private mapToObject(map: any) {
     const out = Object.create(null);
     map.forEach((value: any, key: string | number) => {
       if (value instanceof Map) {
-        out[key] = this.map_to_object(value);
+        out[key] = this.mapToObject(value);
       } else {
         out[key] = value;
       }
@@ -219,7 +218,7 @@ export class TableComponent implements OnInit {
       this.requestResult = 'empty fields';
       return null;
     }
-    return this.map_to_object(attributes);
+    return this.mapToObject(attributes);
   }
 
   private isPasswordEqual(): boolean {
@@ -227,7 +226,7 @@ export class TableComponent implements OnInit {
       this.registerForm.value['fcPassword'] !==
       this.registerForm.value['fcPassword2']
     ) {
-      this.requestResult = 'Password doesnt match!';
+      this.requestResult = 'Password does not match!';
       return false;
     }
 
@@ -237,7 +236,7 @@ export class TableComponent implements OnInit {
 
   private isFormValid(): boolean {
     if (!this.registerForm.valid) {
-      this.requestResult = 'invalid or missing credentials';
+      this.requestResult = 'Missing credentials';
       return false;
     }
     return true;

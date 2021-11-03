@@ -62,7 +62,7 @@ export class RegisterComponent implements OnInit {
       this.registerForm.value['fcPassword'] !==
       this.registerForm.value['fcPassword2']
     ) {
-      this.requestResult = 'Password doesnt match!';
+      this.requestResult = 'Passwords does not match!';
       return false;
     }
 
@@ -72,7 +72,7 @@ export class RegisterComponent implements OnInit {
 
   private isFormValid(): boolean {
     if (!this.registerForm.valid) {
-      this.requestResult = 'Invalid or missing credentials';
+      this.requestResult = 'Missing credentials';
       return false;
     }
     return true;

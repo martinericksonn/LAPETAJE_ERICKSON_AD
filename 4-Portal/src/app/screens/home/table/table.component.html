@@ -1,3 +1,4 @@
+<!-- SEARCH -->
 <div class="below-navbar d-flex flex-row justify-content-between">
     <div class="d-flex">
         <div class="input-group" style="width: 40vh">
@@ -8,11 +9,12 @@
         <button type="button" class="btn btn-outline-primary" (click)="ngOnInit() " (click)="clearSearch()">clear
             search</button>
     </div>
-
     <label class="btn btn-primary" (click)="centeredModal(addUser)">
         <img src="assets/add-user.png" alt="edit button"/> Add user
     </label>
 </div>
+
+<!-- TABLE -->
 <div class="body d-flex flex-column justify-content-center align-items-center p=20">
     <table class="table table-hover table-striped table-borderless">
         <thead>
@@ -50,6 +52,8 @@
     </div>
 </div>
 
+
+<!-- MODALS -->
 <div *ngIf="isEmptySearch " class="search-result d-flex flex-column align-items-center justify-content-center">
     <img src="assets/page-images/no_data.png" alt="no data found" style="width:30vh">
     <h6><span class="text-black">   No result found</span> </h6>

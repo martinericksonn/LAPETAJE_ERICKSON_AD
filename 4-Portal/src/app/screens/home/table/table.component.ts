@@ -53,7 +53,7 @@ export class TableComponent implements OnInit {
       .delete(environment.API_URL + this.PATH_DELETE + this.userSelected.id)
       .toPromise();
 
-    this.successAction = `delete`;
+    this.successAction = `deleted`;
     this.users.splice(this.users.indexOf(this.userSelected), 1);
   }
 
@@ -226,7 +226,7 @@ export class TableComponent implements OnInit {
       this.registerForm.value['fcPassword'] !==
       this.registerForm.value['fcPassword2']
     ) {
-      this.requestResult = 'Password does not match!';
+      this.requestResult = 'Passwords does not match!';
       return false;
     }
 
@@ -236,7 +236,7 @@ export class TableComponent implements OnInit {
 
   private isFormValid(): boolean {
     if (!this.registerForm.valid) {
-      this.requestResult = 'Missing credentials';
+      this.requestResult = 'Invalid or missing credentials';
       return false;
     }
     return true;

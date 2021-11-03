@@ -72,7 +72,7 @@ export class RegisterComponent implements OnInit {
 
   private isFormValid(): boolean {
     if (!this.registerForm.valid) {
-      this.requestResult = 'Missing credentials';
+      this.requestResult = 'Invalid or missing credentials';
       return false;
     }
     return true;

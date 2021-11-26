@@ -1,6 +1,46 @@
-<div class="flex-row main-content d-flex justify-content-center align-items-center ">
-    <h1>Login</h1>
+<div class="login flex-column d-flex justify-content-center align-items-center ">
+    <p class="error-msg text-white">Not yet registered? <b>Create an Account  </b></p>
+    <div class="container-box d-flex flex-column justify-content-start pb-4">
+        <h1 class="text-white header">Login</h1>
+        <p class="text-white">Invite your friends and enjoy Tabi together!</p>
+    </div>
+
+    <div class="container-box">
+
+        <button mat-flat-button class="button">Login with Google</button>
+    </div>
 
 
+    <div class="container pt-4 pb-4">
+        <div class="line">
+            <mat-divider></mat-divider>
+        </div>
+        <div class="text mat-typography text-white">or</div>
+        <div class="line">
+            <mat-divider></mat-divider>
+        </div>
+    </div>
+
+    <mat-form-field appearance="fill" class="forum  pt-2 ">
+        <mat-label>Enter your email</mat-label>
+        <input matInput placeholder="pat@example.com " [formControl]="email " required>
+
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="forum pt-.5 ">
+        <mat-label>Enter your password</mat-label>
+        <input matInput type="password">
+
+
+    </mat-form-field>
+
+    <div class="container-box  pt-1 pb-4">
+        <button mat-flat-button class="button">Login </button>
+    </div>
+    <p class="text-white pb-3">Not yet registered? <b>Create an Account  </b></p>
+
+    <div class="h-10 bg-primary">
+        <hr>
+    </div>
 
 </div>

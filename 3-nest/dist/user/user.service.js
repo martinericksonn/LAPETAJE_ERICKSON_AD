@@ -12,8 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const helper_1 = require("../user.resource/helper");
 const common_1 = require("@nestjs/common");
+const admin = require("firebase-admin");
 let UserService = class UserService {
     constructor() {
+        this.DB = admin.firestore();
         helper_1.Process.populateDatabase();
     }
     async register(newUser) {
@@ -24,15 +26,6 @@ let UserService = class UserService {
             helper_1.Verification.verifyPassword(newUser);
             await helper_1.Verification.verifyEmail(newUser);
             return helper_1.Process.registerUser(newUser);
-        }
-        catch (error) {
-            return error;
-        }
-    }
-    async getUser(id) {
-        try {
-            await helper_1.Verification.verifyID(id);
-            return helper_1.Process.getUser(id);
         }
         catch (error) {
             return error;
@@ -93,6 +86,33 @@ let UserService = class UserService {
         }
         catch (error) {
             return error;
+        }
+    }
+    async getOne(id) {
+        try {
+            var result = await this.DB.collection('users').doc(id).get();
+            if (result.exists) {
+                var temp = result.data();
+                temp['id'] = result.id;
+                return {
+                    success: true,
+                    data: temp,
+                };
+            }
+            else {
+                return {
+                    success: false,
+                    data: `User ${id} does not exist in database!`,
+                };
+            }
+        }
+        catch (error) {
+            console.log('Get one error');
+            console.log(error.message);
+            return {
+                success: false,
+                data: error.message,
+            };
         }
     }
 };

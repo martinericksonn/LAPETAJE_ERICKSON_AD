@@ -1,9 +1,12 @@
 import { Process, Verification } from '../user.resource/helper';
 import { CRUDReturn } from '../user.resource/crud_return.interface';
 import { Injectable } from '@nestjs/common';
+import * as admin from 'firebase-admin';
 
 @Injectable()
 export class UserService {
+  private DB = admin.firestore();
+
   constructor() {
     Process.populateDatabase();
   }
@@ -22,15 +25,15 @@ export class UserService {
     }
   }
 
-  async getUser(id: string): Promise<CRUDReturn> {
-    try {
-      await Verification.verifyID(id);
+  // async getUser(id: string): Promise<CRUDReturn> {
+  //   try {
+  //     await Verification.verifyID(id);
 
-      return Process.getUser(id);
-    } catch (error) {
-      return error;
-    }
-  }
+  //     return Process.getUser(id);
+  //   } catch (error) {
+  //     return error;
+  //   }
+  // }
 
   async getAllUser(): Promise<CRUDReturn> {
     return Process.getAllUsers();
@@ -91,6 +94,32 @@ export class UserService {
       return Process.searchInUser(query);
     } catch (error) {
       return error;
+    }
+  }
+
+  async getOne(id: string): Promise<CRUDReturn> {
+    try {
+      var result = await this.DB.collection('users').doc(id).get();
+      if (result.exists) {
+        var temp: {} = result.data();
+        temp['id'] = result.id;
+        return {
+          success: true,
+          data: temp,
+        };
+      } else {
+        return {
+          success: false,
+          data: `User ${id} does not exist in database!`,
+        };
+      }
+    } catch (error) {
+      console.log('Get one error');
+      console.log(error.message);
+      return {
+        success: false,
+        data: error.message,
+      };
     }
   }
 }

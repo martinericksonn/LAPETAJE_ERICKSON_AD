@@ -14,7 +14,7 @@ export const environment = {
     measurementId: 'G-VW66274HT1',
   },
   production: false,
-  API_URL: 'https://us-central1-appsdev-79e1d.cloudfunctions.net/api',
+  API_URL: 'http://localhost:5000/appsdev-79e1d/us-central1/api',
 };
 
 /*

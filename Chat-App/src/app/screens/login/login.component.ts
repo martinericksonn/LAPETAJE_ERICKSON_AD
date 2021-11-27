@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -21,7 +22,11 @@ export class LoginComponent implements OnInit {
 
   hide = true;
 
-  constructor(private router: Router, private api: HttpClient) {}
+  constructor(
+    private router: Router,
+    private api: HttpClient,
+    private auth: AuthService
+  ) {}
   readonly API_PATH = '/user/login';
 
   ngOnInit(): void {}
@@ -34,13 +39,32 @@ export class LoginComponent implements OnInit {
   //   return this.fcEmail.hasError('email') ? 'Not a valid email' : '';
   // }
 
-  private async loginUser(): Promise<any> {
-    return await this.api
-      .post(environment.API_URL + this.API_PATH, {
-        email: this.fcEmail.value,
-        password: this.fcPassword.value,
-      })
-      .toPromise();
+  // private async loginUser(): Promise<any> {
+  //   return await this.api
+  //     .post(environment.API_URL + this.API_PATH, {
+  //       email: this.fcEmail.value,
+  //       password: this.fcPassword.value,
+  //     })
+  //     .toPromise();
+  // }
+
+  async login(): Promise<any> {
+    try {
+      this.requestResult = '';
+      var result: any = await this.auth.login(
+        this.fcEmail.value,
+        this.fcPassword.value
+      );
+      console.log(result);
+      // this.nav('user');
+      if (!this.auth.authenticated) {
+        this.requestResult = result.data;
+      }else{
+        this.nav('user');
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   private loginResult(result: any) {
@@ -51,11 +75,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  async login() {
-    var result: any = await this.loginUser();
-    this.loginResult(result);
-    // this.nav('user');
-  }
+  // async login() {
+  //   var result: any = await this.loginUser();
+  //   this.loginResult(result);
+  //   // this.nav('user');
+  // }
   private nav(destination: string) {
     this.router.navigate([destination]);
   }

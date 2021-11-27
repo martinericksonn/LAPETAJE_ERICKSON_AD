@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
-import { User } from '../model/user.model';
+
 import { ApiService } from './api.service';
-import { CRUDReturn } from '../model/crud_return.interface';
+
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { User } from './user.model';
+import { CRUDReturn } from './crud_return.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -55,7 +57,7 @@ export class AuthService {
       } catch (error) {
         throw error;
       }
-      //get the data from the db regarding the user
+      // get the data from the db regarding the user
       var result: any = await this.api.get(`/user/${resultOfLogin.user?.uid}`);
       var output: CRUDReturn = { success: result.success, data: result.data };
       if (output.success === true) {

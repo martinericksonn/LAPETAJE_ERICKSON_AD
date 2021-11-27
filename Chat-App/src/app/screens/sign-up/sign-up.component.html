@@ -1,5 +1,5 @@
 <div class="login flex-column d-flex justify-content-center align-items-center ">
-    <p class="error-msg">Not yet registered? <b>Create an Account  </b></p>
+    <p class="error-msg">{{error}} </p>
     <div class="container-box d-flex flex-column justify-content-start pb-4">
         <h1 class="text-white header">Register</h1>
         <p class="text-white">Join the community of Tabians by signing up with Tabi!!</p>
@@ -20,35 +20,37 @@
             <mat-divider></mat-divider>
         </div>
     </div>
+    <form class="inputs container-box " [formGroup]="registerForm">
+        <mat-form-field class="form" appearance="fill" class="forum pt.5">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="pat@example.com " formControlName="fcEmail" required>
+        </mat-form-field>
 
-    <mat-form-field appearance="fill" class="forum pt.5">
-        <mat-label>Email</mat-label>
-        <input matInput placeholder="pat@example.com " [formControl]="email " required>
-    </mat-form-field>
+        <mat-form-field appearance="fill" class="forum  pt.5 ">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Enter name" formControlName="fcName" required>
+        </mat-form-field>
 
-    <mat-form-field appearance="fill" class="forum  pt.5 ">
-        <mat-label>Name</mat-label>
-        <input matInput placeholder="pat@example.com " [formControl]="email " required>
-    </mat-form-field>
+        <mat-form-field appearance="fill" class="forum  pt.5 ">
+            <mat-label>Age</mat-label>
+            <input matInput placeholder="Enter age " formControlName="fcAge" required>
+        </mat-form-field>
 
-    <mat-form-field appearance="fill" class="forum  pt.5 ">
-        <mat-label>Age</mat-label>
-        <input matInput placeholder="pat@example.com " [formControl]="email " required>
-    </mat-form-field>
+        <mat-form-field appearance="fill" class="forum pt-.5 ">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="fcPassword" required>
+        </mat-form-field>
 
-    <mat-form-field appearance="fill" class="forum pt-.5 ">
-        <mat-label>Password</mat-label>
-        <input matInput type="password">
-    </mat-form-field>
+        <mat-form-field appearance="fill" class="forum pt-.5 ">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput type="password" formControlName="fcPassword2" required>
+        </mat-form-field>
+    </form>
 
-    <mat-form-field appearance="fill" class="forum pt-.5 ">
-        <mat-label>Confirm Password</mat-label>
-        <input matInput type="password">
-    </mat-form-field>
 
 
     <div class="container-box  pt-1 pb-4">
-        <button mat-flat-button class="button"><b>Sign up</b> </button>
+        <button (click)="onSubmit()" mat-flat-button class="button"><b>Sign up</b> </button>
     </div>
     <a (click)="gotoLogin()" class=" text-white pb-3 ">Already have an account?</a>
 

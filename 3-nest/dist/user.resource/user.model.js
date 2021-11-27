@@ -4,25 +4,18 @@ exports.SystemMessage = exports.User = void 0;
 const helper_1 = require("./helper");
 require("firebase/auth");
 require("firebase/firestore");
+const admin = require("firebase-admin");
 class User {
-    constructor(user, age, email, password) {
-        if (user.id) {
-            this.id = user.id;
-        }
-        if (typeof user === 'string') {
-            this.id = helper_1.Helper.generateUID();
-            this.name = user;
-            this.age = age;
-            this.email = email.toLowerCase();
-            this.password = password;
+    constructor(name, age, email, id) {
+        if (id != undefined) {
+            this.id = id;
         }
         else {
-            this.id = user.id ? user.id : helper_1.Helper.generateUID();
-            this.name = user.name.trim();
-            this.age = user.age;
-            this.email = user.email.trim().toLowerCase();
-            this.password = user.password.trim();
+            this.id = helper_1.Helper.generateUID();
         }
+        this.name = name;
+        this.age = age;
+        this.email = email;
     }
     log() {
         console.log(`${this.id} ${this.name} ${this.age} ${this.email} ${this.password}`);
@@ -34,6 +27,21 @@ class User {
             age: this.age,
             email: this.email,
         };
+    }
+    async commit(hidePassword = true) {
+        try {
+            var DB = admin.firestore();
+            var result = await DB.collection('users').doc(this.id).set(this.toJson());
+            return {
+                success: true,
+                data: this.toJson(),
+            };
+        }
+        catch (error) {
+            console.log('User.committ error message');
+            console.log(error.message);
+            return { success: false, data: error.message };
+        }
     }
     toJsonPass() {
         return {

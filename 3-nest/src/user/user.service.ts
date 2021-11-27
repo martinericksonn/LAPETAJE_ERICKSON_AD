@@ -1,29 +1,32 @@
-import { Process, Verification } from '../user.resource/helper';
+import { Helper, Process, Verification } from '../user.resource/helper';
 import { CRUDReturn } from '../user.resource/crud_return.interface';
 import { Injectable } from '@nestjs/common';
 import * as admin from 'firebase-admin';
+import { auth } from 'firebase-admin';
+import { User } from 'src/user.resource/user.model';
 
 @Injectable()
 export class UserService {
   private DB = admin.firestore();
+  private AUTH: auth.Auth = admin.auth();
 
   constructor() {
     Process.populateDatabase();
   }
 
-  async register(newUser: any): Promise<CRUDReturn> {
-    try {
-      Verification.verifyCredentials(newUser, 'REGISTER');
-      Verification.verifyAge(newUser);
-      Verification.verifyName(newUser);
-      Verification.verifyPassword(newUser);
-      await Verification.verifyEmail(newUser);
+  // async register(newUser: any): Promise<CRUDReturn> {
+  //   try {
+  //     Verification.verifyCredentials(newUser, 'REGISTER');
+  //     Verification.verifyAge(newUser);
+  //     Verification.verifyName(newUser);
+  //     Verification.verifyPassword(newUser);
+  //     await Verification.verifyEmail(newUser);
 
-      return Process.registerUser(newUser);
-    } catch (error) {
-      return error;
-    }
-  }
+  //     return Process.registerUser(newUser);
+  //   } catch (error) {
+  //     return error;
+  //   }
+  // }
 
   // async getUser(id: string): Promise<CRUDReturn> {
   //   try {
@@ -120,6 +123,94 @@ export class UserService {
         success: false,
         data: error.message,
       };
+    }
+  }
+
+  async register(body: any): Promise<CRUDReturn> {
+    try {
+      var validBody: { success: boolean; data: string } =
+        Helper.validBodyPut(body);
+      if (validBody.success) {
+        var exists = await this.emailExists(body.email);
+        console.log(`Does ${body.email} exist in db? ${exists}`);
+        if (!exists) {
+          //create the Firebase Auth user
+          var authCreationResult: auth.UserRecord;
+          try {
+            authCreationResult = await this.AUTH.createUser({
+              email: body.email,
+              password: body.password,
+            });
+          } catch (error) {
+            throw error;
+          }
+          //create the Firestore Database entry for the user if it is successful
+          var newUser: User = new User(
+            body.name,
+            body.age,
+            authCreationResult.email,
+            authCreationResult.uid,
+          );
+          if (await this.saveToDB(newUser)) {
+            return {
+              success: true,
+              data: newUser.toJson(),
+            };
+          } else {
+            throw new Error('generic database error');
+          }
+        } else
+          throw new Error(`${body.email} is already in use by another user!`);
+      } else {
+        throw new Error(validBody.data);
+      }
+    } catch (error) {
+      console.log('RegisterError');
+      console.log(error.message);
+      return { success: false, data: `Error adding account, ${error}` };
+    }
+  }
+  async saveToDB(user: User): Promise<boolean> {
+    console.log(`Attempting to save user ${user.id} ${user.email}`);
+    try {
+      var result = await user.commit(false);
+      return result.success;
+    } catch (error) {
+      console.log('Save to db error');
+      console.log(error.message);
+      return false;
+    }
+  }
+
+  async emailExists(
+    email: string,
+    options?: { exceptionId: string },
+  ): Promise<boolean> {
+    try {
+      var userResults = await this.DB.collection('users')
+        .where('email', '==', email)
+        .get();
+      console.log('Are the user results empty?');
+      console.log(userResults.empty);
+      if (userResults.empty) return false;
+      for (const doc of userResults.docs) {
+        console.log(doc.data());
+        console.log('Are the options defined?');
+        console.log(options != undefined);
+        if (options != undefined) {
+          if (doc.id == options?.exceptionId) continue;
+        }
+        if (doc.data()['email'] === email) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+      return false;
+    } catch (error) {
+      console.log('Email exists subfunction error');
+      console.log(error.message);
+      return false;
     }
   }
 }

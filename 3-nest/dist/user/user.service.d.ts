@@ -1,8 +1,9 @@
 import { CRUDReturn } from '../user.resource/crud_return.interface';
+import { User } from 'src/user.resource/user.model';
 export declare class UserService {
     private DB;
+    private AUTH;
     constructor();
-    register(newUser: any): Promise<CRUDReturn>;
     getAllUser(): Promise<CRUDReturn>;
     putUser(id: string, user: any): Promise<CRUDReturn>;
     patchUser(id: string, user: any): Promise<CRUDReturn>;
@@ -10,4 +11,9 @@ export declare class UserService {
     loginUser(user: any): Promise<CRUDReturn>;
     searchTerm(query: any): Promise<CRUDReturn> | String[];
     getOne(id: string): Promise<CRUDReturn>;
+    register(body: any): Promise<CRUDReturn>;
+    saveToDB(user: User): Promise<boolean>;
+    emailExists(email: string, options?: {
+        exceptionId: string;
+    }): Promise<boolean>;
 }

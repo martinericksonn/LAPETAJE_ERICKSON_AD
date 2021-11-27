@@ -1,38 +1,55 @@
 import { Helper } from './helper';
 import 'firebase/auth';
 import 'firebase/firestore';
+import { CRUDReturn } from './crud_return.interface';
+import * as admin from 'firebase-admin';
 
 export class User {
   public id: string;
   private name: string;
   private age: number;
-  private email: string;
+  public email: string;
   private password: string;
 
-  constructor(
-    user: any | string,
-    age?: number,
-    email?: string,
-    password?: string,
-  ) {
-    if (user.id) {
-      this.id = user.id;
-    }
-    if (typeof user === 'string') {
-      this.id = Helper.generateUID();
-      this.name = user;
-      this.age = age;
-      this.email = email.toLowerCase();
-      this.password = password;
+  constructor(name: string, age: number, email: string, id?: string) {
+    if (id != undefined) {
+      this.id = id;
     } else {
-      this.id = user.id ? user.id : Helper.generateUID();
-      this.name = user.name.trim();
-      this.age = user.age;
-      this.email = user.email.trim().toLowerCase();
-      this.password = user.password.trim();
+      this.id = Helper.generateUID();
     }
-    // ConnectDatabase.commit(this.id, this);
+    this.name = name;
+    this.age = age;
+    this.email = email;
   }
+
+  // constructor(
+  //   user: any | string,
+  //   age?: number,
+  //   email?: string,
+  //   id?: string,
+  //   password?: string,
+  // ) {
+  //   if (id) {
+  //     this.id = user.id;
+  //     this.email = email;
+  //     this.name = user;
+  //     this.age = age;
+  //   } else if (typeof user === 'string') {
+  //     this.id = Helper.generateUID();
+  //     this.name = user;
+  //     this.age = age;
+  //     this.email = email.toLowerCase();
+  //     this.password = password;
+  //   } else {
+  //     this.id = user.id ? user.id : Helper.generateUID();
+  //     this.name = user.name.trim();
+  //     this.age = user.age;
+  //     this.email = user.email.trim().toLowerCase();
+  //     this.password = user.password.trim();
+  //   }
+
+  //   // ConnectDatabase.commit(this.id, this);
+  // }
 
   log() {
     console.log(
@@ -48,7 +65,20 @@ export class User {
       email: this.email,
     };
   }
-
+  async commit(hidePassword: boolean = true): Promise<CRUDReturn> {
+    try {
+      var DB = admin.firestore();
+      var result = await DB.collection('users').doc(this.id).set(this.toJson());
+      return {
+        success: true,
+        data: this.toJson(),
+      };
+    } catch (error) {
+      console.log('User.committ error message');
+      console.log(error.message);
+      return { success: false, data: error.message };
+    }
+  }
   toJsonPass() {
     return {
       id: this.id,

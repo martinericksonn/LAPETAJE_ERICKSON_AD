@@ -1,12 +1,13 @@
 import 'firebase/auth';
 import 'firebase/firestore';
+import { CRUDReturn } from './crud_return.interface';
 export declare class User {
     id: string;
     private name;
     private age;
-    private email;
+    email: string;
     private password;
-    constructor(user: any | string, age?: number, email?: string, password?: string);
+    constructor(name: string, age: number, email: string, id?: string);
     log(): void;
     toJson(): {
         id: string;
@@ -14,6 +15,7 @@ export declare class User {
         age: number;
         email: string;
     };
+    commit(hidePassword?: boolean): Promise<CRUDReturn>;
     toJsonPass(): {
         id: string;
         name: string;

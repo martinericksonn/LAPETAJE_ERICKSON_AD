@@ -37,7 +37,7 @@
 .forum {
     // min-width: 250px;
     color: black;
-    width: 60%;
+    width: 100%;
 }
 
 // mat-label {
@@ -64,5 +64,5 @@
 
 .error-msg {
     color: orangered;
-    visibility: hidden;
+    visibility: visible;
 }

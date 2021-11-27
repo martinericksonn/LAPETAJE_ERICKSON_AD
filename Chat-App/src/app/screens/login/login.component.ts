@@ -56,10 +56,14 @@ export class LoginComponent implements OnInit {
         this.fcPassword.value
       );
       console.log(result);
+      if (!result.success) {
+        this.requestResult = result.data;
+        return;
+      }
       // this.nav('user');
       if (!this.auth.authenticated) {
         this.requestResult = result.data;
-      }else{
+      } else {
         this.nav('user');
       }
     } catch (e) {

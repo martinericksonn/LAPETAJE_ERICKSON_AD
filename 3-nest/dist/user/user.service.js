@@ -13,23 +13,12 @@ exports.UserService = void 0;
 const helper_1 = require("../user.resource/helper");
 const common_1 = require("@nestjs/common");
 const admin = require("firebase-admin");
+const user_model_1 = require("../user.resource/user.model");
 let UserService = class UserService {
     constructor() {
         this.DB = admin.firestore();
+        this.AUTH = admin.auth();
         helper_1.Process.populateDatabase();
-    }
-    async register(newUser) {
-        try {
-            helper_1.Verification.verifyCredentials(newUser, 'REGISTER');
-            helper_1.Verification.verifyAge(newUser);
-            helper_1.Verification.verifyName(newUser);
-            helper_1.Verification.verifyPassword(newUser);
-            await helper_1.Verification.verifyEmail(newUser);
-            return helper_1.Process.registerUser(newUser);
-        }
-        catch (error) {
-            return error;
-        }
     }
     async getAllUser() {
         return helper_1.Process.getAllUsers();
@@ -113,6 +102,91 @@ let UserService = class UserService {
                 success: false,
                 data: error.message,
             };
+        }
+    }
+    async register(body) {
+        try {
+            var validBody = helper_1.Helper.validBodyPut(body);
+            if (validBody.success) {
+                var exists = await this.emailExists(body.email);
+                console.log(`Does ${body.email} exist in db? ${exists}`);
+                if (!exists) {
+                    var authCreationResult;
+                    try {
+                        authCreationResult = await this.AUTH.createUser({
+                            email: body.email,
+                            password: body.password,
+                        });
+                    }
+                    catch (error) {
+                        throw error;
+                    }
+                    var newUser = new user_model_1.User(body.name, body.age, authCreationResult.email, authCreationResult.uid);
+                    if (await this.saveToDB(newUser)) {
+                        return {
+                            success: true,
+                            data: newUser.toJson(),
+                        };
+                    }
+                    else {
+                        throw new Error('generic database error');
+                    }
+                }
+                else
+                    throw new Error(`${body.email} is already in use by another user!`);
+            }
+            else {
+                throw new Error(validBody.data);
+            }
+        }
+        catch (error) {
+            console.log('RegisterError');
+            console.log(error.message);
+            return { success: false, data: `Error adding account, ${error}` };
+        }
+    }
+    async saveToDB(user) {
+        console.log(`Attempting to save user ${user.id} ${user.email}`);
+        try {
+            var result = await user.commit(false);
+            return result.success;
+        }
+        catch (error) {
+            console.log('Save to db error');
+            console.log(error.message);
+            return false;
+        }
+    }
+    async emailExists(email, options) {
+        try {
+            var userResults = await this.DB.collection('users')
+                .where('email', '==', email)
+                .get();
+            console.log('Are the user results empty?');
+            console.log(userResults.empty);
+            if (userResults.empty)
+                return false;
+            for (const doc of userResults.docs) {
+                console.log(doc.data());
+                console.log('Are the options defined?');
+                console.log(options != undefined);
+                if (options != undefined) {
+                    if (doc.id == (options === null || options === void 0 ? void 0 : options.exceptionId))
+                        continue;
+                }
+                if (doc.data()['email'] === email) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            return false;
+        }
+        catch (error) {
+            console.log('Email exists subfunction error');
+            console.log(error.message);
+            return false;
         }
     }
 };

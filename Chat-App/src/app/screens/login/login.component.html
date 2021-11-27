@@ -35,11 +35,14 @@
     </mat-form-field>
 
     <div class="container-box  pt-1 pb-4">
-        <button mat-flat-button class="button">Login </button>
+        <button mat-flat-button class="button"><b>Login</b> </button>
     </div>
-    <p class="text-white pb-3">Not yet registered? <b>Create an Account  </b></p>
+    <p class="text-white pb-3">Not yet registered?
+        <a [routerLink]="['/welcome/sign-up']" class=" text-white pb-3">
+            <b>Create an Account  </b> </a>
+    </p>
 
-    <div class="h-10 bg-primary">
+    <div class="h-10 bg-primary ">
         <hr>
     </div>
 

@@ -1,1 +1,56 @@
-<p>sign-up works!</p>
+<div class="login flex-column d-flex justify-content-center align-items-center ">
+    <p class="error-msg">Not yet registered? <b>Create an Account  </b></p>
+    <div class="container-box d-flex flex-column justify-content-start pb-4">
+        <h1 class="text-white header">Register</h1>
+        <p class="text-white">Join the community of Tabians by signing up with Tabi!!</p>
+    </div>
+
+    <div class="container-box">
+
+        <button mat-flat-button class="button">Sign up with Google</button>
+    </div>
+
+
+    <div class="container pt-4 pb-4">
+        <div class="line">
+            <mat-divider></mat-divider>
+        </div>
+        <div class="text mat-typography text-white">or</div>
+        <div class="line">
+            <mat-divider></mat-divider>
+        </div>
+    </div>
+
+    <mat-form-field appearance="fill" class="forum pt.5">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="pat@example.com " [formControl]="email " required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="forum  pt.5 ">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="pat@example.com " [formControl]="email " required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="forum  pt.5 ">
+        <mat-label>Age</mat-label>
+        <input matInput placeholder="pat@example.com " [formControl]="email " required>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="forum pt-.5 ">
+        <mat-label>Password</mat-label>
+        <input matInput type="password">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="forum pt-.5 ">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput type="password">
+    </mat-form-field>
+
+
+    <div class="container-box  pt-1 pb-4">
+        <button mat-flat-button class="button"> <b>  Sign up</b> </button>
+    </div>
+    <a [routerLink]="['/welcome/login']" class=" text-white pb-3 ">Already have an account?</a>
+
+
+</div>

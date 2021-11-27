@@ -1,0 +1,68 @@
+.login {
+    height: 100%;
+}
+
+.container {
+    width: 64%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.line {
+    flex: 1;
+}
+
+.text {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.header {
+    font-size: xx-large;
+    font-weight: bold;
+    letter-spacing: .1rem;
+}
+
+.mat-divider {
+    border-top-color: white;
+}
+
+.button {
+    height: 3rem;
+    width: 100%;
+}
+
+.forum {
+    // min-width: 250px;
+    color: black;
+    width: 60%;
+}
+
+// mat-label {
+//     color: white;
+// }
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    // background-color: white;
+    border-radius: 5px;
+}
+
+::ng-deep {
+    .mat-form-field .mat-form-field-flex {
+        background-color: white;
+    }
+}
+
+.container-box {
+    width: 60%;
+}
+
+::ng-deep .mat-form-field {
+    font-size: 1rem; // example
+}
+
+.error-msg {
+    color: orangered;
+    visibility: hidden;
+}

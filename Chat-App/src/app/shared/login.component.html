@@ -1,0 +1,28 @@
+<div class="flex-row main-content d-flex justify-content-center align-items-center m-auto ">
+    <div class="hello_image ">
+        <img src="assets/page-images/login.png " alt="Hello " border="0 ">
+    </div>
+    <div class="card">
+        <form class="m-3">
+            <h2 class="p-3 text-center">Sign In</h2>
+            <div class="form-group m-3">
+                <label for="exampleInputEmail1">Email</label>
+                <input [formControl]="fcEmail" type="email" class="form-control">
+            </div>
+            <div class="form-group m-3">
+                <label for="exampleInputPassword1">Password</label>
+                <input [formControl]="fcPassword" type="password" class="form-control">
+            </div>
+            <div class=" d-flex flex-column justify-content-around mt-4 
+            ">
+                <div style="height: 50px;">
+                    <p class="text-center error-msg">{{requestResult}}</p>
+                </div>
+                <button onclick="return false" (click)="login()" type="login" class=" ms-3 me-3 login-btn btn btn-outline-primary btn-block">Login</button>
+                <hr class='ms-3 me-3'>
+                <a (click)="gotoRegister()" class="link-primary m-auto">Create an Account</a>
+            </div>
+        </form>
+    </div>
+</div>
+<app-footer></app-footer>

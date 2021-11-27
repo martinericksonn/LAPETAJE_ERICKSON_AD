@@ -15,6 +15,19 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { UserProfileComponent } from './screens/user-profile/user-profile.component';
+import { HttpClientModule } from '@angular/common/http';
+
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+
+import { PERSISTENCE } from '@angular/fire/compat/auth';
+
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -22,9 +35,11 @@ import { MatIconModule } from '@angular/material/icon';
     WelcomeComponent,
     LoginComponent,
     SignUpComponent,
+    UserProfileComponent,
   ],
 
   imports: [
+    HttpClientModule,
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
@@ -36,8 +51,14 @@ import { MatIconModule } from '@angular/material/icon';
     AppRoutingModule,
     NgbModule,
     BrowserAnimationsModule,
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
   ],
-  providers: [],
+
+  providers: [{ provide: PERSISTENCE, useValue: 'session' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

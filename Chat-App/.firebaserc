@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "appsdev-79e1d": {
+      "hosting": {
+        "Chat-App": [
+          "tabi-lapetaje"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "appsdev-79e1d"
+  }
+}

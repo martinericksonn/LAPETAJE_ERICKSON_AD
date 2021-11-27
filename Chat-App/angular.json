@@ -105,6 +105,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "Chat-App:build:production",
+            "firebaseProject": "appsdev-79e1d",
+            "firebaseHostingSite": "tabi-lapetaje"
+          }
         }
       }
     }

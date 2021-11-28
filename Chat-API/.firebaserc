@@ -1,1 +1,7 @@
-{}
+{
+  "projects": {
+    "default": "appsdev-79e1d",
+    "tabi": "appsdev-79e1d"
+  },
+  "targets": {}
+}

@@ -4,6 +4,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth.service';
 import { environment } from 'src/environments/environment';
+import { getAuth, getRedirectResult, GoogleAuthProvider } from 'firebase/auth';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private router: Router,
     private api: HttpClient,
-    private auth: AuthService
+    private authServ: AuthService
   ) {}
   readonly API_PATH = '/user/login';
 
@@ -51,7 +52,7 @@ export class LoginComponent implements OnInit {
   async login(): Promise<any> {
     try {
       this.requestResult = '';
-      var result: any = await this.auth.login(
+      var result: any = await this.authServ.login(
         this.fcEmail.value,
         this.fcPassword.value
       );
@@ -61,7 +62,7 @@ export class LoginComponent implements OnInit {
         return;
       }
       // this.nav('user');
-      if (!this.auth.authenticated) {
+      if (!this.authServ.authenticated) {
         this.requestResult = result.data;
       } else {
         this.nav('user');

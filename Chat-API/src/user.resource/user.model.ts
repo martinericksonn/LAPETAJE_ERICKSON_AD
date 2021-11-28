@@ -11,15 +11,22 @@ export class User {
   public email: string;
   private password: string;
 
-  constructor(name: string, age: number, email: string, id?: string) {
-    if (id != undefined) {
-      this.id = id;
+  constructor(user?: any, age?: number, email?: string, id?: string) {
+    if (typeof user === 'string') {
+      if (id != undefined) {
+        this.id = id;
+      } else {
+        this.id = Helper.generateUID();
+      }
+      this.name = user;
+      this.age = age;
+      this.email = email;
     } else {
-      this.id = Helper.generateUID();
+      this.id = user.id;
+      this.name = user.name.trim();
+      this.age = user.age;
+      this.email = user.email.trim().toLowerCase();
     }
-    this.name = name;
-    this.age = age;
-    this.email = email;
   }
 
   // constructor(

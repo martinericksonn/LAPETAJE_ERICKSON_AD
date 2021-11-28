@@ -7,7 +7,7 @@ export declare class User {
     private age;
     email: string;
     private password;
-    constructor(name: string, age: number, email: string, id?: string);
+    constructor(user?: any, age?: number, email?: string, id?: string);
     log(): void;
     toJson(): {
         id: string;

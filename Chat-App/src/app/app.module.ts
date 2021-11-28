@@ -30,6 +30,8 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AuthGuard } from './shared/auth-guard.service';
 
+import { GoogleAuthProvider } from 'firebase/auth';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +61,11 @@ import { AuthGuard } from './shared/auth-guard.service';
     provideAuth(() => getAuth()),
   ],
 
-  providers: [{ provide: PERSISTENCE, useValue: 'session' }, AuthGuard],
+  providers: [
+    { provide: PERSISTENCE, useValue: 'session' },
+    AuthGuard,
+    GoogleAuthProvider,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

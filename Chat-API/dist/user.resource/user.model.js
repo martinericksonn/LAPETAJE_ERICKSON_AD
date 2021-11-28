@@ -6,16 +6,22 @@ require("firebase/auth");
 require("firebase/firestore");
 const admin = require("firebase-admin");
 class User {
-    constructor(name, age, email, id) {
-        if (id != undefined) {
-            this.id = id;
+    constructor(user, age, email, id) {
+        if (typeof user === 'string') {
+            if (id != undefined) {
+                this.id = id;
+            } else {
+                this.id = helper_1.Helper.generateUID();
+            }
+            this.name = user;
+            this.age = age;
+            this.email = email;
+        } else {
+            this.id = user.id;
+            this.name = user.name;
+            this.age = user.age;
+            this.email = user.email.trim().toLowerCase();
         }
-        else {
-            this.id = helper_1.Helper.generateUID();
-        }
-        this.name = name;
-        this.age = age;
-        this.email = email;
     }
     log() {
         console.log(`${this.id} ${this.name} ${this.age} ${this.email} ${this.password}`);
@@ -36,8 +42,7 @@ class User {
                 success: true,
                 data: this.toJson(),
             };
-        }
-        catch (error) {
+        } catch (error) {
             console.log('User.committ error message');
             console.log(error.message);
             return { success: false, data: error.message };

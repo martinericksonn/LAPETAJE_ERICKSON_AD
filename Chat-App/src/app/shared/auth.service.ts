@@ -3,10 +3,15 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from './user.model';
 import { CRUDReturn } from './crud_return.interface';
+
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root',
 })

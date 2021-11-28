@@ -29,7 +29,7 @@ export class AuthService {
       console.log(data);
       if (data == undefined || data == null) return;
       if (!this.authenticated) {
-        this.api.get(`/user/${data?.uid}`).then((result) => {
+        this.api.get(`/user/${data.uid}`).then((result) => {
           var output: CRUDReturn = {
             success: result.success,
             data: result.data,
@@ -39,7 +39,7 @@ export class AuthService {
             this.user = User.fromJson(output.data.id, output.data);
             console.log('Successful Login');
             this.user?.log();
-            this.router.navigate(['user']);
+            this.router.navigate(['profile', data.uid]);
           }
         });
       }

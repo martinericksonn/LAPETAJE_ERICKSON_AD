@@ -20,9 +20,8 @@ export class LoginComponent implements OnInit {
   fcEmail = new FormControl();
   fcPassword = new FormControl();
   requestResult = '';
-
   hide = true;
-
+  uid: String = '';
   constructor(
     private router: Router,
     private api: HttpClient,
@@ -56,16 +55,18 @@ export class LoginComponent implements OnInit {
         this.fcEmail.value,
         this.fcPassword.value
       );
-      console.log(result);
+      this.uid = result.data['id'];
+      console.log(result.data['id']);
+
       if (!result.success) {
         this.requestResult = result.data;
         return;
       }
-      // this.nav('user');
+
       if (!this.authServ.authenticated) {
         this.requestResult = result.data;
       } else {
-        this.nav('user');
+        this.nav(['user', this.uid]);
       }
     } catch (e) {
       console.log(e);
@@ -74,7 +75,7 @@ export class LoginComponent implements OnInit {
 
   private loginResult(result: any) {
     if (result.success) {
-      this.nav('user');
+      this.router.navigate(['user']);
     } else {
       this.requestResult = result.data;
     }
@@ -85,7 +86,7 @@ export class LoginComponent implements OnInit {
   //   this.loginResult(result);
   //   // this.nav('user');
   // }
-  private nav(destination: string) {
+  private nav(destination: any) {
     this.router.navigate([destination]);
   }
 }

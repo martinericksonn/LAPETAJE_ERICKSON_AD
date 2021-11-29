@@ -1,0 +1,33 @@
+<mat-drawer-container class="example-container mat-typography h-100" autosize>
+    <mat-drawer class="sidebar" #drawer mode="side" disableClose="true" opened="true">
+        <button class="tabi-btn" mat-button (click)="isExpanded = !isExpanded">
+            <img  *ngIf="!isExpanded " class="tabi-icon " src="assets/icons/tabi-white-icon.png " alt="tabi-icon ">
+            <img  *ngIf="isExpanded " class="tabi-icon-big " src="assets/icons/tabi-white-full.png " alt="tabi-icon ">
+          </button>
+
+        <mat-nav-list>
+            <mat-list-item>
+                <img mat-list-icon src="assets/icons/user.svg " alt="user ">
+                <h4 mat-line *ngIf="isExpanded ">Profile</h4>
+            </mat-list-item>
+            <mat-list-item>
+                <img mat-list-icon src="assets/icons/message-circle.svg " alt="message ">
+                <h4 mat-line *ngIf="isExpanded ">Messages</h4>
+            </mat-list-item>
+
+            <mat-list-item>
+                <img mat-list-icon src="assets/icons/info.svg " alt="message ">
+                <h4 mat-line *ngIf="isExpanded ">About Tabi</h4>
+            </mat-list-item>
+
+            <mat-list-item class="logout ">
+                <img mat-list-icon src="assets/icons/log-out.svg " alt="message ">
+                <h4 mat-line *ngIf="isExpanded ">Logout</h4>
+            </mat-list-item>
+        </mat-nav-list>
+    </mat-drawer>
+
+    <div class="example-sidenav-content ">
+
+    </div>
+</mat-drawer-container>

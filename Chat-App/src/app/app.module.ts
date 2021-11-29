@@ -27,10 +27,15 @@ import { PERSISTENCE } from '@angular/fire/compat/auth';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+
 import { AuthGuard } from './shared/auth-guard.service';
 
 import { GoogleAuthProvider } from 'firebase/auth';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -39,9 +44,11 @@ import { GoogleAuthProvider } from 'firebase/auth';
     LoginComponent,
     SignUpComponent,
     UserProfileComponent,
+    SidebarComponent,
   ],
 
   imports: [
+    MatSidenavModule,
     HttpClientModule,
     MatIconModule,
     FormsModule,
@@ -59,6 +66,9 @@ import { GoogleAuthProvider } from 'firebase/auth';
     AngularFireModule.initializeApp(environment.firebase),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
+    LayoutModule,
+    MatToolbarModule,
+    MatListModule,
   ],
 
   providers: [

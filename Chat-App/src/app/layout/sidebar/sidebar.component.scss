@@ -1,0 +1,41 @@
+// .example-container {
+//     width: 500px;
+//     height: 300px;
+//     border: 1px solid rgba(0, 0, 0, 0.5);
+//     min-width: 200px;
+// }
+// .example-sidenav-content {
+//     display: flex;
+//     height: 100%;
+//     align-items: center;
+//     justify-content: center;
+// }
+// .example-sidenav {
+//     padding: 20px;
+// }
+.sidebar {
+    background-color: #5A4AE3;
+    border-radius: 0 25px 25px 0;
+}
+
+h4 {
+    color: white
+}
+
+.logout {
+    bottom: 0;
+    position: absolute;
+}
+
+.tabi-icon {
+    margin: 1rem 0 1.8rem 0;
+    width: 2.2rem;
+}
+
+.tabi-icon-big {
+    width: 9rem;
+}
+
+.tabi-btn {
+    margin-top: 1rem;
+}

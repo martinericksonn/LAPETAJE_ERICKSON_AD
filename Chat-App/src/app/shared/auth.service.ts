@@ -39,7 +39,7 @@ export class AuthService {
             this.user = User.fromJson(output.data.id, output.data);
             console.log('Successful Login');
             this.user?.log();
-            this.router.navigate(['profile', data.uid]);
+            this.router.navigate(['home', data.uid]);
           }
         });
       }

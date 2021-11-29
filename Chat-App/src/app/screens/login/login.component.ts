@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
       if (!this.authServ.authenticated) {
         this.requestResult = result.data;
       } else {
-        this.nav(['user', this.uid]);
+        this.router.navigate(['home/profile/', this.uid]);
       }
     } catch (e) {
       console.log(e);

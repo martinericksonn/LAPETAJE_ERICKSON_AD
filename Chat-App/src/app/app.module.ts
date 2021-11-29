@@ -36,6 +36,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
+import { MessagesComponent } from './screens/messages/messages.component';
+import { AboutUsComponent } from './screens/about-us/about-us.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import { MatListModule } from '@angular/material/list';
     SignUpComponent,
     UserProfileComponent,
     SidebarComponent,
+    MessagesComponent,
+    AboutUsComponent,
   ],
 
   imports: [

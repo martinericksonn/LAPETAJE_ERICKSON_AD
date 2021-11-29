@@ -12,10 +12,7 @@ export class UserProfileComponent implements OnInit {
   id: string | undefined;
   data: any;
 
-  constructor(
-    private _activatedRoute: ActivatedRoute,
-    private api: ApiService
-  ) {
+  constructor(_activatedRoute: ActivatedRoute, private api: ApiService) {
     _activatedRoute.params.subscribe((params) => {
       this.id = params['id'];
     });

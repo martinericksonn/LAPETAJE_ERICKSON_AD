@@ -18,6 +18,8 @@ import { switchMap } from 'rxjs/operators';
 export class AuthService {
   public user?: User | null;
   public userObs?: Subscription;
+  static uid: string = '';
+
   constructor(
     private api: ApiService,
     private afAuth: AngularFireAuth,
@@ -35,11 +37,12 @@ export class AuthService {
             data: result.data,
           };
           if (output.success === true) {
+            AuthService.uid = data.uid;
             console.log('Subscription');
             this.user = User.fromJson(output.data.id, output.data);
             console.log('Successful Login');
             this.user?.log();
-            this.router.navigate(['home', data.uid]);
+            this.router.navigate(['home/profile/', data.uid]);
           }
         });
       }

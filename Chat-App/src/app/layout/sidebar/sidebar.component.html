@@ -9,10 +9,8 @@
             <mat-nav-list class="nav nav-pills ">
 
                 <mat-list-item class="nav-link active" [routerLink]=" [ 'profile',uid] " (click)="setActive(1)" [ngClass]="{active: getActive() == 1}">
-
                     <img mat-list-icon src="assets/icons/user.svg " alt="user ">
                     <h4 mat-line *ngIf="isExpanded ">Profile</h4>
-
                 </mat-list-item>
 
                 <mat-list-item class="nav-link active" [routerLink]="['messages']" (click)="setActive(2)" [ngClass]="{active: getActive() == 2}">

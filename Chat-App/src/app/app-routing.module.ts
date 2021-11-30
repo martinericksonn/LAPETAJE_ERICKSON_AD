@@ -33,24 +33,24 @@ const routes: Routes = [
     data: { some_data: 'some value' },
     children: [
       { path: 'home', redirectTo: '', pathMatch: 'full' },
-      {
-        path: '',
-        // canActivate: [AuthGuard],
-        component: SidebarComponent,
-      },
+      // {
+      //   path: '',
+      //   canActivate: [AuthGuard],
+      //   component: SidebarComponent,
+      // },
       {
         path: 'messages',
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         component: MessagesComponent,
       },
       {
         path: 'profile/:id',
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         component: UserProfileComponent,
       },
       {
         path: 'about-tabi',
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
         component: AboutUsComponent,
       },
     ],

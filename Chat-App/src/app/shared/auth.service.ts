@@ -9,9 +9,6 @@ import { Router } from '@angular/router';
 import { User } from './user.model';
 import { CRUDReturn } from './crud_return.interface';
 
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -53,6 +50,16 @@ export class AuthService {
     return this.user != undefined && this.user != null;
   }
 
+  async resetPassword(email: string) {
+    return this.afAuth
+      .sendPasswordResetEmail(email)
+      .then()
+      .catch((error) => console.log(error.message));
+  }
+
+  printme() {
+    console.log('yes');
+  }
   async login(email: string, password: string): Promise<any> {
     try {
       //log in to firebase auth

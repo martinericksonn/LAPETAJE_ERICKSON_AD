@@ -3,7 +3,6 @@
         <div class="d-flex justify-content-start ">
             <h1><b>Edit Profile</b></h1>
         </div>
-
         <div class="d-flex flex-column align-items-center left-container  justify-content-center">
             <img class="" src="assets/icons/profile-fin.jpg " alt="avatar image ">
             <div class="pt-5">
@@ -11,11 +10,10 @@
                     <button mat-flat-button class="button ">Upload Photo</button>
                 </div>
                 <div class="buttons">
-                    <button mat-flat-button class="button ">Reset Password</button>
+                    <button mat-flat-button class="button " (click)="resetPass()">Reset Password</button>
                 </div>
             </div>
         </div>
-
     </div>
 
     <div class="right-side d-flex flex-column justify-content-center ">
@@ -29,7 +27,7 @@
             </div>
             <div class="form-group m-4 ">
                 <label for="inputEmail4 ">Email</label>
-                <input type="email " class="form-control " formControlName="fcEmail " placeholder="{{user.email}}">
+                <input type="email " class="form-control " formControlName="fcEmail" placeholder="{{user.email}}">
             </div>
             <div class="form-group m-4 ">
                 <label for="inputEmail4 ">Age</label>

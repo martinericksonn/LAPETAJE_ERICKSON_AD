@@ -41,12 +41,10 @@ export class SidebarComponent implements OnInit {
   }
 
   setActive(active: number) {
-    console.log('setActive ' + active);
     this.active = active;
   }
 
   getActive(): number {
-    console.log('getActive ' + this.active);
     return this.active;
   }
 }

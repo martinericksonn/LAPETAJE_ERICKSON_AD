@@ -38,6 +38,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MessagesComponent } from './screens/messages/messages.component';
 import { AboutUsComponent } from './screens/about-us/about-us.component';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { AboutUsComponent } from './screens/about-us/about-us.component';
   ],
 
   imports: [
+    AngularFireStorageModule,
     MatSidenavModule,
     HttpClientModule,
     MatIconModule,

@@ -4,13 +4,15 @@
             <h1><b>Edit Profile</b></h1>
         </div>
         <div class="d-flex flex-column align-items-center left-container  justify-content-center">
-            <img class="" src="assets/icons/profile-fin.jpg " alt="avatar image ">
+            <img class="" src="{{url}}" alt="avatar image ">
             <div class="pt-5">
                 <div class="buttons">
-                    <button mat-flat-button class="button ">Upload Photo</button>
+
+                    <button mat-flat-button type="file" accept=".png,.jpg" class="button" (click)="uploadFile($event)">Change Photo</button>
+                    <input type="file" accept=".png,.jpg" class="button" (click)="uploadFile($event)">
                 </div>
-                <div class="buttons">
-                    <button mat-flat-button class="button " (click)="resetPass()">Reset Password</button>
+                <div class=" buttons ">
+                    <button mat-flat-button class="button " (click)="resetPass() ">Reset Password</button>
                 </div>
             </div>
         </div>
@@ -22,16 +24,16 @@
 
             <div class="form-group m-4 ">
                 <label for="inputName4 ">Name</label>
-                <input type="name" class="form-control " formControlName="fcName" placeholder="{{user.name}}">
+                <input type="name " class="form-control " formControlName="fcName" placeholder="{{user.name}} ">
 
             </div>
             <div class="form-group m-4 ">
                 <label for="inputEmail4 ">Email</label>
-                <input type="email " class="form-control " formControlName="fcEmail" placeholder="{{user.email}}">
+                <input type="email " class="form-control " formControlName="fcEmail" placeholder="{{user.email}} ">
             </div>
             <div class="form-group m-4 ">
                 <label for="inputEmail4 ">Age</label>
-                <input type="number " class="form-control " formControlName='fcAge' placeholder="{{user.age}}">
+                <input type="number " class="form-control " formControlName='fcAge' placeholder="{{user.age}} ">
             </div>
             <div class=" d-flex justify-content-end mr-4 mt-4 ">
                 <button mat-flat-button class="buttons-save ">Save</button>

@@ -4,30 +4,34 @@
             <img  *ngIf="!isExpanded " class="tabi-icon " src="assets/icons/tabi-white-icon.png " alt="tabi-icon ">
             <img  *ngIf="isExpanded " class="tabi-icon-big " src="assets/icons/tabi-white-full.png " alt="tabi-icon ">
           </button>
+        <div class="nav-list">
 
-        <mat-nav-list>
-            <mat-list-item [routerLink]="['profile',uid]" routerLinkActive="active-list-item">
+            <mat-nav-list class="nav nav-pills ">
 
-                <img mat-list-icon src="assets/icons/user.svg " alt="user ">
-                <h4 mat-line *ngIf="isExpanded ">Profile</h4>
-            </mat-list-item>
+                <mat-list-item class="nav-link active" [routerLink]=" [ 'profile',uid] " (click)="setActive(1)" [ngClass]="{active: getActive() == 1}">
 
-            <mat-list-item [routerLink]="['messages']" routerLinkActive="active-list-item">
-                <img mat-list-icon src="assets/icons/message-circle.svg " alt="message ">
-                <h4 mat-line *ngIf="isExpanded ">Messages</h4>
-            </mat-list-item>
+                    <img mat-list-icon src="assets/icons/user.svg " alt="user ">
+                    <h4 mat-line *ngIf="isExpanded ">Profile</h4>
 
-            <mat-list-item [routerLink]="['about-tabi']">
-                <img mat-list-icon src="assets/icons/info.svg " alt="message ">
-                <h4 mat-line *ngIf="isExpanded ">About Tabi</h4>
-            </mat-list-item>
+                </mat-list-item>
 
-            <mat-list-item class="logout" (click)="logouts()">
-                <img mat-list-icon src="assets/icons/log-out.svg " alt="message ">
-                <h4 mat-line *ngIf="isExpanded ">Logout</h4>
-            </mat-list-item>
+                <mat-list-item class="nav-link active" [routerLink]="['messages']" (click)="setActive(2)" [ngClass]="{active: getActive() == 2}">
+                    <img mat-list-icon src="assets/icons/message-circle.svg " alt="message ">
+                    <h4 mat-line *ngIf="isExpanded ">Messages</h4>
+                </mat-list-item>
 
-        </mat-nav-list>
+                <mat-list-item class="nav-link active" routerLink="about-tabi" (click)="setActive(3)" [ngClass]="{active: getActive() == 3}">
+                    <img mat-list-icon src="assets/icons/info.svg " alt="message ">
+                    <h4 mat-line *ngIf="isExpanded ">About Tabi</h4>
+                </mat-list-item>
+
+                <mat-list-item class="logout" (click)="logouts()">
+                    <img mat-list-icon src="assets/icons/log-out.svg " alt="message ">
+                    <h4 mat-line *ngIf="isExpanded ">Logout</h4>
+                </mat-list-item>
+
+            </mat-nav-list>
+        </div>
     </mat-drawer>
 
     <router-outlet></router-outlet>

@@ -61,7 +61,7 @@ export class SignUpComponent implements OnInit {
       };
       this.auth.register(payload).then((data) => {
         if (!data.success) this.error = data.data;
-        else this.nav('user');
+        else this.nav('login');
       });
     }
   }

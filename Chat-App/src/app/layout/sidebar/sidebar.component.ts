@@ -10,11 +10,12 @@ import { User } from 'src/app/shared/user.model';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
+  public user?: User | null;
   id: string | undefined;
   isExpanded = false;
   showFiller = false;
-  public user?: User | null;
   uid!: string;
+  active: number = 2;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -29,10 +30,6 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.uid = AuthService.uid;
-    console.log('innn' + this.uid);
-    console.log('innn' + this.uid);
-    console.log('innn' + this.uid);
-    console.log('innn' + this.uid);
   }
 
   logouts() {
@@ -41,5 +38,15 @@ export class SidebarComponent implements OnInit {
       this.user = null;
     });
     this.nav('login');
+  }
+
+  setActive(active: number) {
+    console.log('setActive ' + active);
+    this.active = active;
+  }
+
+  getActive(): number {
+    console.log('getActive ' + this.active);
+    return this.active;
   }
 }

@@ -15,7 +15,7 @@
 // }
 .sidebar {
     background-color: #5A4AE3;
-    border-radius: 0 25px 25px 0;
+    border-radius: 0 20px 20px 0;
 }
 
 h4 {
@@ -38,4 +38,18 @@ h4 {
 
 .tabi-btn {
     margin-top: 1rem;
+}
+
+.nav-list {
+    margin-top: 1rem;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #8A7DFC;
+}
+
+.art {
+    background-color: red;
 }

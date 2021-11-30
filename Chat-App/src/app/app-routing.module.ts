@@ -5,7 +5,7 @@ import { AboutUsComponent } from './screens/about-us/about-us.component';
 import { LoginComponent } from './screens/login/login.component';
 import { MessagesComponent } from './screens/messages/messages.component';
 import { SignUpComponent } from './screens/sign-up/sign-up.component';
-import { UserProfileComponent } from './screens/user-profile/user-profile.component';
+import { UserProfileComponent } from './screens/profile/user-profile.component';
 import { WelcomeComponent } from './screens/welcome/welcome.component';
 import { AuthGuard } from './shared/auth-guard.service';
 
@@ -28,23 +28,29 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
     component: SidebarComponent,
     data: { some_data: 'some value' },
     children: [
+      { path: 'home', redirectTo: '', pathMatch: 'full' },
+      {
+        path: '',
+        // canActivate: [AuthGuard],
+        component: SidebarComponent,
+      },
       {
         path: 'messages',
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         component: MessagesComponent,
       },
       {
         path: 'profile/:id',
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         component: UserProfileComponent,
       },
       {
         path: 'about-tabi',
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         component: AboutUsComponent,
       },
     ],

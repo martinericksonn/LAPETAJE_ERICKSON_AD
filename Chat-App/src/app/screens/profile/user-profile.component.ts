@@ -1,72 +1,94 @@
-import { Component, OnInit } from '@angular/core';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { ApiService } from 'src/app/shared/api.service';
-import { AuthService } from 'src/app/shared/auth.service';
-import { CRUDReturn } from 'src/app/shared/crud_return.interface';
-import { User } from 'src/app/shared/user.model';
+import { Component, OnInit } from "@angular/core";
+import { AngularFireStorage } from "@angular/fire/compat/storage";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
+import { ApiService } from "src/app/shared/api.service";
+import { AuthService } from "src/app/shared/auth.service";
+import { CRUDReturn } from "src/app/shared/crud_return.interface";
+import { User } from "src/app/shared/user.model";
+import { Observable } from "rxjs";
+import { MatDialog } from "@angular/material/dialog";
+import { DiaglogComponent } from "src/app/layout/diaglog/diaglog.component";
+import { DialogProfileComponent } from "src/app/layout/dialog-profile/dialog-profile.component";
+import { DialogUpdateComponent } from "src/app/layout/dialog-update/dialog-update.component";
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss'],
+  selector: "app-user-profile",
+  templateUrl: "./user-profile.component.html",
+  styleUrls: ["./user-profile.component.scss"],
 })
 export class UserProfileComponent implements OnInit {
   id: string | undefined;
   user!: User;
   imagePath: string | undefined;
-  editProfile: FormGroup = new FormGroup({
-    fcName: new FormControl('', Validators.required),
-    fcAge: new FormControl('', Validators.min(1)),
-    fcEmail: new FormControl('', Validators.required),
-  });
   fileName: any;
   message: string | undefined;
-  url: string | ArrayBuffer | null | undefined;
+  url: Observable<string | null>;
+  requestResult: string | undefined;
+
+  editProfile: FormGroup = new FormGroup({
+    fcName: new FormControl("", Validators.required),
+    fcAge: new FormControl("", Validators.min(1)),
+  });
 
   constructor(
     _auth: AuthService,
     _activatedRoute: ActivatedRoute,
+    public dialog: MatDialog,
+    // public modal: DiaglogComponent,
     private api: ApiService,
     private authServ: AuthService,
     private storage: AngularFireStorage
   ) {
     _activatedRoute.params.subscribe((params) => {
-      this.id = params['id'];
+      this.id = params["id"];
     });
+    const ref = this.storage.ref(`images/${this.id}/profile`);
+    this.url = ref.getDownloadURL();
+  }
+
+  openDialogResetPass() {
+    this.dialog.open(DialogProfileComponent);
   }
 
   async uploadFile(event: any) {
     const files = event.target.files;
-    if (files.length === 0) return;
 
-    const mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      this.message = 'Only images are supported.';
-      return;
+    this.imagePath = `/images/${this.user.id}/profile`;
+    const task = await this.storage.upload(this.imagePath, files[0]);
+
+    const ref = this.storage.ref(`images/${this.id}/profile`);
+    this.url = ref.getDownloadURL();
+
+    this.dialog.open(DialogProfileComponent);
+  }
+
+  private async clearFields() {
+    await this.getUserData();
+
+    this.editProfile.controls["fcName"].reset();
+    this.editProfile.controls["fcAge"].reset();
+  }
+
+  updateUser() {
+    console.log("updateUser");
+    var attributes = this.formToJson();
+
+    if (attributes == null) return;
+    var result: any = this.editUser(attributes);
+  }
+
+  private async editUser(attributes: any): Promise<any> {
+    console.log("editUser");
+    var result: any = await this.api.patch(`/user/${this.id}`, attributes);
+
+    if (result.success) {
+      this.requestResult = "";
+      this.dialog.open(DialogUpdateComponent);
+      this.clearFields();
+    } else {
+      this.requestResult = result.data;
     }
-
-    const reader = new FileReader();
-    this.imagePath = files;
-    reader.readAsDataURL(files[0]);
-    reader.onload = (_event) => {
-      this.url = reader.result;
-    };
-
-    // this.fileName = await event.target.files[0];
-
-    // const reader = new FileReader();
-    // this.imagePath = files;
-    // reader.readAsDataURL(files[0]);
-    // reader.onload = (_event) => {
-    //     this.url = reader.result;
-    // }
-
-    // this.imagePath = `/images/${this.user.id}${Math.random()}`;
-    // const task = await this.storage.upload(this.imagePath, file);
-    console.log(this.fileName[0]);
-    // console.log(task);
   }
 
   async getUserData() {
@@ -76,16 +98,45 @@ export class UserProfileComponent implements OnInit {
       this.user = output.data;
     }
   }
-  ngOnInit(): void {
-    this.getUserData();
+
+  async ngOnInit() {
+    await this.getUserData();
   }
 
   resetPass() {
     this.authServ.resetPassword(this.user.email);
-    console.log('password sent check your email');
+    console.log("password sent check your email");
   }
 
   somefunc() {
     this.authServ.printme();
+  }
+
+  private formToJson(): any {
+    var attributes = new Map<string, any>();
+
+    if (this.editProfile.value.fcName && this.editProfile.value.fcName.trim())
+      attributes.set("name", this.editProfile.value.fcName.trim());
+
+    if (this.editProfile.value.fcAge)
+      attributes.set("age", this.editProfile.value.fcAge);
+
+    if (attributes.size <= 0) {
+      return null;
+    }
+
+    return this.mapToObject(attributes);
+  }
+
+  private mapToObject(map: any) {
+    const out = Object.create(null);
+    map.forEach((value: any, key: string | number) => {
+      if (value instanceof Map) {
+        out[key] = this.mapToObject(value);
+      } else {
+        out[key] = value;
+      }
+    });
+    return out;
   }
 }

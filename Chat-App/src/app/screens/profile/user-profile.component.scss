@@ -5,8 +5,13 @@
 }
 
 img {
+    min-width: 30vh;
+    min-height: 30vh;
     border-radius: 50%;
-    width: 20rem
+    width: 30vh;
+    height: 30vh;
+    object-fit: cover;
+    border: 5px solid #5A4AE3;;
 }
 
 .button {
@@ -52,5 +57,11 @@ label {
 }
 
 input {
-    font-size: 24px;
+    font-size: 22px;
+}
+
+.error-msg {
+    font-size: 22px;
+    color: orangered;
+    visibility: visible;
 }

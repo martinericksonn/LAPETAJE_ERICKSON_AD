@@ -1,47 +1,48 @@
-import { NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from "./app-routing.module";
-import { AppComponent } from "./app.component";
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { WelcomeComponent } from "./screens/welcome/welcome.component";
-import { LoginComponent } from "./screens/login/login.component";
-import { SignUpComponent } from "./screens/sign-up/sign-up.component";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { WelcomeComponent } from './screens/welcome/welcome.component';
+import { LoginComponent } from './screens/login/login.component';
+import { SignUpComponent } from './screens/sign-up/sign-up.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { MatDividerModule } from "@angular/material/divider";
-import { MatButtonModule } from "@angular/material/button";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
-import { MatIconModule } from "@angular/material/icon";
-import { UserProfileComponent } from "./screens/profile/user-profile.component";
-import { HttpClientModule } from "@angular/common/http";
+import { MatDividerModule } from '@angular/material/divider';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { UserProfileComponent } from './screens/profile/user-profile.component';
+import { HttpClientModule } from '@angular/common/http';
 
-import { AngularFireModule } from "@angular/fire/compat";
-import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
-import { AngularFireAuthModule } from "@angular/fire/compat/auth";
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
-import { PERSISTENCE } from "@angular/fire/compat/auth";
+import { PERSISTENCE } from '@angular/fire/compat/auth';
 
-import { initializeApp, provideFirebaseApp } from "@angular/fire/app";
-import { environment } from "../environments/environment";
-import { provideAuth, getAuth } from "@angular/fire/auth";
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth, getAuth } from '@angular/fire/auth';
 
-import { AuthGuard } from "./shared/auth-guard.service";
+import { AuthGuard } from './shared/auth-guard.service';
 
-import { GoogleAuthProvider } from "firebase/auth";
-import { SidebarComponent } from "./layout/sidebar/sidebar.component";
-import { MatSidenavModule } from "@angular/material/sidenav";
-import { LayoutModule } from "@angular/cdk/layout";
-import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatListModule } from "@angular/material/list";
-import { MessagesComponent } from "./screens/messages/messages.component";
-import { AboutUsComponent } from "./screens/about-us/about-us.component";
-import { AngularFireStorageModule } from "@angular/fire/compat/storage";
-import { DiaglogComponent } from "./layout/diaglog/diaglog.component";
-import { MatDialogModule } from "@angular/material/dialog";
+import { GoogleAuthProvider } from 'firebase/auth';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatListModule } from '@angular/material/list';
+import { MessagesComponent } from './screens/messages/messages.component';
+import { AboutUsComponent } from './screens/about-us/about-us.component';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { DiaglogComponent } from './layout/diaglog/diaglog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 import { DialogUpdateComponent } from './layout/dialog-update/dialog-update.component';
+import { DialogProfileComponent } from './layout/dialog-profile/dialog-profile.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { DialogUpdateComponent } from './layout/dialog-update/dialog-update.comp
     AboutUsComponent,
     DiaglogComponent,
     DialogUpdateComponent,
+    DialogProfileComponent,
   ],
 
   imports: [
@@ -84,7 +86,7 @@ import { DialogUpdateComponent } from './layout/dialog-update/dialog-update.comp
   ],
 
   providers: [
-    { provide: PERSISTENCE, useValue: "session" },
+    { provide: PERSISTENCE, useValue: 'session' },
     AuthGuard,
     GoogleAuthProvider,
   ],

@@ -8,19 +8,24 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from './user.model';
 import { CRUDReturn } from './crud_return.interface';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  static currentUser: any;
   public user?: User | null;
   public userObs?: Subscription;
   static uid: string = '';
-
   constructor(
+    private storage: AngularFireStorage,
     private api: ApiService,
     private afAuth: AngularFireAuth,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {
     console.log('I am instance' + `${Date.now()}`);
     this.userObs = this.afAuth.user.subscribe((data) => {
@@ -57,9 +62,6 @@ export class AuthService {
       .catch((error) => console.log(error.message));
   }
 
-  printme() {
-    console.log('yes');
-  }
   async login(email: string, password: string): Promise<any> {
     try {
       //log in to firebase auth
@@ -69,6 +71,7 @@ export class AuthService {
           email,
           password
         );
+        AuthService.currentUser = resultOfLogin;
       } catch (error) {
         throw error;
       }
@@ -98,13 +101,15 @@ export class AuthService {
     var output: CRUDReturn = { success: result.success, data: result.data };
     if (output.success === true) {
       this.user = User.fromJson(output.data.id, output.data);
-      var resultOfLogin: any;
       //sign in the frontend if registration is successful;
       try {
-        resultOfLogin = await this.afAuth.signInWithEmailAndPassword(
+        const resultOfLogin = await this.afAuth.signInWithEmailAndPassword(
           payload.email,
           payload.password
         );
+        AuthService.currentUser = resultOfLogin;
+        this.generateProfile(output.data.id);
+        await resultOfLogin.user?.sendEmailVerification();
       } catch (error) {
         console.log(error);
         console.log('Register Error');
@@ -118,9 +123,39 @@ export class AuthService {
     return output;
   }
 
+  async isEmailVerified(): Promise<boolean> {
+    var bool: boolean = await AuthService.currentUser.user?.emailVerified;
+    console.log(bool + 'asdasdsd');
+    return bool;
+  }
+
+  async emailVerified(): Promise<string> {
+    var msg: string = (await AuthService.currentUser.user?.emailVerified)
+      ? ''
+      : 'Please check your email to verify your Tabi account';
+    console.log(msg + 'asdasdsd');
+    return msg;
+  }
+
   logout() {
     this.afAuth.signOut().then(() => {
       this.user = null;
     });
+  }
+
+  metadata = {
+    contentType: 'image/jpeg',
+  };
+
+  async generateProfile(id: string) {
+    this.http
+      .get(`assets/profile/${Math.floor(Math.random() * 8) + 1}.png`, {
+        responseType: 'blob',
+      })
+      .subscribe((data) => {
+        const file = data;
+        const filePath = `images/${id}/profile`;
+        this.storage.upload(filePath, file);
+      });
   }
 }

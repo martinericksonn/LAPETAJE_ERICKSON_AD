@@ -9,17 +9,17 @@
     <form class="inputs container-box " [formGroup]="registerForm">
         <mat-form-field class="form" appearance="fill" class="forum pt.5">
             <mat-label>Email</mat-label>
-            <input matInput placeholder="pat@example.com " formControlName="fcEmail" required>
+            <input matInput type="email" placeholder="pat@example.com " formControlName="fcEmail" required>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="forum  pt.5 ">
             <mat-label>Name</mat-label>
-            <input matInput placeholder="Enter name" formControlName="fcName" required>
+            <input matInput type="name" placeholder="Enter name" formControlName="fcName" required>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="forum  pt.5 ">
             <mat-label>Age</mat-label>
-            <input matInput placeholder="Enter age " formControlName="fcAge" required>
+            <input matInput type="number" placeholder="Enter age " formControlName="fcAge" required>
         </mat-form-field>
 
         <mat-form-field appearance="fill" class="forum pt-.5 ">

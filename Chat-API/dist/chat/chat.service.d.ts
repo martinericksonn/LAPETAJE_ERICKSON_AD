@@ -1,6 +1,5 @@
-import { Message } from './message.interface';
+import { Message } from './chat.resource/chat.interface';
 export declare class ChatService {
-    private DB;
-    sendMessageIndiv(user1: string, user2: string, message: Message): void;
+    sendMessageIndiv(user1: string, user2: string, message: any): void;
     sendMessageGroup(message: Message): void;
 }

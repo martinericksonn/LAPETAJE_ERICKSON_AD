@@ -8,15 +8,13 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChatService = void 0;
 const common_1 = require("@nestjs/common");
-const admin = require("firebase-admin");
+const chat_databaseQuery_1 = require("./chat.resource/chat.databaseQuery");
 let ChatService = class ChatService {
-    constructor() {
-        this.DB = admin.firestore();
-    }
     sendMessageIndiv(user1, user2, message) {
-        console.log(user1, user2, message);
+        chat_databaseQuery_1.DatabaseQuery.addMessage(user1, user2, message);
     }
     sendMessageGroup(message) {
+        chat_databaseQuery_1.DatabaseQuery.addMessageGroup(message);
         console.log(message);
     }
 };

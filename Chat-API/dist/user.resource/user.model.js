@@ -10,15 +10,17 @@ class User {
         if (typeof user === 'string') {
             if (id != undefined) {
                 this.id = id;
-            } else {
+            }
+            else {
                 this.id = helper_1.Helper.generateUID();
             }
             this.name = user;
             this.age = age;
             this.email = email;
-        } else {
+        }
+        else {
             this.id = user.id;
-            this.name = user.name;
+            this.name = user.name.trim();
             this.age = user.age;
             this.email = user.email.trim().toLowerCase();
         }
@@ -42,7 +44,8 @@ class User {
                 success: true,
                 data: this.toJson(),
             };
-        } catch (error) {
+        }
+        catch (error) {
             console.log('User.committ error message');
             console.log(error.message);
             return { success: false, data: error.message };

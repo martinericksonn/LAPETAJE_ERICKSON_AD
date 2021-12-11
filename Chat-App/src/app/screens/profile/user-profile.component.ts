@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ApiService } from 'src/app/shared/api.service';
-import { AuthService } from 'src/app/shared/auth.service';
+// import { ApiService } from 'src/app/shared/api.service';
+// import { AuthService } from 'src/app/shared/auth.service';
 import { CRUDReturn } from 'src/app/shared/crud_return.interface';
 import { User } from 'src/app/shared/user.model';
 import { Observable } from 'rxjs';
@@ -34,11 +34,11 @@ export class UserProfileComponent implements OnInit {
   public isEmailVerified: boolean = true;
   uploadPercent: any;
   constructor(
-    _auth: AuthService,
+    // _auth: AuthService,
     _activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
-    public authServ: AuthService,
-    private api: ApiService,
+    // public authServ: AuthService,
+    // private api: ApiService,
 
     private storage: AngularFireStorage
   ) {
@@ -49,13 +49,13 @@ export class UserProfileComponent implements OnInit {
     var ref = this.storage.ref(`images/${this.id}/profile`);
     this.url = ref.getDownloadURL();
 
-    this.authServ.isEmailVerified().then((result) => {
-      this.isEmailVerified = result;
-      this.isEmailVerifiedMsg = result
-        ? undefined
-        : 'Please check your email to verify your Tabi account';
-      console.log('bool ' + result);
-    });
+    // this.authServ.isEmailVerified().then((result) => {
+    //   this.isEmailVerified = result;
+    //   this.isEmailVerifiedMsg = result
+    //     ? undefined
+    //     : 'Please check your email to verify your Tabi account';
+    //   console.log('bool ' + result);
+    // });
   }
 
   openDialogResetPass() {
@@ -91,23 +91,23 @@ export class UserProfileComponent implements OnInit {
 
   private async editUser(attributes: any): Promise<any> {
     console.log('editUser');
-    var result: any = await this.api.patch(`/user/${this.id}`, attributes);
+    // var result: any = await this.api.patch(`/user/${this.id}`, attributes);
 
-    if (result.success) {
-      this.requestResult = '';
-      this.dialog.open(DialogUpdateComponent);
-      this.clearFields();
-    } else {
-      this.requestResult = result.data;
-    }
+    // if (result.success) {
+    //   this.requestResult = '';
+    //   this.dialog.open(DialogUpdateComponent);
+    //   this.clearFields();
+    // } else {
+    //   this.requestResult = result.data;
+    // }
   }
 
   async getUserData() {
-    var result: any = await this.api.get(`/user/${this.id}`);
-    var output: CRUDReturn = { success: result.success, data: result.data };
-    if (output.success === true) {
-      this.user = output.data;
-    }
+    // var result: any = await this.api.get(`/user/${this.id}`);
+    // var output: CRUDReturn = { success: result.success, data: result.data };
+    // if (output.success === true) {
+    //   this.user = output.data;
+    // }
   }
 
   async ngOnInit() {
@@ -116,7 +116,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   resetPass() {
-    this.authServ.resetPassword(this.user.email);
+    // this.authServ.resetPassword(this.user.email);
     console.log('password sent check your email');
   }
 

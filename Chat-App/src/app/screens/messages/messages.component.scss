@@ -1,0 +1,35 @@
+.body {
+    width: 30vh;
+    height: 100vh;
+    max-height: 100vh; // border: 1px solid black;
+    // border-left: 1px grey
+}
+
+.button {
+    color: white;
+    background-color: #5A4AE3;
+    border-radius: 5px;
+}
+
+.box {
+    padding: 2px;
+    height: 4rem
+}
+
+.msg-private-body {
+    height: 68.5vh
+}
+
+img {
+    min-width: 3.9rem;
+    min-height: 3.9rem;
+    border-radius: 50%;
+    width: 3.9rem;
+    height: 3.9rem;
+    object-fit: cover;
+}
+
+h1 {
+    font-size: 1.3em;
+    font-weight: bold;
+}

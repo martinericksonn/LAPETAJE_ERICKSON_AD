@@ -23,7 +23,7 @@ export class ApiService {
       return null;
     }
   }
-  
+
   async get(url: string): Promise<any> {
     try {
       var token: string = await this.getAuthToken();

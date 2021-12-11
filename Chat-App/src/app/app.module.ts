@@ -43,6 +43,8 @@ import { DiaglogComponent } from './layout/diaglog/diaglog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogUpdateComponent } from './layout/dialog-update/dialog-update.component';
 import { DialogProfileComponent } from './layout/dialog-profile/dialog-profile.component';
+import { MessageComponent } from './screens/messages/message/message.component';
+import { NewMessageComponent } from './screens/messages/new-message/new-message.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import { DialogProfileComponent } from './layout/dialog-profile/dialog-profile.c
     DiaglogComponent,
     DialogUpdateComponent,
     DialogProfileComponent,
+    MessageComponent,
+    NewMessageComponent,
   ],
 
   imports: [

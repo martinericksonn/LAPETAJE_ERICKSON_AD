@@ -1,0 +1,57 @@
+.use-name {
+    width: 100%;
+}
+
+.body {
+    width: 100%;
+    height: 100%;
+}
+
+h1 {
+    margin: 0;
+}
+
+img {
+    min-width: 3.4rem;
+    min-height: 3.4rem;
+    border-radius: 50%;
+    width: 3.4rem;
+    height: 3.4rem;
+    object-fit: cover;
+}
+
+.time {
+    color: grey;
+    font-size: 12px;
+    font-weight: 200;
+}
+
+.msg-name {
+    margin-bottom: 0;
+    color: black;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.chat-body {
+    height: 87.8vh;
+}
+
+// .send-msg {
+//     height: inherit;
+// }
+button {
+    color: white;
+    background-color: #5A4AE3;
+    border-radius: 5px;
+}
+
+input {
+    // border-radius: 1rem;
+    height: 2.2rem;
+    width: -webkit-fill-available
+}
+
+.text-field {
+    width: -webkit-fill-available
+}

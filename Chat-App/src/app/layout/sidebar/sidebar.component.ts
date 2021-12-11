@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from 'src/app/shared/auth.service';
+// import { AuthService } from 'src/app/shared/auth.service';
 import { User } from 'src/app/shared/user.model';
 
 @Component({
@@ -18,7 +18,7 @@ export class SidebarComponent implements OnInit {
   active: number = 2;
 
   constructor(
-    private afAuth: AngularFireAuth,
+    // private afAuth: AngularFireAuth,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
@@ -29,14 +29,14 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.uid = AuthService.uid;
+    // this.uid = AuthService.uid;
   }
 
   logouts() {
     console.log('logout');
-    this.afAuth.signOut().then(() => {
-      this.user = null;
-    });
+    // this.afAuth.signOut().then(() => {
+    //   this.user = null;
+    // });
     this.nav('login');
   }
 

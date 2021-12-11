@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/shared/auth.service';
+// import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -19,7 +19,8 @@ export class SignUpComponent implements OnInit {
     fcPassword2: new FormControl('', Validators.required),
   });
 
-  constructor(private router: Router, private auth: AuthService) {}
+  // constructor(private router: Router, private auth: AuthService) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
   // getErrorMessage() {
@@ -59,10 +60,10 @@ export class SignUpComponent implements OnInit {
         email: this.registerForm.value.fcEmail,
         password: this.registerForm.value.fcPassword,
       };
-      this.auth.register(payload).then((data) => {
-        if (!data.success) this.error = data.data;
-        else this.nav('login');
-      });
+      // this.auth.register(payload).then((data) => {
+      //   if (!data.success) this.error = data.data;
+      //   else this.nav('login');
+      // });
     }
   }
 

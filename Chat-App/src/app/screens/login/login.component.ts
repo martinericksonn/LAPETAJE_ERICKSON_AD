@@ -12,16 +12,17 @@ import { getAuth, getRedirectResult, GoogleAuthProvider } from 'firebase/auth';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  // fcEmail = new FormControl('', [Validators.required, Validators.email]);
-  // fcPassword = new FormControl('', [
-  //   Validators.required,
-  //   Validators.minLength(6),
-  // ]);
-  fcEmail = new FormControl();
-  fcPassword = new FormControl();
+  fcEmail = new FormControl('', [Validators.required, Validators.email]);
+  fcPassword = new FormControl('', [
+    Validators.required,
+    Validators.minLength(6),
+  ]);
+  // fcEmail = new FormControl();
+  // fcPassword = new FormControl();
   requestResult = '';
   hide = true;
   uid: String = '';
+  email: any;
   constructor(
     private router: Router,
     private api: HttpClient,
@@ -39,16 +40,17 @@ export class LoginComponent implements OnInit {
   //   return this.fcEmail.hasError('email') ? 'Not a valid email' : '';
   // }
 
-  // private async loginUser(): Promise<any> {
-  //   return await this.api
-  //     .post(environment.API_URL + this.API_PATH, {
-  //       email: this.fcEmail.value,
-  //       password: this.fcPassword.value,
-  //     })
-  //     .toPromise();
-  // }
+  private async loginUser(): Promise<any> {
+    return await this.api
+      .post(environment.API_URL + this.API_PATH, {
+        email: this.fcEmail.value,
+        password: this.fcPassword.value,
+      })
+      .toPromise();
+  }
 
   async login(): Promise<any> {
+    this.router.navigate(['home/profile/', '2719261ushq1w']);
     try {
       this.requestResult = '';
       var result: any = await this.authServ.login(

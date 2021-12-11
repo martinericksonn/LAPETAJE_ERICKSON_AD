@@ -6,21 +6,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.ChatService = void 0;
 const common_1 = require("@nestjs/common");
-const app_controller_1 = require("../app.controller");
-const app_service_1 = require("../app.service");
-const exercise3_module_1 = require("../exercise3/exercise3.module");
-const user_module_1 = require("../user/user.module");
-const chat_module_1 = require("../chat/chat.module");
-let AppModule = class AppModule {
+const admin = require("firebase-admin");
+let ChatService = class ChatService {
+    constructor() {
+        this.DB = admin.firestore();
+    }
+    sendMessageIndiv(user1, user2, message) {
+        console.log(user1, user2, message);
+    }
+    sendMessageGroup(message) {
+        console.log(message);
+    }
 };
-AppModule = __decorate([
-    (0, common_1.Module)({
-        imports: [exercise3_module_1.Exercise3Module, user_module_1.UserModule, chat_module_1.ChatModule],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
-    })
-], AppModule);
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+ChatService = __decorate([
+    (0, common_1.Injectable)()
+], ChatService);
+exports.ChatService = ChatService;
+//# sourceMappingURL=chat.service.js.map

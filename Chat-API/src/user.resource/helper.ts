@@ -1,6 +1,7 @@
 import { User, SystemMessage } from './user.model';
 import { v4 as uid } from 'uuid';
 import { DatabaseQuery } from './firebase.database';
+import { Message } from 'src/chat.resource/chat.interface';
 
 export class Helper {
   private static systemMessage = new SystemMessage();
@@ -151,6 +152,7 @@ export class Verification {
 
   static async verifyID(id: string) {
     if (await DatabaseQuery.hasID(id)) {
+      console.log('has');
       throw this.systemMessage.error(506);
     }
   }
@@ -158,6 +160,19 @@ export class Verification {
 
 export class Process {
   private static systemMessage = new SystemMessage();
+
+  static getMsgUid(user1: string, user2: string): string {
+    var user = [];
+    user.push(user1.slice(-(user1.length / 2)));
+    user.push(user2.slice(-(user1.length / 2)));
+    user.sort();
+    return user.join('');
+  }
+
+  static messageAddTime(message: Message): Message {
+    message.date = new Date();
+    return message;
+  }
 
   static async updateUser(user: any, id: string) {
     return await DatabaseQuery.updateValues(id, user);

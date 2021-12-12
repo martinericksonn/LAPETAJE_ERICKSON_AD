@@ -8,14 +8,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ChatService = void 0;
 const common_1 = require("@nestjs/common");
-const chat_databaseQuery_1 = require("./chat.resource/chat.databaseQuery");
+const helper_1 = require("../user.resource/helper");
+const chat_databaseQuery_1 = require("../chat.resource/chat.databaseQuery");
 let ChatService = class ChatService {
-    sendMessageIndiv(user1, user2, message) {
-        chat_databaseQuery_1.DatabaseQuery.addMessage(user1, user2, message);
+    async sendMessageIndiv(user1, user2, message) {
+        try {
+            await helper_1.Verification.verifyID(user1);
+            await helper_1.Verification.verifyID(user2);
+            await chat_databaseQuery_1.DatabaseQuery.addMessage(user1, user2, message);
+        }
+        catch (error) {
+            return error;
+        }
     }
     sendMessageGroup(message) {
-        chat_databaseQuery_1.DatabaseQuery.addMessageGroup(message);
-        console.log(message);
+        try {
+            helper_1.Verification.verifyID(message['uid']);
+            chat_databaseQuery_1.DatabaseQuery.addMessageGroup(message);
+        }
+        catch (error) {
+            return error;
+        }
     }
 };
 ChatService = __decorate([

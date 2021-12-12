@@ -1,4 +1,5 @@
 import { User } from './user.model';
+import { Message } from 'src/chat.resource/chat.interface';
 export declare class Helper {
     private static systemMessage;
     static describeClass(typeOfClass: any): Array<any>;
@@ -23,6 +24,8 @@ export declare class Verification {
 }
 export declare class Process {
     private static systemMessage;
+    static getMsgUid(user1: string, user2: string): string;
+    static messageAddTime(message: Message): Message;
     static updateUser(user: any, id: string): Promise<any>;
     static registerUser(newUser: any): Promise<import("./crud_return.interface").CRUDReturn>;
     static getUser(id: any): Promise<any>;

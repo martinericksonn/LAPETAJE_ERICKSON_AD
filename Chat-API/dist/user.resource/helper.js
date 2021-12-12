@@ -4,6 +4,7 @@ exports.Process = exports.Verification = exports.Helper = void 0;
 const user_model_1 = require("./user.model");
 const uuid_1 = require("uuid");
 const firebase_database_1 = require("./firebase.database");
+const chat_interface_1 = require("../chat.resource/chat.interface");
 class Helper {
     static describeClass(typeOfClass) {
         let a = new typeOfClass();
@@ -127,6 +128,7 @@ class Verification {
     }
     static async verifyID(id) {
         if (await firebase_database_1.DatabaseQuery.hasID(id)) {
+            console.log('has');
             throw this.systemMessage.error(506);
         }
     }
@@ -134,6 +136,17 @@ class Verification {
 exports.Verification = Verification;
 Verification.systemMessage = new user_model_1.SystemMessage();
 class Process {
+    static getMsgUid(user1, user2) {
+        var user = [];
+        user.push(user1.slice(-(user1.length / 2)));
+        user.push(user2.slice(-(user1.length / 2)));
+        user.sort();
+        return user.join('');
+    }
+    static messageAddTime(message) {
+        message.date = new Date();
+        return message;
+    }
     static async updateUser(user, id) {
         return await firebase_database_1.DatabaseQuery.updateValues(id, user);
     }

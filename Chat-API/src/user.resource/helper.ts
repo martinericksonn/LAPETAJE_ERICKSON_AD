@@ -152,7 +152,6 @@ export class Verification {
 
   static async verifyID(id: string) {
     if (await DatabaseQuery.hasID(id)) {
-      console.log('has');
       throw this.systemMessage.error(506);
     }
   }

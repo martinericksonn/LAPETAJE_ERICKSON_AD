@@ -17,11 +17,11 @@ export class ChatService {
     }
   }
 
-  sendMessageGroup(message: Message) {
+  async sendMessageGroup(message: Message) {
     try {
-      Verification.verifyID(message['uid']);
+      await Verification.verifyID(message['uid']);
 
-      DatabaseQuery.addMessageGroup(message);
+      await DatabaseQuery.addMessageGroup(message);
     } catch (error) {
       return error;
     }

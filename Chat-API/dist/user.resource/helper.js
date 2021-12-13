@@ -128,7 +128,6 @@ class Verification {
     }
     static async verifyID(id) {
         if (await firebase_database_1.DatabaseQuery.hasID(id)) {
-            console.log('has');
             throw this.systemMessage.error(506);
         }
     }

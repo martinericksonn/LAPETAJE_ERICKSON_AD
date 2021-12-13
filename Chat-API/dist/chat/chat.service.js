@@ -21,10 +21,10 @@ let ChatService = class ChatService {
             return error;
         }
     }
-    sendMessageGroup(message) {
+    async sendMessageGroup(message) {
         try {
-            helper_1.Verification.verifyID(message['uid']);
-            chat_databaseQuery_1.DatabaseQuery.addMessageGroup(message);
+            await helper_1.Verification.verifyID(message['uid']);
+            await chat_databaseQuery_1.DatabaseQuery.addMessageGroup(message);
         }
         catch (error) {
             return error;

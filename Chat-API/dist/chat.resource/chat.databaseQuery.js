@@ -13,11 +13,8 @@ class DatabaseQuery {
             const chatUid = helper_1.Process.getMsgUid(user1, user2);
             const newMessage = helper_1.Process.messageAddTime(message);
             const messageLocation = await db.collection('chats').doc(chatUid);
-            console.log('help');
             await messageLocation.set({ user1: user1, user2: user2 });
-            console.log('help1');
             await messageLocation.collection('messages').add(newMessage);
-            console.log('help4');
         }
         catch (error) {
             console.log(error);

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-// import { ApiService } from 'src/app/shared/api.service';
-// import { AuthService } from 'src/app/shared/auth.service';
+import { ApiService } from 'src/app/shared/api.service';
+import { AuthService } from 'src/app/shared/auth.service';
 import { CRUDReturn } from 'src/app/shared/crud_return.interface';
 import { User } from 'src/app/shared/user.model';
 import { Observable } from 'rxjs';
@@ -19,7 +19,6 @@ import { DialogUpdateComponent } from 'src/app/layout/dialog-update/dialog-updat
 })
 export class UserProfileComponent implements OnInit {
   id: string | undefined;
-  user!: User;
   imagePath: string | undefined;
   fileName: any;
   message: string | undefined;
@@ -34,11 +33,11 @@ export class UserProfileComponent implements OnInit {
   public isEmailVerified: boolean = true;
   uploadPercent: any;
   constructor(
-    // _auth: AuthService,
+    _auth: AuthService,
     _activatedRoute: ActivatedRoute,
     public dialog: MatDialog,
-    // public authServ: AuthService,
-    // private api: ApiService,
+    public authServ: AuthService,
+    private api: ApiService,
 
     private storage: AngularFireStorage
   ) {
@@ -65,18 +64,16 @@ export class UserProfileComponent implements OnInit {
   async uploadFile(event: any) {
     const files = event.target.files;
 
-    this.imagePath = `/images/${this.user.id}/profile`;
+    this.imagePath = `/images/${this.authServ.user?.id}/profile`;
     const task = await this.storage.upload(this.imagePath, files[0]);
 
-    const ref = this.storage.ref(`images/${this.user.id}/profile`);
+    const ref = this.storage.ref(`images/${this.authServ.user?.id}/profile`);
     this.url = ref.getDownloadURL();
 
     this.dialog.open(DialogProfileComponent);
   }
 
   private async clearFields() {
-    await this.getUserData();
-
     this.editProfile.controls['fcName'].reset();
     this.editProfile.controls['fcAge'].reset();
   }
@@ -91,27 +88,19 @@ export class UserProfileComponent implements OnInit {
 
   private async editUser(attributes: any): Promise<any> {
     console.log('editUser');
-    // var result: any = await this.api.patch(`/user/${this.id}`, attributes);
+    var result: any = await this.api.patch(`/user/${this.id}`, attributes);
 
-    // if (result.success) {
-    //   this.requestResult = '';
-    //   this.dialog.open(DialogUpdateComponent);
-    //   this.clearFields();
-    // } else {
-    //   this.requestResult = result.data;
-    // }
-  }
-
-  async getUserData() {
-    // var result: any = await this.api.get(`/user/${this.id}`);
-    // var output: CRUDReturn = { success: result.success, data: result.data };
-    // if (output.success === true) {
-    //   this.user = output.data;
-    // }
+    if (result.success) {
+      this.requestResult = '';
+      this.dialog.open(DialogUpdateComponent);
+      this.clearFields();
+    } else {
+      this.requestResult = result.data;
+    }
   }
 
   async ngOnInit() {
-    await this.getUserData();
+    // await this.getUserData();
     console.log(this.isEmailVerified);
   }
 

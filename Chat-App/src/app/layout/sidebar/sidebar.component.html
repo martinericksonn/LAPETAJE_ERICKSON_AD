@@ -8,7 +8,7 @@
 
             <mat-nav-list class="nav nav-pills ">
 
-                <mat-list-item class="nav-link active" [routerLink]=" [ 'profile',uid] " (click)="setActive(1)" [ngClass]="{active: getActive() == 1}">
+                <mat-list-item class="nav-link active" [routerLink]=" ['profile',authServ.user?.id]" routerLinkActive="active" (click)="setActive(1)" [ngClass]="{active: getActive() == 1}">
                     <img mat-list-icon src="assets/icons/user.svg " alt="user ">
                     <h4 mat-line *ngIf="isExpanded ">Profile</h4>
                 </mat-list-item>
@@ -32,5 +32,5 @@
         </div>
     </mat-drawer>
 
-    <router-outlet></router-outlet>
+    <router-outlet> </router-outlet>
 </mat-drawer-container>

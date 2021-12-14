@@ -1,4 +1,4 @@
-<div class="login flex-column d-flex justify-content-center align-items-center ">
+<div class="login flex-column d-flex justify-content-center align-items-center">
     <p class="error-msg ">{{requestResult}}</p>
     <div class="container-box d-flex flex-column justify-content-start pb-4">
         <h1 class="text-white header">Login</h1>
@@ -26,18 +26,26 @@
     <mat-form-field appearance="fill" class="forum  pt-2 ">
         <mat-label>Enter your email</mat-label>
         <input matInput placeholder="pat@example.com " [formControl]="fcEmail" type="email">
-
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="forum pt-.5 ">
         <mat-label>Enter your password</mat-label>
         <input matInput placeholder="******" [formControl]="fcPassword" type="password">
-
-
     </mat-form-field>
-
-    <div class="container-box  pt-1 pb-4">
+    <div class="container-box  pt-1 pb-3">
         <button mat-flat-button class="button" (click)="login()"><b>Login</b> </button>
+    </div>
+    <div class="align-self-center pb-3">
+        <a [routerLink]="['/forget-password']">Forget password?</a>
+    </div>
+    <div class="container  pb-3">
+        <div class="line">
+            <mat-divider></mat-divider>
+        </div>
+
+        <div class="line">
+            <mat-divider></mat-divider>
+        </div>
     </div>
     <p class="text-white pb-3">Not yet registered?
         <a [routerLink]="['/sign-up']" class=" text-white pb-3">

@@ -10,10 +10,11 @@ import { UserProfileComponent } from './screens/profile/user-profile.component';
 import { WelcomeComponent } from './screens/welcome/welcome.component';
 
 import { AuthGuard } from './shared/auth-guard.service';
+import { ForgetPasswordComponent } from './screens/forget-password/forget-password.component';
 
 const routes: Routes = [
   {
-    path: 'as',
+    path: '',
     component: WelcomeComponent,
     // component: SidebarComponent,
     children: [
@@ -26,19 +27,23 @@ const routes: Routes = [
         path: 'sign-up',
         component: SignUpComponent,
       },
+      {
+        path: 'forget-password',
+        component: ForgetPasswordComponent,
+      },
     ],
   },
   {
-    path: '',
-    // canActivate: [AuthGuard],
+    path: 't',
     component: SidebarComponent,
+    // canActivate: [AuthGuard],
     data: { some_data: 'some value' },
     children: [
-      { path: 'home', redirectTo: '', pathMatch: 'full' },
+      // { path: 'home', redirectTo: '', pathMatch: 'full' },
       // {
       //   path: '',
-      //   canActivate: [AuthGuard],
-      //   component: SidebarComponent,
+      //   pathMatch: 'full',
+      //   redirectTo: 'profile/:id',
       // },
       {
         path: 'messages',
@@ -47,12 +52,13 @@ const routes: Routes = [
       },
       {
         path: 'profile/:id',
+
         // canActivate: [AuthGuard],
         component: UserProfileComponent,
       },
       {
         path: 'about-tabi',
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
         component: AboutUsComponent,
       },
     ],

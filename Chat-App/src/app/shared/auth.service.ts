@@ -44,7 +44,7 @@ export class AuthService {
             this.user = User.fromJson(output.data.id, output.data);
             console.log('Successful Login');
             this.user?.log();
-            this.router.navigate(['home/profile/', data.uid]);
+            this.router.navigate(['t/profile/', data.uid]);
           }
         });
       }
@@ -107,7 +107,7 @@ export class AuthService {
           payload.email,
           payload.password
         );
-        AuthService.currentUser = resultOfLogin;
+        AuthService.currentUser = resultOfLogin.user?.emailVerified;
         this.generateProfile(output.data.id);
         await resultOfLogin.user?.sendEmailVerification();
       } catch (error) {

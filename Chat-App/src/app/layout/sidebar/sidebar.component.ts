@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { ActivatedRoute, Router } from '@angular/router';
-// import { AuthService } from 'src/app/shared/auth.service';
-import { User } from 'src/app/shared/user.model';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ApiService } from 'src/app/shared/api.service';
+import { AuthService } from 'src/app/shared/auth.service';
+import { CRUDReturn } from 'src/app/shared/crud_return.interface';
 
 @Component({
   selector: 'app-sidebar',
@@ -10,26 +10,41 @@ import { User } from 'src/app/shared/user.model';
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  public user?: User | null;
+  public user: any;
+
+  constructor(
+    private router: Router,
+    private api: ApiService,
+    public authServ: AuthService
+  ) {}
+
   id: string | undefined;
   isExpanded = false;
   showFiller = false;
   uid!: string;
-  active: number = 2;
-
-  constructor(
-    // private afAuth: AngularFireAuth,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
-  ) {}
+  active: number = 1;
 
   getUID() {}
   nav(destination: any) {
     this.router.navigate([destination]);
   }
 
-  ngOnInit() {
-    // this.uid = AuthService.uid;
+  async getUserData() {
+    try {
+      var result: any = await this.api.get(`/user/${this.id}`);
+      var output: CRUDReturn = { success: result.success, data: result.data };
+      if (output?.success === true) {
+        this.user = output.data;
+      }
+      console.log('user');
+      console.log(this.user.id);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async ngOnInit() {
+    // await this.getUserData();
   }
 
   logouts() {

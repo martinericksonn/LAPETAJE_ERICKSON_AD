@@ -27,15 +27,15 @@
         <form class="m-4 " [formGroup]="editProfile ">
             <div class="form-group mt-4 ">
                 <label for="inputEmail4 "><b>Email</b> </label>
-                <input disabled class="form-control " placeholder="{{user.email}}">
+                <input disabled class="form-control " placeholder="{{authServ.user?.email}}">
             </div>
             <div class="form-group mt-4 ">
                 <label for="inputName4 "><b>Name</b></label>
-                <input type="name" class="form-control " formControlName="fcName" placeholder="{{user.name}} ">
+                <input type="name" class="form-control " formControlName="fcName" placeholder="{{authServ.user?.name}} ">
             </div>
             <div class="form-group mt-4 ">
                 <label for="inputEmail4 "><b>Age</b></label>
-                <input type="number" class="form-control " formControlName='fcAge' placeholder="{{user.age}} ">
+                <input type="number" class="form-control " formControlName='fcAge' placeholder="{{authServ.user?.age}} ">
             </div>
             <div class=" d-flex justify-content-end  mt-4 ">
                 <button mat-flat-button class="buttons-save " (click)="updateUser()">Save</button>

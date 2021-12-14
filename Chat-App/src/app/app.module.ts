@@ -46,6 +46,8 @@ import { DialogProfileComponent } from './layout/dialog-profile/dialog-profile.c
 import { MessageComponent } from './screens/messages/message/message.component';
 import { NewMessageComponent } from './screens/messages/new-message/new-message.component';
 
+import { ForgetPasswordComponent } from './screens/forget-password/forget-password.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,6 +63,8 @@ import { NewMessageComponent } from './screens/messages/new-message/new-message.
     DialogProfileComponent,
     MessageComponent,
     NewMessageComponent,
+
+    ForgetPasswordComponent,
   ],
 
   imports: [

@@ -105,7 +105,8 @@ export class UserProfileComponent implements OnInit {
   }
 
   resetPass() {
-    // this.authServ.resetPassword(this.user.email);
+    if (this.authServ.user)
+      this.authServ.resetPassword(this.authServ.user.email);
     console.log('password sent check your email');
   }
 

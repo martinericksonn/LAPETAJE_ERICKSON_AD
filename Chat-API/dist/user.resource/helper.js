@@ -178,7 +178,7 @@ class Process {
     static async searchInUser(query) {
         var result = await firebase_database_1.DatabaseQuery.searchInUser(query);
         if (!result.length)
-            return this.systemMessage.error(511);
+            return this.systemMessage.error(512);
         return this.systemMessage.success(result);
     }
     static populateDatabase() {

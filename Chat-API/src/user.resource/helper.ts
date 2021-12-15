@@ -215,7 +215,7 @@ export class Process {
   static async searchInUser(query: string) {
     var result = await DatabaseQuery.searchInUser(query);
 
-    if (!result.length) return this.systemMessage.error(511);
+    if (!result.length) return this.systemMessage.error(512);
     return this.systemMessage.success(result);
   }
 

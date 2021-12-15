@@ -20,9 +20,6 @@ export class ForgetPasswordComponent implements OnInit {
 
   fcEmail = new FormControl('', [Validators.email]);
   ngOnInit(): void {}
-  openDialogResetPass() {
-    this.dialog.open(DiaglogComponent);
-  }
 
   async resetPass() {
     var request: any = await this.api.get('/user/search/' + this.fcEmail.value);
@@ -30,6 +27,9 @@ export class ForgetPasswordComponent implements OnInit {
       this.requestResult = 'This email does not exist. Try creating an account';
       return;
     }
+
+    if (this.authServ.user)
+      this.authServ.resetPassword(this.authServ.user.email);
 
     this.dialog.open(DiaglogComponent);
     this.requestResult = '';

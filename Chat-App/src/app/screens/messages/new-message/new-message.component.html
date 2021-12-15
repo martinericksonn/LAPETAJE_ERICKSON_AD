@@ -8,11 +8,16 @@
                 <label>Email</label>
                 <div class="d-flex flex-row align-items-center">
                     <div>
-                        <input type="name " class="form-control email">
+                        <input type="name " class="form-control email" [formControl]="fcEmail">
                     </div>
                     <div>
-                        <button mat-button class="ml-2 ">Check</button>
+                        <button mat-button class="ml-2 " (click)="checkEmail()">Check</button>
                     </div>
+                    <div class="align-self-center pl-2 ">
+
+                        <p class="error-msg ">{{requestResult}}</p>
+                    </div>
+
                 </div>
             </div>
             <div class="form-group m-3 ">

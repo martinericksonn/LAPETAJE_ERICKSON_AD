@@ -11,6 +11,8 @@ import { WelcomeComponent } from './screens/welcome/welcome.component';
 
 import { AuthGuard } from './shared/auth-guard.service';
 import { ForgetPasswordComponent } from './screens/forget-password/forget-password.component';
+import { NewMessageComponent } from './screens/messages/new-message/new-message.component';
+import { MessageComponent } from './screens/messages/message/message.component';
 
 const routes: Routes = [
   {
@@ -39,16 +41,22 @@ const routes: Routes = [
     // canActivate: [AuthGuard],
     data: { some_data: 'some value' },
     children: [
-      // { path: 'home', redirectTo: '', pathMatch: 'full' },
-      // {
-      //   path: '',
-      //   pathMatch: 'full',
-      //   redirectTo: 'profile/:id',
-      // },
       {
         path: 'messages',
         // canActivate: [AuthGuard],
         component: MessagesComponent,
+        children: [
+          {
+            path: 'new-message',
+            // canActivate: [AuthGuard],
+            component: NewMessageComponent,
+          },
+          // {
+          //   path: ':id',
+          //   // canActivate: [AuthGuard],
+          //   component: MessageComponent,
+          // },
+        ],
       },
       {
         path: 'profile/:id',
